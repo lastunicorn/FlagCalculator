@@ -1,0 +1,28 @@
+Flag Calculator
+---------------
+
+- user types digits
+	- catched in code behind
+	- handled in VM
+
+- user pastes number
+	- catched in code behind
+	- handled in VM
+
+- user checks/unchecks flags
+	- catched in CheckableItem -> VM
+	- handled in VM
+
+----------------------------------------------------------------------------------------------------
+
+- user types digits
+	- catched in command
+	- handled in VM
+
+- user pastes number
+	- catched in command
+	- handled in VM
+
+- user checks/unchecks flags
+	- catched in CheckableItem -> VM
+	- handled in VM
