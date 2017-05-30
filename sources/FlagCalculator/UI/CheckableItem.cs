@@ -17,8 +17,9 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator
+namespace DustInTheWind.FlagCalculator.UI
 {
     internal class CheckableItem : INotifyPropertyChanged
     {

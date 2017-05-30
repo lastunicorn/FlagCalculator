@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace DustInTheWind.FlagCalculator
+namespace DustInTheWind.FlagCalculator.UI
 {
     /// <summary>
     /// Interaction logic for App.xaml

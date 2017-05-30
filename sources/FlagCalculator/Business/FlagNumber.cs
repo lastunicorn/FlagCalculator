@@ -15,10 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Globalization;
 
-namespace DustInTheWind.FlagCalculator
+namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class FlagNumber
+    internal sealed class FlagNumber
     {
         private ulong value;
 
@@ -56,10 +57,15 @@ namespace DustInTheWind.FlagCalculator
                 : (value & flags) == flags;
         }
 
-        protected virtual void OnValueChanged()
+        private void OnValueChanged()
         {
             EventHandler handler = ValueChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
+        }
+
+        public override string ToString()
+        {
+            return value.ToString(CultureInfo.CurrentCulture);
         }
     }
 }

@@ -17,7 +17,7 @@
 using System;
 using System.Configuration;
 
-namespace DustInTheWind.FlagCalculator
+namespace DustInTheWind.FlagCalculator.Business
 {
     internal class FlagCollectionProvider
     {

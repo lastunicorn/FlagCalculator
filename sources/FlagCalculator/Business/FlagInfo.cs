@@ -14,34 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections;
-using System.Collections.Generic;
-
-namespace DustInTheWind.FlagCalculator
+namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class FlagCollection : IEnumerable<FlagInfo>
+    internal class FlagInfo
     {
+        public ulong Value { get; set; }
         public string Name { get; set; }
-        private readonly List<FlagInfo> flags;
 
-        public FlagCollection()
+        public override string ToString()
         {
-            flags = new List<FlagInfo>();
-        }
-
-        public IEnumerator<FlagInfo> GetEnumerator()
-        {
-            return flags.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public void Add(FlagInfo flagInfo)
-        {
-            flags.Add(flagInfo);
+            return $"{Name} - {Value}";
         }
     }
 }

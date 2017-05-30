@@ -16,8 +16,9 @@
 
 using System;
 using System.Windows.Input;
+using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator
+namespace DustInTheWind.FlagCalculator.UI
 {
     internal class CheckBoxCheckedCommand : ICommand
     {

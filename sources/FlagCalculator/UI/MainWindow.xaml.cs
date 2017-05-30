@@ -1,4 +1,4 @@
-// FlagCalculator
+﻿// FlagCalculator
 // Copyright (C) 2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,16 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.FlagCalculator
-{
-    internal class FlagInfo
-    {
-        public ulong Value { get; set; }
-        public string Name { get; set; }
+using System.Windows;
+using System.Windows.Input;
 
-        public override string ToString()
+namespace DustInTheWind.FlagCalculator.UI
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
         {
-            return string.Format("{0} - {1}", Name, Value);
+            InitializeComponent();
+
+            DataContext = new MainWindowViewModel();
+        }
+
+        private void TextBlockValue_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+                Clipboard.SetText(TextBlockValue.Text);
         }
     }
 }

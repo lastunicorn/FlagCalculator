@@ -21,7 +21,7 @@ using System.Reflection;
 // associated with an assembly.
 
 [assembly: AssemblyCompany("Dust in the Wind")]
-[assembly: AssemblyProduct("Flag Calculator - Some Data")]
+[assembly: AssemblyProduct("Flag Calculator")]
 [assembly: AssemblyCopyright("Copyright © Dust in the Wind 2017")]
 [assembly: AssemblyTrademark("")]
 
