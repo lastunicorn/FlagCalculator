@@ -62,7 +62,7 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
-        public CheckBoxCheckedCommand CheckBoxCheckedCommand { get; private set; }
+        public CheckBoxCheckedCommand CheckBoxCheckedCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -82,7 +82,7 @@ namespace DustInTheWind.FlagCalculator.UI
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

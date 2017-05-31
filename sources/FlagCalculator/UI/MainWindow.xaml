@@ -39,10 +39,6 @@
         <KeyBinding Command="{Binding DigitCommand}" Key="NumPad8" CommandParameter="8"></KeyBinding>
         <KeyBinding Command="{Binding DigitCommand}" Key="NumPad9" CommandParameter="9"></KeyBinding>
 
-        <!--<ui:MultiKeyBinding Command="PasteCommand"  Modifiers="Control">
-            <Key>D0</Key>
-            <Key>D1</Key>
-        </ui:MultiKeyBinding>-->
     </Window.InputBindings>
 
     <DockPanel Background="#ffcb9e">
@@ -82,7 +78,6 @@
                             <CheckBox
                                 Name="CheckBox1"
                                 IsChecked="{Binding IsChecked, Mode=TwoWay}" 
-                                HorizontalAlignment="Stretch"
                                 Padding="5 5 5 5"
                                 VerticalContentAlignment="Center"
                                 Margin="10 0 10 0"
@@ -96,7 +91,7 @@
                                     <Style TargetType="CheckBox">
                                         <Style.Triggers>
                                             <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Foreground" Value="#4a2200"></Setter>
+                                                <Setter Property="Background" Value="#4a2200"></Setter>
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
