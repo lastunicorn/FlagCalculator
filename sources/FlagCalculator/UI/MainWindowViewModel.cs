@@ -24,6 +24,7 @@ namespace DustInTheWind.FlagCalculator.UI
     internal sealed class MainWindowViewModel : ViewModelBase
     {
         private readonly FlagNumber flagNumber = new FlagNumber();
+        private readonly UserInterface userInterface;
 
         private string title;
         private ulong value;
@@ -66,6 +67,8 @@ namespace DustInTheWind.FlagCalculator.UI
 
             flagNumber.ValueChanged += HandleFlagNumberValueChanged;
 
+            userInterface = new UserInterface();
+
             LoadFlagCollection();
         }
 
@@ -80,16 +83,23 @@ namespace DustInTheWind.FlagCalculator.UI
 
         private void LoadFlagCollection()
         {
-            flagNumber.Clear();
+            try
+            {
+                flagNumber.Clear();
 
-            FlagCollectionProvider flagCollectionProvider = new FlagCollectionProvider();
-            FlagCollection flagCollection = flagCollectionProvider.LoadFlagCollection();
+                FlagCollectionProvider flagCollectionProvider = new FlagCollectionProvider();
+                FlagCollection flagCollection = flagCollectionProvider.LoadFlagCollection();
 
-            FlagItems = flagCollection
-                .Select(ToCheckableItem)
-                .ToList();
+                FlagItems = flagCollection
+                    .Select(ToCheckableItem)
+                    .ToList();
 
-            Title = string.Format("{0} - {1}", TitleBase, flagCollection.Name);
+                Title = string.Format("{0} - {1}", TitleBase, flagCollection.Name);
+            }
+            catch (Exception ex)
+            {
+                userInterface.DisplayError(ex);
+            }
         }
 
         private CheckableItem ToCheckableItem(FlagInfo flagInfo)

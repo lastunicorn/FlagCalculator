@@ -25,7 +25,13 @@ namespace DustInTheWind.FlagCalculator.Business
         {
             string enumTypeFullName = ConfigurationManager.AppSettings["enumTypeName"];
 
+            if (enumTypeFullName == null)
+                return new FlagCollection();
+
             Type enumType = Type.GetType(enumTypeFullName);
+
+            if (enumType == null)
+                throw new Exception(string.Format("The enum type '{0}' specified in the configuration file could not be loaded.", enumTypeFullName));
 
             if (!enumType.IsEnum)
                 throw new Exception("Specified type is not an enum.");

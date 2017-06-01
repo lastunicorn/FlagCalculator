@@ -72,6 +72,7 @@
     <Compile Include="UI\MainWindowViewModel.cs" />
     <Compile Include="UI\MultiKeyBinding.cs" />
     <Compile Include="UI\PasteCommand.cs" />
+    <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
     <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

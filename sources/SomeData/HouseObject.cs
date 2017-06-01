@@ -1,4 +1,4 @@
-// FlagCalculator
+﻿// FlagCalculator
 // Copyright (C) 2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,32 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Windows.Input;
-using DustInTheWind.FlagCalculator.Business;
-
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.SomeData
 {
-    internal class EscapeCommand : ICommand
+    internal enum HouseObject
     {
-        private readonly FlagNumber flagNumber;
-
-        public EscapeCommand(FlagNumber flagNumber)
-        {
-            if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
-            this.flagNumber = flagNumber;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            flagNumber.Clear();
-        }
+        None = 0,
+        Door = 1,
+        Window = 1 << 2,
+        Table = 1 << 3,
+        Bed = 1 << 4,
+        Chair = 1 << 5,
+        Wardrobe = 1 << 6,
+        Mirror = 1 << 7,
+        Sink = 1 << 8,
+        Stove = 1 << 9,
+        Rug = 1 << 10,
+        Bathtub = 1 << 11
     }
 }

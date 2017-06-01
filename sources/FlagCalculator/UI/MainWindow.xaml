@@ -13,6 +13,7 @@
     </Window.Resources>
     
     <Window.InputBindings>
+        
         <KeyBinding Command="{Binding EscapeCommand}" Key="Escape"></KeyBinding>
         <KeyBinding Command="{Binding CopyCommand}" Key="C" Modifiers="Control"></KeyBinding>
         <KeyBinding Command="{Binding PasteCommand}" Key="V" Modifiers="Control"></KeyBinding>
@@ -68,6 +69,9 @@
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked}" Value="true">
+                                            <Setter Property="Background" Value="#ffbc83"></Setter>
+                                        </DataTrigger>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="Background" Value="#ff9a4e"></Setter>
                                         </Trigger>
@@ -76,7 +80,6 @@
                             </Grid.Style>
 
                             <CheckBox
-                                Name="CheckBox1"
                                 IsChecked="{Binding IsChecked, Mode=TwoWay}" 
                                 Padding="5 5 5 5"
                                 VerticalContentAlignment="Center"
@@ -91,7 +94,7 @@
                                     <Style TargetType="CheckBox">
                                         <Style.Triggers>
                                             <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Background" Value="#4a2200"></Setter>
+                                                <Setter Property="Foreground" Value="#4a2200"></Setter>
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>

@@ -1,26 +1,33 @@
 Flag Calculator
 ---------------
 
-List the flag values from a enum
+Load enums from UI
+- As a user I want to be able to have a File->Open menu item that lets me select an assembly file and open the assembly browse window.
+
+Different background color for checked checkboxes
+- As a user I want to see the chacked checkboxes with different background color.
+
+* List the flag values from a enum
 - As a use I want to see a list with the values of the flag enum.
 
-Type a number - display it
+* Type a number - display it
 - As a user I want to be able to type a number from the keyboard and see it displayed in a text box.
 
-Type a number - update flags
+* Type a number - update flags
 - As a user I want to be able to type a number from the keyboard and see the corresponding flag values checked.
 
-Paste a number - display it
+* Paste a number - display it
 - As a user I want to be able to paste a number from the keyboard (Ctrl+V) and see it displayed in a text box.
 
-Paste a number - update flags
+* Paste a number - update flags
 - As a user I want to be able to paste a number from the keyboard (Ctrl+V) and see the corresponding flag values checked.
 
-Check/uncheck flags
+* Check/uncheck flags
 - As a user I want to be able to check/uncheck the flag values displayed and to see the number updated.
 
-Copy the number
+* Copy the number
 - As a user I want to be able the copy (Ctrl+C) the number displayed in the text box.
 
-Dinamically load enum
+* Dinamically load enum
 - As a user I want to be able to specify an enum type in the config file that will be dinamically loaded when app starts and be used as a source for the list of flags.
+1239

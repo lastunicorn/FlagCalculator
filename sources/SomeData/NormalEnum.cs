@@ -21,7 +21,7 @@ namespace DustInTheWind.SomeData
         None = 0,
         Father = 1,
         Mother = 2,
-        Sun = 3,
-        Doughter = 4
+        Son = 3,
+        Daughter = 4
     }
 }
