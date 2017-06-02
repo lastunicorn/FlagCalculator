@@ -36,78 +36,88 @@ namespace DustInTheWind.SomeData
         /// <summary>
         /// A room used for sleeping in.
         /// </summary>
-        Bedroom = 1,
+        Bedroom = 1 << 0,
 
         /// <summary>
         ///  UK also sitting room, AUSTRALIAN ENGLISH also lounge room.
         ///  The room in a house or apartment that is used for relaxing, and entertaining guests, but not usually for eating.
         /// </summary>
-        LivingRoom = 1 << 2,
+        LivingRoom = 1 << 1,
 
         /// <summary>
         /// A room with a bath and/or shower and often a toilet.
         /// </summary>
-        Bathroom = 1 << 3,
+        Bathroom = 1 << 2,
 
         /// <summary>
         /// The area just inside the main entrance of a house, apartment or other building which leads to other rooms and usually to the stairs.
         /// </summary>
-        Hall = 1 << 4,
+        Hall = 1 << 3,
 
         /// <summary>
         /// Usually just for washing machine, freezer etc.
         /// </summary>
-        UtilityRoom = 1 << 5,
+        UtilityRoom = 1 << 4,
 
         /// <summary>
         /// A separated building from the house usually for storing garden tools.
         /// </summary>
-        Shed = 1 << 6,
+        Shed = 1 << 5,
 
         /// <summary>
         /// Space in the roof of the house usually used only for storage.
         /// </summary>
-        Loft = 1 << 7,
+        Loft = 1 << 6,
 
         /// <summary>
         /// Room in the roof space of a house (could be lived in.)
         /// </summary>
-        Attic = 1 << 8,
+        Attic = 1 << 7,
 
         /// <summary>
         /// Room below ground level without any windows used for storage.
         /// </summary>
-        Cellar = 1 << 9,
+        Cellar = 1 << 8,
 
         /// <summary>
         /// Room below ground level, with windows, used for living and working.
         /// </summary>
-        Basement = 1 << 10,
+        Basement = 1 << 9,
+
+        /// <summary>
+        /// The rooms below ground.
+        /// </summary>
+        BelowGroundSpaces = Cellar | Basement,
 
         /// <summary>
         /// Flat area at the top of a staircase.
         /// </summary>
-        Landing = 1 << 11,
+        Landing = 1 << 10,
 
         /// <summary>
         /// Covered area before the entrance door.
         /// </summary>
-        Porch = 1 << 12,
+        Porch = 1 << 11,
 
         /// <summary>
         /// Also called patio. Paved area between the house and garden for sitting and eating, etc.
         /// </summary>
-        Terrace = 1 << 13,
+        Terrace = 1 << 12,
 
         /// <summary>
         /// A room for reading, writing, studying in.
         /// </summary>
-        Study = 1 << 14,
+        Study = 1 << 13,
 
         /// <summary>
         /// An area with a wall or bars around it that is joined to the outside wall of a building on an upper level.
         /// </summary>
-        Balcony = 1 << 15,
+        Balcony = 1 << 14,
+
+        /// <summary>
+        /// Spaces that are open to the outside.
+        /// </summary>
+        OutsideSpaces = Porch | Terrace | Balcony,
 
         /// <summary>
         /// Represents all house pasts together.

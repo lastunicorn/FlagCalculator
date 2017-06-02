@@ -15,12 +15,17 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Reflection;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
     internal class FlagCollectionProvider
     {
+        public Func<Type, bool> OnEnumIsNotFlags { get; set; }
+
         public FlagCollection LoadFlagCollection()
         {
             string enumTypeFullName = ConfigurationManager.AppSettings["enumTypeName"];
@@ -28,36 +33,58 @@ namespace DustInTheWind.FlagCalculator.Business
             if (enumTypeFullName == null)
                 return new FlagCollection();
 
+            Type enumType = GetEnumeType(enumTypeFullName);
+            List<FlagInfo> list = BuildListOfFields(enumType);
+
+            return ToFlagCollection(list, enumType.Name);
+        }
+
+        private Type GetEnumeType(string enumTypeFullName)
+        {
             Type enumType = Type.GetType(enumTypeFullName);
 
             if (enumType == null)
-                throw new Exception(string.Format("The enum type '{0}' specified in the configuration file could not be loaded.", enumTypeFullName));
+                throw new ApplicationException(string.Format("The enum type '{0}' specified in the configuration file could not be loaded.", enumTypeFullName));
 
             if (!enumType.IsEnum)
-                throw new Exception("Specified type is not an enum.");
+                throw new ApplicationException("Specified type is not an enum.");
 
             if (Attribute.GetCustomAttribute(enumType, typeof(FlagsAttribute)) == null)
-                Console.WriteLine("Specified type is not a flags enum.");
+            {
+                if (OnEnumIsNotFlags == null)
+                    throw new ApplicationException("Specified type is not a flags enum.");
 
-            Array enumValues = Enum.GetValues(enumType);
+                bool allowToContinue = OnEnumIsNotFlags(enumType);
 
+                if (!allowToContinue)
+                    throw new ApplicationException("Specified type is not a flags enum.");
+            }
+
+            return enumType;
+        }
+
+        private static List<FlagInfo> BuildListOfFields(Type enumType)
+        {
+            FieldInfo[] fieldInfos = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
+
+            return fieldInfos
+                .Select(x => new FlagInfo
+                {
+                    Value = (ulong)Convert.ChangeType(x.GetRawConstantValue(), typeof(ulong)),
+                    Name = x.Name
+                })
+                .ToList();
+        }
+
+        public static FlagCollection ToFlagCollection(IEnumerable<FlagInfo> flagInfos, string collectionName)
+        {
             FlagCollection flagCollection = new FlagCollection
             {
-                Name = enumType.Name
+                Name = collectionName
             };
 
-            for (int i = 0; i < enumValues.Length; i++)
-            {
-                object enumValue = enumValues.GetValue(i);
-
-                FlagInfo flagInfo = new FlagInfo
-                {
-                    Value = (ulong)Convert.ChangeType(enumValue, typeof(ulong)),
-                    Name = enumValue.ToString()
-                };
-
+            foreach (FlagInfo flagInfo in flagInfos)
                 flagCollection.Add(flagInfo);
-            }
 
             return flagCollection;
         }
