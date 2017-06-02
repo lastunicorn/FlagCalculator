@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.FlagCalculator.Business;
+using System.Windows;
 
 namespace DustInTheWind.FlagCalculator.UI
 {
@@ -52,6 +53,46 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public List<CheckableItem> FlagItems { get; private set; }
 
+        public bool displayOnlySelected;
+
+        public bool DisplayOnlySelected
+        {
+            get { return displayOnlySelected; }
+            set
+            {
+                if (value == displayOnlySelected)
+                    return;
+
+                displayOnlySelected = value;
+                OnPropertyChanged();
+
+                if (value)
+                    DisplayOnlyUnselected = false;
+
+                UpdateCheckBoxesVisibility();
+            }
+        }
+
+        public bool displayOnlyUnselected;
+
+        public bool DisplayOnlyUnselected
+        {
+            get { return displayOnlyUnselected; }
+            set
+            {
+                if (value == displayOnlyUnselected)
+                    return;
+
+                displayOnlyUnselected = value;
+                OnPropertyChanged();
+
+                if (value)
+                    DisplayOnlySelected = false;
+
+                UpdateCheckBoxesVisibility();
+            }
+        }
+
         public EscapeCommand EscapeCommand { get; private set; }
         public CopyCommand CopyCommand { get; private set; }
         public PasteCommand PasteCommand { get; private set; }
@@ -70,6 +111,8 @@ namespace DustInTheWind.FlagCalculator.UI
             userInterface = new UserInterface();
 
             LoadFlagCollection();
+
+            flagNumber.Value = 0;
         }
 
         private void HandleFlagNumberValueChanged(object sender, EventArgs e)
@@ -79,6 +122,21 @@ namespace DustInTheWind.FlagCalculator.UI
                     checkableItem.IsChecked = flagNumber.IsFlagSet(checkableItem.Value);
 
             Value = flagNumber.Value;
+            UpdateCheckBoxesVisibility();
+        }
+
+        private void UpdateCheckBoxesVisibility()
+        {
+            if (FlagItems == null)
+                return;
+
+            bool displayAll = !displayOnlySelected && !displayOnlyUnselected;
+
+            FlagItems.ForEach(x =>
+            {
+                bool display = displayAll || (x.IsChecked && displayOnlySelected) || (!x.IsChecked && displayOnlyUnselected);
+                x.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+            });
         }
 
         private void LoadFlagCollection()

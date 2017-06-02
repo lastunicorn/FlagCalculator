@@ -55,7 +55,7 @@ namespace DustInTheWind.FlagCalculator.UI
         public Visibility Visibility
         {
             get { return visibility; }
-            private set
+            set
             {
                 visibility = value;
                 OnPropertyChanged();

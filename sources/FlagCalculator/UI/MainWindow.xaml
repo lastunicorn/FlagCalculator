@@ -22,7 +22,6 @@
 
                                 <Image
                                     x:Name="checkboxImage"
-                                    
                                     Width="16"
                                     Height="16"
                                     Margin="0 0 5 0"
@@ -143,6 +142,43 @@
             Background="#f97300"
             Foreground="#4a2200"/>
 
+        <Border
+            DockPanel.Dock="Bottom"
+            Padding="8"
+            Background="#f97300">
+
+            <StackPanel
+                Orientation="Horizontal"
+                FlowDirection="RightToLeft">
+
+                <StackPanel.Resources>
+                    <Style TargetType="ToggleButton">
+                        <Style.Setters>
+                            <Setter Property="Padding" Value="8"/>
+                        </Style.Setters>
+                    </Style>
+                </StackPanel.Resources>
+
+                <ToggleButton IsChecked="{Binding DisplayOnlySelected}">
+                    <Image
+                        Source="pack://application:,,,/Resources/checkbox/checked-checkbox-16.png"
+                        Width="16"
+                        Height="16"/>
+                </ToggleButton>
+
+                <ToggleButton IsChecked="{Binding DisplayOnlyUnselected}" Margin="8 0 0 0">
+                    <Image
+                        Source="pack://application:,,,/Resources/checkbox/unchecked-checkbox-16.png"
+                        Width="16"
+                        Height="16"/>
+                </ToggleButton>
+
+                <TextBlock Text="Display" VerticalAlignment="Center" Margin="8 0 0 0"/>
+
+            </StackPanel>
+            
+        </Border>
+
         <ScrollViewer>
             <ItemsControl
                 ItemsSource="{Binding FlagItems}"
@@ -157,10 +193,10 @@
                                 <Style TargetType="StackPanel">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsChecked}" Value="true">
-                                            <Setter Property="Background" Value="#ffbc83"></Setter>
+                                            <Setter Property="Background" Value="#ffbc83"/>
                                         </DataTrigger>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#ff9a4e"></Setter>
+                                            <Setter Property="Background" Value="#ff9a4e"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
