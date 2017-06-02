@@ -114,6 +114,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\checkbox\checked-checkbox-16.png" />
+    <Resource Include="Resources\checkbox\unchecked-checkbox-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\checkbox\checked-disabled-checkbox-16.png" />
+    <Resource Include="Resources\checkbox\checked-hover-checkbox-16.png" />
+    <Resource Include="Resources\checkbox\unchecked-disabled-checkbox-16.png" />
+    <Resource Include="Resources\checkbox\unchecked-hover-checkbox-16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

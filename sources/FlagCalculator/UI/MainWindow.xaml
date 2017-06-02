@@ -10,14 +10,101 @@
 
         <!-- orange: f97300 - ffcb9e, ff9a4e, aa4f00, 4a2200 -->
 
+        <Style TargetType="{x:Type CheckBox}" x:Key="CustomCheckbox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+
+                        <Border Padding="{TemplateBinding Padding}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Background="Transparent">
+
+                                <Image
+                                    x:Name="checkboxImage"
+                                    
+                                    Width="16"
+                                    Height="16"
+                                    Margin="0 0 5 0"
+                                    VerticalAlignment="Center"/>
+
+                                <ContentPresenter/>
+
+                            </StackPanel>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-checkbox-16.png"/>
+                            </Trigger>
+
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/unchecked-checkbox-16.png"/>
+                            </Trigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                    <Condition Property="IsEnabled" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-disabled-checkbox-16.png"/>
+                            </MultiTrigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="False"/>
+                                    <Condition Property="IsEnabled" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-disabled-checkbox-16.png"/>
+                            </MultiTrigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-hover-checkbox-16.png"/>
+                            </MultiTrigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="False"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/unchecked-hover-checkbox-16.png"/>
+                            </MultiTrigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="Foreground" Value="#4a2200"></Setter>
+                </Trigger>
+
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="#a0a0a0"></Setter>
+                </Trigger>
+
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Black"></Setter>
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
     </Window.Resources>
-    
+
     <Window.InputBindings>
-        
+
         <KeyBinding Command="{Binding EscapeCommand}" Key="Escape"></KeyBinding>
         <KeyBinding Command="{Binding CopyCommand}" Key="C" Modifiers="Control"></KeyBinding>
         <KeyBinding Command="{Binding PasteCommand}" Key="V" Modifiers="Control"></KeyBinding>
-        
+
         <KeyBinding Command="{Binding DigitCommand}" Key="D0" CommandParameter="0"></KeyBinding>
         <KeyBinding Command="{Binding DigitCommand}" Key="D1" CommandParameter="1"></KeyBinding>
         <KeyBinding Command="{Binding DigitCommand}" Key="D2" CommandParameter="2"></KeyBinding>
@@ -28,7 +115,7 @@
         <KeyBinding Command="{Binding DigitCommand}" Key="D7" CommandParameter="7"></KeyBinding>
         <KeyBinding Command="{Binding DigitCommand}" Key="D8" CommandParameter="8"></KeyBinding>
         <KeyBinding Command="{Binding DigitCommand}" Key="D9" CommandParameter="9"></KeyBinding>
-        
+
         <KeyBinding Command="{Binding DigitCommand}" Key="NumPad0" CommandParameter="0"></KeyBinding>
         <KeyBinding Command="{Binding DigitCommand}" Key="NumPad1" CommandParameter="1"></KeyBinding>
         <KeyBinding Command="{Binding DigitCommand}" Key="NumPad2" CommandParameter="2"></KeyBinding>
@@ -64,10 +151,10 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
 
-                        <Grid>
+                        <StackPanel>
 
-                            <Grid.Style>
-                                <Style TargetType="Grid">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsChecked}" Value="true">
                                             <Setter Property="Background" Value="#ffbc83"></Setter>
@@ -77,33 +164,28 @@
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
-                            </Grid.Style>
+                            </StackPanel.Style>
 
                             <CheckBox
                                 IsChecked="{Binding IsChecked, Mode=TwoWay}" 
-                                Padding="5 5 5 5"
                                 VerticalContentAlignment="Center"
+                                VerticalAlignment="Center"
                                 Margin="10 0 10 0"
                                 FontSize="20"
                                 Visibility="{Binding Visibility}"
                                 Tag="{Binding Value}"
                                 Command="{Binding CheckBoxCheckedCommand}"
-                                CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">
+                                CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                Style="{StaticResource CustomCheckbox}"
+                                Foreground="#4a2200">
 
-                                <CheckBox.Style>
-                                    <Style TargetType="CheckBox">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Foreground" Value="#4a2200"></Setter>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </CheckBox.Style>
-
-                                <TextBlock Name="TextBlock1" Text="{Binding Text}"/>
+                                <TextBlock
+                                    Text="{Binding Text}"
+                                    Padding="5"/>
 
                             </CheckBox>
-                        </Grid>
+
+                        </StackPanel>
 
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

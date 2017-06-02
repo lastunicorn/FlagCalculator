@@ -2,7 +2,7 @@ Flag Calculator
 ---------------
 
 Load enums from UI
-- As a user I want to be able to have a File->Open menu item that lets me select an assembly file and open the assembly browse window.
+- As a user I want to be able to have a File->Open menu item that lets me select an assembly file, open the assembly browse window and then let me choos an enum to be loaded.
 
 Different background color for checked checkboxes
 - As a user I want to see the chacked checkboxes with different background color.
