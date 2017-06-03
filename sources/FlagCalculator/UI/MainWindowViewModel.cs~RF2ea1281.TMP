@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Runtime.InteropServices;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI
@@ -45,16 +44,6 @@ namespace DustInTheWind.FlagCalculator.UI
             private set
             {
                 this.value = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string NumericalBase
-        {
-            get { return numericalBase; }
-            set
-            {
-                numericalBase = value;
                 OnPropertyChanged();
             }
         }
@@ -94,7 +83,6 @@ namespace DustInTheWind.FlagCalculator.UI
         }
 
         private bool displayOnlyUnselected;
-        private string numericalBase;
 
         public bool DisplayOnlyUnselected
         {
@@ -117,7 +105,6 @@ namespace DustInTheWind.FlagCalculator.UI
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public DigitCommand DigitCommand { get; }
-        public BaseRollCommand BaseRollCommand { get; }
 
         public string Base { get; set; }
 
@@ -130,7 +117,6 @@ namespace DustInTheWind.FlagCalculator.UI
             CopyCommand = new CopyCommand(flagNumber);
             PasteCommand = new PasteCommand(flagNumber);
             DigitCommand = new DigitCommand(flagNumber);
-            BaseRollCommand = new BaseRollCommand(flagNumber);
 
             FlagsViewModel = new FlagsViewModel(flagNumber);
             FlagsViewModel.SelectionChanged += HandleFlagItemsSelectionChanged;
@@ -138,40 +124,10 @@ namespace DustInTheWind.FlagCalculator.UI
             LoadFlagCollection();
 
             flagNumber.ValueChanged += HandleFlagNumberValueChanged;
-            flagNumber.BaseChanged += HandleFlagNumberBaseChanged;
 
             FlagsViewModel.DisplayAll = true;
 
             flagNumber.Value = 0;
-
-            UpdateNumericalBase();
-        }
-
-        private void HandleFlagNumberBaseChanged(object sender, EventArgs e)
-        {
-            UpdateNumericalBase();
-            Value = flagNumber.ToString();
-        }
-
-        private void UpdateNumericalBase()
-        {
-            switch (flagNumber.NumericalBase)
-            {
-                case Business.NumericalBase.Decimal:
-                    NumericalBase = "10";
-                    break;
-
-                case Business.NumericalBase.Hexadecimal:
-                    NumericalBase = "16";
-                    break;
-
-                case Business.NumericalBase.Binary:
-                    NumericalBase = "2";
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         private void HandleFlagItemsSelectionChanged(object sender, EventArgs e)
@@ -183,7 +139,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
         private void HandleFlagNumberValueChanged(object sender, EventArgs e)
         {
-            Value = flagNumber.ToString();
+            Value = flagNumber.Value.ToString();
         }
 
         private void LoadFlagCollection()
@@ -196,8 +152,6 @@ namespace DustInTheWind.FlagCalculator.UI
                 FlagInfoCollection flagInfoCollection = flagCollectionProvider.LoadFlagCollection();
 
                 FlagsViewModel.Load(flagInfoCollection);
-
-                flagNumber.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
 
                 Title = string.Format("{0} - {1}", TitleBase, flagInfoCollection.Name);
             }

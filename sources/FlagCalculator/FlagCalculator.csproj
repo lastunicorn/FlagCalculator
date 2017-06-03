@@ -59,6 +59,8 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
+    <Compile Include="Business\NumericalBase.cs" />
+    <Compile Include="UI\BaseRollCommand.cs" />
     <Compile Include="UI\CheckableItem.cs" />
     <Compile Include="UI\CheckBoxCheckedCommand.cs" />
     <Compile Include="Business\FlagInfoCollection.cs" />

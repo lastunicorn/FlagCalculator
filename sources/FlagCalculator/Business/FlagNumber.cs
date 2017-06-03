@@ -15,13 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
     internal sealed class FlagNumber
     {
         private ulong value;
+        private NumericalBase numericalBase;
 
         public ulong Value
         {
@@ -33,7 +36,20 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
+        public NumericalBase NumericalBase
+        {
+            get { return numericalBase; }
+            private set
+            {
+                numericalBase = value;
+                OnBaseChanged();
+            }
+        }
+
+        public int BitCount { get; set; } = 64;
+
         public event EventHandler ValueChanged;
+        public event EventHandler BaseChanged;
 
         public void AddFlags(ulong flags)
         {
@@ -63,9 +79,69 @@ namespace DustInTheWind.FlagCalculator.Business
             handler?.Invoke(this, EventArgs.Empty);
         }
 
+        public void RollBase()
+        {
+            switch (numericalBase)
+            {
+                case NumericalBase.Decimal:
+                    NumericalBase = NumericalBase.Hexadecimal;
+                    break;
+
+                case NumericalBase.Hexadecimal:
+                    NumericalBase = NumericalBase.Binary;
+                    break;
+
+                case NumericalBase.Binary:
+                    NumericalBase = NumericalBase.Decimal;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void OnBaseChanged()
+        {
+            BaseChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         public override string ToString()
         {
-            return value.ToString(CultureInfo.CurrentCulture);
+            switch (NumericalBase)
+            {
+                case NumericalBase.Decimal:
+                    return value.ToString(CultureInfo.CurrentCulture);
+
+                case NumericalBase.Hexadecimal:
+                    return value.ToString("X");
+
+                case NumericalBase.Binary:
+                    return ToBinaryString();
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public string ToBinaryString()
+        {
+            ulong v = value;
+            List<char> chars = new List<char>(BitCount + (BitCount / 4 - 1));
+
+            for (int i = 0; i < BitCount; i++)
+            {
+                if (i != 0 && i % 4 == 0)
+                    chars.Add(' ');
+
+                bool bit = (v & 1) == 1;
+                chars.Add(bit ? '1' : '0');
+
+                v = v >> 1;
+            }
+
+            chars.Reverse();
+
+            return string.Join(string.Empty, chars);
         }
     }
 }
