@@ -10,92 +10,6 @@
 
         <!-- orange: f97300 - ffcb9e, ff9a4e, aa4f00, 4a2200 -->
 
-        <Style TargetType="{x:Type CheckBox}" x:Key="CustomCheckbox">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type CheckBox}">
-
-                        <Border Padding="{TemplateBinding Padding}">
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Background="Transparent">
-
-                                <Image
-                                    x:Name="checkboxImage"
-                                    Width="16"
-                                    Height="16"
-                                    Margin="0 0 5 0"
-                                    VerticalAlignment="Center"/>
-
-                                <ContentPresenter/>
-
-                            </StackPanel>
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-checkbox-16.png"/>
-                            </Trigger>
-
-                            <Trigger Property="IsChecked" Value="False">
-                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/unchecked-checkbox-16.png"/>
-                            </Trigger>
-
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsChecked" Value="True"/>
-                                    <Condition Property="IsEnabled" Value="False"/>
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-disabled-checkbox-16.png"/>
-                            </MultiTrigger>
-
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsChecked" Value="False"/>
-                                    <Condition Property="IsEnabled" Value="False"/>
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-disabled-checkbox-16.png"/>
-                            </MultiTrigger>
-
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsChecked" Value="True"/>
-                                    <Condition Property="IsMouseOver" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-hover-checkbox-16.png"/>
-                            </MultiTrigger>
-
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsChecked" Value="False"/>
-                                    <Condition Property="IsMouseOver" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/unchecked-hover-checkbox-16.png"/>
-                            </MultiTrigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsChecked" Value="False">
-                    <Setter Property="Foreground" Value="#4a2200"></Setter>
-                </Trigger>
-
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Foreground" Value="#a0a0a0"></Setter>
-                </Trigger>
-
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="Black"></Setter>
-                </Trigger>
-            </Style.Triggers>
-
-        </Style>
-
     </Window.Resources>
 
     <Window.InputBindings>
@@ -171,19 +85,28 @@
                 <StackPanel Orientation="Horizontal">
 
                     <TextBlock Text="Display:" VerticalAlignment="Center" Margin="0 0 8 0"/>
-                    <ToggleButton IsChecked="{Binding DisplayOnlySelected}">
+
+                    <ToggleButton IsChecked="{Binding DisplayAll}" Margin="0 0 8 0">
+                        <Image
+                        Source="pack://application:,,,/Resources/checkbox/all-checkbox-16.png"
+                        Width="16"
+                        Height="16"/>
+                    </ToggleButton>
+
+                    <ToggleButton IsChecked="{Binding DisplayOnlySelected}" Margin="0 0 8 0">
                         <Image
                         Source="pack://application:,,,/Resources/checkbox/checked-checkbox-16.png"
                         Width="16"
                         Height="16"/>
                     </ToggleButton>
 
-                    <ToggleButton IsChecked="{Binding DisplayOnlyUnselected}" Margin="8 0 0 0">
+                    <ToggleButton IsChecked="{Binding DisplayOnlyUnselected}">
                         <Image
                         Source="pack://application:,,,/Resources/checkbox/unchecked-checkbox-16.png"
                         Width="16"
                         Height="16"/>
                     </ToggleButton>
+                    
                 </StackPanel>
             </StatusBarItem>
 
@@ -198,6 +121,96 @@
                     <DataTemplate>
 
                         <StackPanel>
+
+                            <StackPanel.Resources>
+
+                                <Style TargetType="{x:Type CheckBox}" x:Key="CustomCheckbox">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type CheckBox}">
+
+                                                <Border Padding="{TemplateBinding Padding}">
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Background="Transparent">
+
+                                                        <Image
+                                                            x:Name="checkboxImage"
+                                                            Width="16"
+                                                            Height="16"
+                                                            Margin="0 0 5 0"
+                                                            VerticalAlignment="Center"/>
+
+                                                        <ContentPresenter/>
+
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <ControlTemplate.Triggers>
+
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-checkbox-16.png"/>
+                                                    </Trigger>
+
+                                                    <Trigger Property="IsChecked" Value="False">
+                                                        <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/unchecked-checkbox-16.png"/>
+                                                    </Trigger>
+
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="IsChecked" Value="True"/>
+                                                            <Condition Property="IsEnabled" Value="False"/>
+                                                        </MultiTrigger.Conditions>
+                                                        <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-disabled-checkbox-16.png"/>
+                                                    </MultiTrigger>
+
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="IsChecked" Value="False"/>
+                                                            <Condition Property="IsEnabled" Value="False"/>
+                                                        </MultiTrigger.Conditions>
+                                                        <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-disabled-checkbox-16.png"/>
+                                                    </MultiTrigger>
+
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="IsChecked" Value="True"/>
+                                                            <Condition Property="IsMouseOver" Value="True"/>
+                                                        </MultiTrigger.Conditions>
+                                                        <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/checked-hover-checkbox-16.png"/>
+                                                    </MultiTrigger>
+
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="IsChecked" Value="False"/>
+                                                            <Condition Property="IsMouseOver" Value="True"/>
+                                                        </MultiTrigger.Conditions>
+                                                        <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/Resources/checkbox/unchecked-hover-checkbox-16.png"/>
+                                                    </MultiTrigger>
+
+                                                </ControlTemplate.Triggers>
+
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Foreground" Value="#4a2200"></Setter>
+                                        </Trigger>
+
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Foreground" Value="#a0a0a0"></Setter>
+                                        </Trigger>
+
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="Black"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+
+                                </Style>
+
+                            </StackPanel.Resources>
 
                             <StackPanel.Style>
                                 <Style TargetType="StackPanel">

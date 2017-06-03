@@ -68,7 +68,33 @@ namespace DustInTheWind.FlagCalculator.UI
                 OnPropertyChanged();
 
                 if (value)
+                {
+                    DisplayAll = false;
                     DisplayOnlyUnselected = false;
+                }
+
+                UpdateCheckBoxesVisibility();
+            }
+        }
+
+        public bool displayAll;
+
+        public bool DisplayAll
+        {
+            get { return displayAll; }
+            set
+            {
+                if (value == displayAll)
+                    return;
+
+                displayAll = value;
+                OnPropertyChanged();
+
+                if (value)
+                {
+                    DisplayOnlySelected = false;
+                    DisplayOnlyUnselected = false;
+                }
 
                 UpdateCheckBoxesVisibility();
             }
@@ -88,7 +114,10 @@ namespace DustInTheWind.FlagCalculator.UI
                 OnPropertyChanged();
 
                 if (value)
+                {
+                    DisplayAll = false;
                     DisplayOnlySelected = false;
+                }
 
                 UpdateCheckBoxesVisibility();
             }
@@ -101,6 +130,8 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public MainWindowViewModel()
         {
+            userInterface = new UserInterface();
+
             Title = TitleBase;
             EscapeCommand = new EscapeCommand(flagNumber);
             CopyCommand = new CopyCommand(flagNumber);
@@ -109,7 +140,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
             flagNumber.ValueChanged += HandleFlagNumberValueChanged;
 
-            userInterface = new UserInterface();
+            DisplayAll = true;
 
             LoadFlagCollection();
 
@@ -130,9 +161,7 @@ namespace DustInTheWind.FlagCalculator.UI
         {
             if (FlagItems == null)
                 return;
-
-            bool displayAll = !displayOnlySelected && !displayOnlyUnselected;
-
+            
             FlagItems.ForEach(x =>
             {
                 bool display = displayAll || (x.IsChecked && displayOnlySelected) || (!x.IsChecked && displayOnlyUnselected);
