@@ -61,7 +61,7 @@
     </Compile>
     <Compile Include="UI\CheckableItem.cs" />
     <Compile Include="UI\CheckBoxCheckedCommand.cs" />
-    <Compile Include="Business\FlagCollection.cs" />
+    <Compile Include="Business\FlagInfoCollection.cs" />
     <Compile Include="Business\FlagCollectionProvider.cs" />
     <Compile Include="Business\FlagInfo.cs" />
     <Compile Include="Business\FlagNumber.cs" />
@@ -69,11 +69,19 @@
     <Compile Include="UI\DigitCommand.cs" />
     <Compile Include="UI\EmptyCommand.cs" />
     <Compile Include="UI\EscapeCommand.cs" />
+    <Compile Include="UI\FlagsViewModel.cs" />
+    <Compile Include="UI\MainStatusBar.xaml.cs">
+      <DependentUpon>MainStatusBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MainWindowViewModel.cs" />
     <Compile Include="UI\MultiKeyBinding.cs" />
     <Compile Include="UI\PasteCommand.cs" />
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
+    <Page Include="UI\MainStatusBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

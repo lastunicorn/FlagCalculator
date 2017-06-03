@@ -4,11 +4,13 @@
         xmlns:ui="clr-namespace:DustInTheWind.FlagCalculator.UI"
         Title="{Binding Title}"
         Height="480"
-        Width="640">
+        Width="640"
+        ResizeMode="CanResizeWithGrip">
 
     <Window.Resources>
 
         <!-- orange: f97300 - ffcb9e, ff9a4e, aa4f00, 4a2200 -->
+        <!-- blue: 113f47 - 5575bf, 3459af, 0d3083, 082466 -->
 
     </Window.Resources>
 
@@ -56,65 +58,12 @@
             Background="#f97300"
             Foreground="#4a2200"/>
 
-        <StatusBar
-            DockPanel.Dock="Bottom"
-            Padding="8"
-            Background="#f97300">
+        <ui:MainStatusBar
+            DockPanel.Dock="Bottom"/>
 
-            <StatusBar.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ItemsPanelTemplate>
-
-            </StatusBar.ItemsPanel>
-
-            <StatusBar.Resources>
-                <Style TargetType="ToggleButton">
-                    <Style.Setters>
-                        <Setter Property="Padding" Value="8"/>
-                    </Style.Setters>
-                </Style>
-            </StatusBar.Resources>
-
-            <StatusBarItem Grid.Column="1">
-                <StackPanel Orientation="Horizontal">
-
-                    <TextBlock Text="Display:" VerticalAlignment="Center" Margin="0 0 8 0"/>
-
-                    <ToggleButton IsChecked="{Binding DisplayAll}" Margin="0 0 8 0">
-                        <Image
-                        Source="pack://application:,,,/Resources/checkbox/all-checkbox-16.png"
-                        Width="16"
-                        Height="16"/>
-                    </ToggleButton>
-
-                    <ToggleButton IsChecked="{Binding DisplayOnlySelected}" Margin="0 0 8 0">
-                        <Image
-                        Source="pack://application:,,,/Resources/checkbox/checked-checkbox-16.png"
-                        Width="16"
-                        Height="16"/>
-                    </ToggleButton>
-
-                    <ToggleButton IsChecked="{Binding DisplayOnlyUnselected}">
-                        <Image
-                        Source="pack://application:,,,/Resources/checkbox/unchecked-checkbox-16.png"
-                        Width="16"
-                        Height="16"/>
-                    </ToggleButton>
-                    
-                </StackPanel>
-            </StatusBarItem>
-
-        </StatusBar>
-
-        <ScrollViewer>
+        <ScrollViewer DataContext="{Binding FlagsViewModel}">
             <ItemsControl
-                ItemsSource="{Binding FlagItems}"
+                ItemsSource="{Binding Items}"
                 HorizontalAlignment="Stretch">
 
                 <ItemsControl.ItemTemplate>

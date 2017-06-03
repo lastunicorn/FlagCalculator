@@ -14,14 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI
 {
-    internal class CheckableItem : INotifyPropertyChanged
+    internal class CheckableItem : ViewModelBase
     {
         private bool isChecked;
         private Visibility visibility;
@@ -63,8 +61,6 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public CheckBoxCheckedCommand CheckBoxCheckedCommand { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public CheckableItem(FlagNumber flagNumber)
         {
             CheckBoxCheckedCommand = new CheckBoxCheckedCommand(flagNumber)
@@ -76,12 +72,6 @@ namespace DustInTheWind.FlagCalculator.UI
         public override string ToString()
         {
             return Text;
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

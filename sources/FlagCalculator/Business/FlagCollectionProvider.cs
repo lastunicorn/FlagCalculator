@@ -26,12 +26,12 @@ namespace DustInTheWind.FlagCalculator.Business
     {
         public Func<Type, bool> OnEnumIsNotFlags { get; set; }
 
-        public FlagCollection LoadFlagCollection()
+        public FlagInfoCollection LoadFlagCollection()
         {
             string enumTypeFullName = ConfigurationManager.AppSettings["enumTypeName"];
 
             if (enumTypeFullName == null)
-                return new FlagCollection();
+                return new FlagInfoCollection();
 
             Type enumType = GetEnumeType(enumTypeFullName);
             List<FlagInfo> list = BuildListOfFields(enumType);
@@ -76,18 +76,18 @@ namespace DustInTheWind.FlagCalculator.Business
                 .ToList();
         }
 
-        public static FlagCollection ToFlagCollection(IEnumerable<FlagInfo> flagInfos, Type enumType)
+        public static FlagInfoCollection ToFlagCollection(IEnumerable<FlagInfo> flagInfos, Type enumType)
         {
-            FlagCollection flagCollection = new FlagCollection
+            FlagInfoCollection flagInfoCollection = new FlagInfoCollection
             {
                 Name = enumType.Name,
                 UnderlyingType = enumType.GetEnumUnderlyingType()
             };
 
             foreach (FlagInfo flagInfo in flagInfos)
-                flagCollection.Add(flagInfo);
+                flagInfoCollection.Add(flagInfo);
 
-            return flagCollection;
+            return flagInfoCollection;
         }
     }
 }

@@ -20,13 +20,13 @@ using System.Collections.Generic;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class FlagCollection : IEnumerable<FlagInfo>
+    internal class FlagInfoCollection : IEnumerable<FlagInfo>
     {
         private readonly List<FlagInfo> flags;
         public string Name { get; set; }
         public Type UnderlyingType { get; set; }
 
-        public FlagCollection()
+        public FlagInfoCollection()
         {
             flags = new List<FlagInfo>();
         }

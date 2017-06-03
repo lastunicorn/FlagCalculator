@@ -15,11 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using DustInTheWind.FlagCalculator.Business;
-using System.Windows;
-using System.Runtime.InteropServices;
 
 namespace DustInTheWind.FlagCalculator.UI
 {
@@ -52,9 +48,7 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
-        public List<CheckableItem> FlagItems { get; private set; }
-
-        public bool displayOnlySelected;
+        private bool displayOnlySelected;
 
         public bool DisplayOnlySelected
         {
@@ -67,17 +61,11 @@ namespace DustInTheWind.FlagCalculator.UI
                 displayOnlySelected = value;
                 OnPropertyChanged();
 
-                if (value)
-                {
-                    DisplayAll = false;
-                    DisplayOnlyUnselected = false;
-                }
-
-                UpdateCheckBoxesVisibility();
+                FlagsViewModel.DisplayOnlySelected = value;
             }
         }
 
-        public bool displayAll;
+        private bool displayAll;
 
         public bool DisplayAll
         {
@@ -90,17 +78,11 @@ namespace DustInTheWind.FlagCalculator.UI
                 displayAll = value;
                 OnPropertyChanged();
 
-                if (value)
-                {
-                    DisplayOnlySelected = false;
-                    DisplayOnlyUnselected = false;
-                }
-
-                UpdateCheckBoxesVisibility();
+                FlagsViewModel.DisplayAll = value;
             }
         }
 
-        public bool displayOnlyUnselected;
+        private bool displayOnlyUnselected;
 
         public bool DisplayOnlyUnselected
         {
@@ -113,20 +95,16 @@ namespace DustInTheWind.FlagCalculator.UI
                 displayOnlyUnselected = value;
                 OnPropertyChanged();
 
-                if (value)
-                {
-                    DisplayAll = false;
-                    DisplayOnlySelected = false;
-                }
-
-                UpdateCheckBoxesVisibility();
+                FlagsViewModel.DisplayOnlyUnselected = value;
             }
         }
 
-        public EscapeCommand EscapeCommand { get; private set; }
-        public CopyCommand CopyCommand { get; private set; }
-        public PasteCommand PasteCommand { get; private set; }
-        public DigitCommand DigitCommand { get; private set; }
+        public FlagsViewModel FlagsViewModel { get; }
+
+        public EscapeCommand EscapeCommand { get; }
+        public CopyCommand CopyCommand { get; }
+        public PasteCommand PasteCommand { get; }
+        public DigitCommand DigitCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -138,35 +116,28 @@ namespace DustInTheWind.FlagCalculator.UI
             PasteCommand = new PasteCommand(flagNumber);
             DigitCommand = new DigitCommand(flagNumber);
 
-            flagNumber.ValueChanged += HandleFlagNumberValueChanged;
-
-            DisplayAll = true;
+            FlagsViewModel = new FlagsViewModel(flagNumber);
+            FlagsViewModel.SelectionChanged += HandleFlagItemsSelectionChanged;
 
             LoadFlagCollection();
+
+            flagNumber.ValueChanged += HandleFlagNumberValueChanged;
+
+            FlagsViewModel.DisplayAll = true;
 
             flagNumber.Value = 0;
         }
 
-        private void HandleFlagNumberValueChanged(object sender, EventArgs e)
+        private void HandleFlagItemsSelectionChanged(object sender, EventArgs e)
         {
-            if (FlagItems != null)
-                foreach (CheckableItem checkableItem in FlagItems)
-                    checkableItem.IsChecked = flagNumber.IsFlagSet(checkableItem.Value);
-
-            Value = flagNumber.Value;
-            UpdateCheckBoxesVisibility();
+            DisplayAll = FlagsViewModel.DisplayAll;
+            DisplayOnlySelected = FlagsViewModel.DisplayOnlySelected;
+            DisplayOnlyUnselected = FlagsViewModel.DisplayOnlyUnselected;
         }
 
-        private void UpdateCheckBoxesVisibility()
+        private void HandleFlagNumberValueChanged(object sender, EventArgs e)
         {
-            if (FlagItems == null)
-                return;
-            
-            FlagItems.ForEach(x =>
-            {
-                bool display = displayAll || (x.IsChecked && displayOnlySelected) || (!x.IsChecked && displayOnlyUnselected);
-                x.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
-            });
+            Value = flagNumber.Value;
         }
 
         private void LoadFlagCollection()
@@ -176,49 +147,16 @@ namespace DustInTheWind.FlagCalculator.UI
                 flagNumber.Clear();
 
                 FlagCollectionProvider flagCollectionProvider = new FlagCollectionProvider();
-                FlagCollection flagCollection = flagCollectionProvider.LoadFlagCollection();
+                FlagInfoCollection flagInfoCollection = flagCollectionProvider.LoadFlagCollection();
 
-                FlagItems = flagCollection
-                    .Select(x => ToCheckableItem(x, flagCollection.UnderlyingType))
-                    .ToList();
+                FlagsViewModel.Load(flagInfoCollection);
 
-                Title = string.Format("{0} - {1}", TitleBase, flagCollection.Name);
+                Title = string.Format("{0} - {1}", TitleBase, flagInfoCollection.Name);
             }
             catch (Exception ex)
             {
                 userInterface.DisplayError(ex);
             }
-        }
-
-        private CheckableItem ToCheckableItem(FlagInfo flagInfo, Type enumUnderlyingType)
-        {
-            return new CheckableItem(flagNumber)
-            {
-                IsChecked = false,
-                Value = flagInfo.Value,
-                Text = string.Format("{0} ({1}) - {2}", flagInfo.Name, flagInfo.Value, ToBinary(flagInfo.Value, enumUnderlyingType))
-            };
-        }
-
-        public static string ToBinary(ulong value, Type enumUnderlyingType)
-        {
-            int size = Marshal.SizeOf(enumUnderlyingType) * 8;
-            List<char> chars = new List<char>(size + (size / 4 - 1));
-
-            for (int i = 0; i < size; i++)
-            {
-                if (i != 0 && i % 4 == 0)
-                    chars.Add(' ');
-
-                bool bit = (value & 1) == 1;
-                chars.Add(bit ? '1' : '0');
-
-                value = value >> 1;
-            }
-
-            chars.Reverse();
-
-            return string.Join(string.Empty, chars);
         }
     }
 }
