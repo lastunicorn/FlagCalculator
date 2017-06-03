@@ -34,7 +34,6 @@ namespace DustInTheWind.FlagCalculator.UI
             {
                 isChecked = value;
                 OnPropertyChanged();
-                //Visibility = isChecked ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 

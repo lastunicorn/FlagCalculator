@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.FlagCalculator.Business;
 using System.Windows;
+using System.Runtime.InteropServices;
 
 namespace DustInTheWind.FlagCalculator.UI
 {
@@ -149,7 +150,7 @@ namespace DustInTheWind.FlagCalculator.UI
                 FlagCollection flagCollection = flagCollectionProvider.LoadFlagCollection();
 
                 FlagItems = flagCollection
-                    .Select(ToCheckableItem)
+                    .Select(x => ToCheckableItem(x, flagCollection.UnderlyingType))
                     .ToList();
 
                 Title = string.Format("{0} - {1}", TitleBase, flagCollection.Name);
@@ -160,14 +161,35 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
-        private CheckableItem ToCheckableItem(FlagInfo flagInfo)
+        private CheckableItem ToCheckableItem(FlagInfo flagInfo, Type enumUnderlyingType)
         {
             return new CheckableItem(flagNumber)
             {
                 IsChecked = false,
                 Value = flagInfo.Value,
-                Text = string.Format("{0} ({1})", flagInfo.Name, flagInfo.Value)
+                Text = string.Format("{0} ({1}) - {2}", flagInfo.Name, flagInfo.Value, ToBinary(flagInfo.Value, enumUnderlyingType))
             };
+        }
+
+        public static string ToBinary(ulong value, Type enumUnderlyingType)
+        {
+            int size = Marshal.SizeOf(enumUnderlyingType) * 8;
+            List<char> chars = new List<char>(size + (size / 4 - 1));
+
+            for (int i = 0; i < size; i++)
+            {
+                if (i != 0 && i % 4 == 0)
+                    chars.Add(' ');
+
+                bool bit = (value & 1) == 1;
+                chars.Add(bit ? '1' : '0');
+
+                value = value >> 1;
+            }
+
+            chars.Reverse();
+
+            return string.Join(string.Empty, chars);
         }
     }
 }

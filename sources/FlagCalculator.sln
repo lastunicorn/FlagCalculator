@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlagCalculator", "FlagCalculator\FlagCalculator.csproj", "{7E184559-E48A-4ECA-932C-72EAA0B06C12}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlagCalculator", "FlagCalcu
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeData", "SomeData\SomeData.csproj", "{324D12B0-DD5B-495C-8970-C93FC144FD28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyBrowse", "AssemblyBrowse\AssemblyBrowse.csproj", "{C5A5BC39-0BC8-45DC-99FC-C6694B2D25A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,10 @@ Global
 		{324D12B0-DD5B-495C-8970-C93FC144FD28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{324D12B0-DD5B-495C-8970-C93FC144FD28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{324D12B0-DD5B-495C-8970-C93FC144FD28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5A5BC39-0BC8-45DC-99FC-C6694B2D25A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A5BC39-0BC8-45DC-99FC-C6694B2D25A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A5BC39-0BC8-45DC-99FC-C6694B2D25A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A5BC39-0BC8-45DC-99FC-C6694B2D25A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
