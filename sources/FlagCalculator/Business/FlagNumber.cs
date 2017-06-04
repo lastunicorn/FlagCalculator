@@ -138,7 +138,7 @@ namespace DustInTheWind.FlagCalculator.Business
                     return value.ToStringHexa();
 
                 case NumericalBase.Binary:
-                    return value.ToStringBinary();
+                    return value.ToStringBinary(BitCount);
 
                 default:
                     throw new ArgumentOutOfRangeException();

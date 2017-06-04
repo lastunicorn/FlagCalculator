@@ -21,6 +21,142 @@ namespace DustInTheWind.FlagCalculator.Business
 {
     internal static class NumberExtensions
     {
+        #region byte
+
+        public static string ToStringDecimal(this byte value)
+        {
+            return value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        public static string ToStringHexa(this byte value)
+        {
+            return value.ToString("X", CultureInfo.CurrentCulture);
+        }
+
+        public static string ToStringBinary(this byte value, int bitCount = 8)
+        {
+            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
+
+            for (int i = 0; i < bitCount; i++)
+            {
+                if (i != 0 && i % 4 == 0)
+                    chars.Add(' ');
+
+                bool bit = (value & 1) == 1;
+                chars.Add(bit ? '1' : '0');
+
+                value = (byte)(value >> 1);
+            }
+
+            chars.Reverse();
+
+            return string.Join(string.Empty, chars);
+        }
+
+        #endregion
+
+        #region sbyte
+
+        public static string ToStringDecimal(this sbyte value)
+        {
+            return value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        public static string ToStringHexa(this sbyte value)
+        {
+            return value.ToString("X", CultureInfo.CurrentCulture);
+        }
+
+        public static string ToStringBinary(this sbyte value, int bitCount = 8)
+        {
+            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
+
+            for (int i = 0; i < bitCount; i++)
+            {
+                if (i != 0 && i % 4 == 0)
+                    chars.Add(' ');
+
+                bool bit = (value & 1) == 1;
+                chars.Add(bit ? '1' : '0');
+
+                value = (sbyte)(value >> 1);
+            }
+
+            chars.Reverse();
+
+            return string.Join(string.Empty, chars);
+        }
+
+        #endregion
+
+        #region short
+
+        public static string ToStringDecimal(this short value)
+        {
+            return value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        public static string ToStringHexa(this short value)
+        {
+            return value.ToString("X", CultureInfo.CurrentCulture);
+        }
+
+        public static string ToStringBinary(this short value, int bitCount = 16)
+        {
+            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
+
+            for (int i = 0; i < bitCount; i++)
+            {
+                if (i != 0 && i % 4 == 0)
+                    chars.Add(' ');
+
+                bool bit = (value & 1) == 1;
+                chars.Add(bit ? '1' : '0');
+
+                value = (short)(value >> 1);
+            }
+
+            chars.Reverse();
+
+            return string.Join(string.Empty, chars);
+        }
+
+        #endregion
+
+        #region ushort
+
+        public static string ToStringDecimal(this ushort value)
+        {
+            return value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        public static string ToStringHexa(this ushort value)
+        {
+            return value.ToString("X", CultureInfo.CurrentCulture);
+        }
+
+        public static string ToStringBinary(this ushort value, int bitCount = 16)
+        {
+            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
+
+            for (int i = 0; i < bitCount; i++)
+            {
+                if (i != 0 && i % 4 == 0)
+                    chars.Add(' ');
+
+                bool bit = (value & 1) == 1;
+                chars.Add(bit ? '1' : '0');
+
+                value = (ushort)(value >> 1);
+            }
+
+            chars.Reverse();
+
+            return string.Join(string.Empty, chars);
+        }
+
+        #endregion
+
         #region int
 
         public static string ToStringDecimal(this int value)
@@ -33,11 +169,11 @@ namespace DustInTheWind.FlagCalculator.Business
             return value.ToString("X", CultureInfo.CurrentCulture);
         }
 
-        public static string ToStringBinary(this int value)
+        public static string ToStringBinary(this int value, int bitCount = 32)
         {
-            List<char> chars = new List<char>(32 + (32 / 4 - 1));
+            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
 
-            for (int i = 0; i < 32; i++)
+            for (int i = 0; i < bitCount; i++)
             {
                 if (i != 0 && i % 4 == 0)
                     chars.Add(' ');
@@ -67,11 +203,11 @@ namespace DustInTheWind.FlagCalculator.Business
             return value.ToString("X", CultureInfo.CurrentCulture);
         }
 
-        public static string ToStringBinary(this uint value)
+        public static string ToStringBinary(this uint value, int bitCount = 32)
         {
-            List<char> chars = new List<char>(32 + (32 / 4 - 1));
+            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
 
-            for (int i = 0; i < 32; i++)
+            for (int i = 0; i < bitCount; i++)
             {
                 if (i != 0 && i % 4 == 0)
                     chars.Add(' ');
@@ -101,11 +237,11 @@ namespace DustInTheWind.FlagCalculator.Business
             return value.ToString("X", CultureInfo.CurrentCulture);
         }
 
-        public static string ToStringBinary(this long value)
+        public static string ToStringBinary(this long value, int bitCount = 64)
         {
-            List<char> chars = new List<char>(64 + (64 / 4 - 1));
+            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
 
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < bitCount; i++)
             {
                 if (i != 0 && i % 4 == 0)
                     chars.Add(' ');
@@ -135,11 +271,11 @@ namespace DustInTheWind.FlagCalculator.Business
             return value.ToString("X", CultureInfo.CurrentCulture);
         }
 
-        public static string ToStringBinary(this ulong value)
+        public static string ToStringBinary(this ulong value, int bitCount = 64)
         {
-            List<char> chars = new List<char>(64 + (64 / 4 - 1));
+            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
 
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < bitCount; i++)
             {
                 if (i != 0 && i % 4 == 0)
                     chars.Add(' ');

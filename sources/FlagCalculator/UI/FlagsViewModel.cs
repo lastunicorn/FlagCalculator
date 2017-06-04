@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 
@@ -98,6 +99,8 @@ namespace DustInTheWind.FlagCalculator.UI
                 .ToList();
 
             Items.AddRange(checkableItems);
+
+            flagNumber.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
         }
 
         protected virtual void OnSelectionChanged()

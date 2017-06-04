@@ -29,6 +29,7 @@ namespace DustInTheWind.FlagCalculator.UI
         private Visibility visibility;
         private ulong value;
         private string text;
+        private string valueAsString;
 
         public bool IsChecked
         {
@@ -60,6 +61,16 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
+        public string ValueAsString
+        {
+            get { return valueAsString; }
+            set
+            {
+                valueAsString = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Visibility Visibility
         {
             get { return visibility; }
@@ -86,10 +97,11 @@ namespace DustInTheWind.FlagCalculator.UI
 
             IsChecked = false;
             Value = flagInfo.Value;
-            Text = string.Format("{0} - {1}", flagInfo.Name, ValueAsString());
+            Text = flagInfo.Name;
+            ValueAsString = CalculateValueAsString();
         }
 
-        private string ValueAsString()
+        private string CalculateValueAsString()
         {
             switch (flagNumber.NumericalBase)
             {
@@ -100,7 +112,7 @@ namespace DustInTheWind.FlagCalculator.UI
                     return flagInfo.Value.ToStringHexa();
 
                 case NumericalBase.Binary:
-                    return flagInfo.Value.ToStringBinary();
+                    return flagInfo.Value.ToStringBinary(flagNumber.BitCount);
 
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -109,7 +121,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
         private void HandleFlagNumberBaseChanged(object sender, EventArgs eventArgs)
         {
-            Text = string.Format("{0} - {1}", flagInfo.Name, ValueAsString());
+            ValueAsString = CalculateValueAsString();
         }
 
         public override string ToString()

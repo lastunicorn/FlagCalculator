@@ -180,9 +180,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 Foreground="#4a2200"
                                 RequestBringIntoView="FrameworkElement_OnRequestBringIntoView">
 
-                                <TextBlock
-                                    Text="{Binding Text}"
-                                    Padding="5"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Text="{Binding Text}"
+                                        FontWeight="DemiBold"
+                                        Padding="5"
+                                        VerticalAlignment="Center"/>
+                                    <TextBlock
+                                        Padding="4 0 4 0"
+                                        Text="-"
+                                        VerticalAlignment="Center"/>
+                                    <TextBlock
+                                        Text="{Binding ValueAsString}"
+                                        Padding="5"
+                                        VerticalAlignment="Center"/>
+                                </StackPanel>
 
                             </CheckBox>
 

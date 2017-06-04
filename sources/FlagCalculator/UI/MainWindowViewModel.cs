@@ -184,9 +184,7 @@ namespace DustInTheWind.FlagCalculator.UI
                 FlagInfoCollection flagInfoCollection = flagCollectionProvider.LoadFlagCollection();
 
                 FlagsViewModel.Load(flagInfoCollection);
-
-                flagNumber.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
-
+                
                 Title = string.Format("{1} ({2}) - {0}", TitleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);
             }
             catch (Exception ex)

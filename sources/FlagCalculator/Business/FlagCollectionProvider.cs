@@ -34,9 +34,9 @@ namespace DustInTheWind.FlagCalculator.Business
                 return new FlagInfoCollection();
 
             Type enumType = GetEnumeType(enumTypeFullName);
-            List<FlagInfo> list = BuildListOfFields(enumType);
+            IEnumerable<FlagInfo> list = BuildListOfFields(enumType);
 
-            return ToFlagCollection(list, enumType);
+            return ToFlagInfoCollection(list, enumType);
         }
 
         private Type GetEnumeType(string enumTypeFullName)
@@ -63,7 +63,7 @@ namespace DustInTheWind.FlagCalculator.Business
             return enumType;
         }
 
-        private static List<FlagInfo> BuildListOfFields(Type enumType)
+        private static IEnumerable<FlagInfo> BuildListOfFields(Type enumType)
         {
             FieldInfo[] fieldInfos = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
 
@@ -76,7 +76,7 @@ namespace DustInTheWind.FlagCalculator.Business
                 .ToList();
         }
 
-        public static FlagInfoCollection ToFlagCollection(IEnumerable<FlagInfo> flagInfos, Type enumType)
+        public static FlagInfoCollection ToFlagInfoCollection(IEnumerable<FlagInfo> flagInfos, Type enumType)
         {
             FlagInfoCollection flagInfoCollection = new FlagInfoCollection
             {
