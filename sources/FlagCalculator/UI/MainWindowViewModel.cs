@@ -18,6 +18,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using DustInTheWind.FlagCalculator.Business;
+using DustInTheWind.FlagCalculator.UI.Commands;
 
 namespace DustInTheWind.FlagCalculator.UI
 {
@@ -130,7 +131,7 @@ namespace DustInTheWind.FlagCalculator.UI
             FlagsViewModel.DisplaySelected = true;
             FlagsViewModel.DisplayUnselected = true;
 
-            flagNumber.Value = 0;
+            flagNumber.Clear();
 
             UpdateNumericalBase();
         }

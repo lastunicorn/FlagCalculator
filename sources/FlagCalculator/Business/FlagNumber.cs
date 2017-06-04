@@ -148,5 +148,13 @@ namespace DustInTheWind.FlagCalculator.Business
 
             return string.Join(string.Empty, chars);
         }
+
+        public void AddDigit(uint digit)
+        {
+            if (digit >= (uint)numericalBase)
+                return;
+
+            Value = Value * (uint)numericalBase + digit;
+        }
     }
 }

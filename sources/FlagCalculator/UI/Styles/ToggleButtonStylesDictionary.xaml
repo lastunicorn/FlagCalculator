@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="OrangeRed" />
+                            <Setter Property="Background" Value="Red" />
                             <Setter Property="Foreground" Value="White" />
                         </Trigger>
 

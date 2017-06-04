@@ -18,7 +18,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class EmptyCommand : ICommand
     {

@@ -1,4 +1,4 @@
-﻿// FlagCalculator
+// FlagCalculator
 // Copyright (C) 2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -18,19 +18,17 @@ using System;
 using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class CheckBoxCheckedCommand : ICommand
+    internal class BaseRollCommand : ICommand
     {
         private readonly FlagNumber flagNumber;
 
-        public CheckBoxCheckedCommand(FlagNumber flagNumber)
+        public BaseRollCommand(FlagNumber flagNumber)
         {
-            if (flagNumber == null) throw new ArgumentNullException("flagNumber");
+            if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
             this.flagNumber = flagNumber;
         }
-
-        public ulong Value { get; set; }
 
         public bool CanExecute(object parameter)
         {
@@ -41,22 +39,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public void Execute(object parameter)
         {
-            if (!(parameter is bool))
-                return;
-
-            bool isChecked = (bool)parameter;
-
-            if (isChecked)
-            {
-                if (Value == 0)
-                    flagNumber.Clear();
-                else
-                    flagNumber.AddFlags(Value);
-            }
-            else
-            {
-                flagNumber.RemoveFlags(Value);
-            }
+            flagNumber.RollBase();
         }
     }
 }

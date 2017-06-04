@@ -18,13 +18,13 @@ using System;
 using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class DigitCommand : ICommand
+    internal class EscapeCommand : ICommand
     {
         private readonly FlagNumber flagNumber;
 
-        public DigitCommand(FlagNumber flagNumber)
+        public EscapeCommand(FlagNumber flagNumber)
         {
             if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
             this.flagNumber = flagNumber;
@@ -39,8 +39,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public void Execute(object parameter)
         {
-            int digit = int.Parse((string)parameter);
-            flagNumber.Value = flagNumber.Value * 10 + (ulong)digit;
+            flagNumber.Clear();
         }
     }
 }

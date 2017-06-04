@@ -16,6 +16,7 @@
 
 using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
+using DustInTheWind.FlagCalculator.UI.Commands;
 
 namespace DustInTheWind.FlagCalculator.UI
 {
@@ -44,8 +45,8 @@ namespace DustInTheWind.FlagCalculator.UI
             {
                 this.value = value;
 
-                if (CheckBoxCheckedCommand != null)
-                    CheckBoxCheckedCommand.Value = value;
+                if (FlagCheckedCommand != null)
+                    FlagCheckedCommand.Value = value;
             }
         }
 
@@ -59,11 +60,11 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
-        public CheckBoxCheckedCommand CheckBoxCheckedCommand { get; }
+        public FlagCheckedCommand FlagCheckedCommand { get; }
 
         public CheckableItem(FlagNumber flagNumber)
         {
-            CheckBoxCheckedCommand = new CheckBoxCheckedCommand(flagNumber)
+            FlagCheckedCommand = new FlagCheckedCommand(flagNumber)
             {
                 Value = value
             };

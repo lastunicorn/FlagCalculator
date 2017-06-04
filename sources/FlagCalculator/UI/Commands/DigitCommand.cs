@@ -15,18 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
-using System.Windows;
 using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class CopyCommand : ICommand
+    internal class DigitCommand : ICommand
     {
         private readonly FlagNumber flagNumber;
 
-        public CopyCommand(FlagNumber flagNumber)
+        public DigitCommand(FlagNumber flagNumber)
         {
             if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
             this.flagNumber = flagNumber;
@@ -41,7 +39,8 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public void Execute(object parameter)
         {
-            Clipboard.SetText(flagNumber.Value.ToString(CultureInfo.CurrentCulture));
+            uint digit = uint.Parse((string)parameter);
+            flagNumber.AddDigit(digit);
         }
     }
 }

@@ -16,7 +16,7 @@
 
 namespace DustInTheWind.FlagCalculator.Business
 {
-    internal enum NumericalBase
+    internal enum NumericalBase : uint
     {
         None = 0,
         Decimal = 10,

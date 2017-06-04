@@ -44,31 +44,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <Window.InputBindings>
 
-        <KeyBinding Command="{Binding EscapeCommand}" Key="Escape"></KeyBinding>
-        <KeyBinding Command="{Binding CopyCommand}" Key="C" Modifiers="Control"></KeyBinding>
-        <KeyBinding Command="{Binding PasteCommand}" Key="V" Modifiers="Control"></KeyBinding>
+        <KeyBinding Command="{Binding EscapeCommand}" Key="Escape"/>
+        <KeyBinding Command="{Binding CopyCommand}" Key="C" Modifiers="Control"/>
+        <KeyBinding Command="{Binding PasteCommand}" Key="V" Modifiers="Control"/>
 
-        <KeyBinding Command="{Binding DigitCommand}" Key="D0" CommandParameter="0"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="D1" CommandParameter="1"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="D2" CommandParameter="2"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="D3" CommandParameter="3"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="D4" CommandParameter="4"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="D5" CommandParameter="5"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="D6" CommandParameter="6"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="D7" CommandParameter="7"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="D8" CommandParameter="8"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="D9" CommandParameter="9"></KeyBinding>
+        <MouseBinding Command="{Binding CopyCommand}" MouseAction="LeftDoubleClick"/>
 
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad0" CommandParameter="0"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad1" CommandParameter="1"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad2" CommandParameter="2"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad3" CommandParameter="3"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad4" CommandParameter="4"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad5" CommandParameter="5"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad6" CommandParameter="6"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad7" CommandParameter="7"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad8" CommandParameter="8"></KeyBinding>
-        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad9" CommandParameter="9"></KeyBinding>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D0" CommandParameter="0"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D1" CommandParameter="1"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D2" CommandParameter="2"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D3" CommandParameter="3"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D4" CommandParameter="4"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D5" CommandParameter="5"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D6" CommandParameter="6"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D7" CommandParameter="7"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D8" CommandParameter="8"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D9" CommandParameter="9"/>
+
+        <KeyBinding Command="{Binding DigitCommand}" Key="A" CommandParameter="10"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="B" CommandParameter="11"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="C" CommandParameter="12"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="D" CommandParameter="13"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="E" CommandParameter="14"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="F" CommandParameter="15"/>
+
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad0" CommandParameter="0"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad1" CommandParameter="1"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad2" CommandParameter="2"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad3" CommandParameter="3"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad4" CommandParameter="4"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad5" CommandParameter="5"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad6" CommandParameter="6"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad7" CommandParameter="7"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad8" CommandParameter="8"/>
+        <KeyBinding Command="{Binding DigitCommand}" Key="NumPad9" CommandParameter="9"/>
 
     </Window.InputBindings>
 
@@ -111,7 +120,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             Text="{Binding Value}"
                             HorizontalAlignment="Stretch"
                             TextAlignment="Right"
-                            MouseDown="TextBlockValue_OnMouseDown"
                             Foreground="#4a2200"/>
 
                         <TextBlock
@@ -133,7 +141,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <ScrollViewer
             x:Name="ScrollViewer1"
             DataContext="{Binding FlagsViewModel}"
-            HorizontalScrollBarVisibility="Auto">
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto">
 
             <ItemsControl
                 x:Name="ItemsControl1"
@@ -166,7 +175,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 FontSize="20"
                                 Visibility="{Binding Visibility}"
                                 Tag="{Binding Value}"
-                                Command="{Binding CheckBoxCheckedCommand}"
+                                Command="{Binding FlagCheckedCommand}"
                                 CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                                 Foreground="#4a2200"
                                 RequestBringIntoView="FrameworkElement_OnRequestBringIntoView">

@@ -30,13 +30,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
             DataContext = new MainWindowViewModel();
         }
-
-        private void TextBlockValue_OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ClickCount == 2)
-                Clipboard.SetText(TextBlockValue.Text);
-        }
-
+        
         private void FrameworkElement_OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
         {
             e.Handled = true;

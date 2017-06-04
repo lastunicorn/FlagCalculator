@@ -19,7 +19,7 @@ using System.Windows;
 using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class PasteCommand : ICommand
     {
@@ -27,7 +27,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public PasteCommand(FlagNumber flagNumber)
         {
-            if (flagNumber == null) throw new ArgumentNullException("flagNumber");
+            if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
             this.flagNumber = flagNumber;
         }
 
