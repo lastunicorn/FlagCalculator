@@ -4,3 +4,4 @@ obj/
 *.user
 /Publish/
 packages/
+*.tmp

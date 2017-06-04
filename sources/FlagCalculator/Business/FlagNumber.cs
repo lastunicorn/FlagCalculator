@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.InteropServices;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
@@ -46,10 +45,16 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
-        public int BitCount { get; set; } = 64;
+        public int BitCount { get; set; }
 
         public event EventHandler ValueChanged;
         public event EventHandler BaseChanged;
+
+        public FlagNumber()
+        {
+            numericalBase = NumericalBase.Decimal;
+            BitCount = 64;
+        }
 
         public void AddFlags(ulong flags)
         {
