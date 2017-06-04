@@ -145,7 +145,7 @@ namespace DustInTheWind.FlagCalculator.UI
             {
                 IsChecked = false,
                 Value = flagInfo.Value,
-                Text = string.Format("{0} ({1}) - {2}", flagInfo.Name, flagInfo.Value, ToBinary(flagInfo.Value, enumUnderlyingType))
+                Text = string.Format("{0} ({1})", flagInfo.Name, flagInfo.Value, ToBinary(flagInfo.Value, enumUnderlyingType))
             };
         }
 
