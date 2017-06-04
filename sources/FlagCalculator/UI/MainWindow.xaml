@@ -116,8 +116,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                         <TextBlock
                             Grid.Column="1"
-                            FontSize="14"
-                            Margin="2 0 0 4"
+                            FontSize="20"
+                            Margin="4 0 0 4"
                             VerticalAlignment="Bottom"
                             Text="{Binding NumericalBase}"/>
                     </Grid>
@@ -189,4 +189,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </DockPanel>
 
 </Window>
-

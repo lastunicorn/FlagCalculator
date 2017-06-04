@@ -29,72 +29,34 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public List<CheckableItem> Items { get; }
 
-        private bool displayOnlySelected;
+        private bool displaySelected;
 
-        public bool DisplayOnlySelected
+        public bool DisplaySelected
         {
-            get { return displayOnlySelected; }
+            get { return displaySelected; }
             set
             {
-                if (value == displayOnlySelected)
+                if (value == displaySelected)
                     return;
 
-                displayOnlySelected = value;
-
-                if (value)
-                {
-                    DisplayAll = false;
-                    DisplayOnlyUnselected = false;
-                }
-
+                displaySelected = value;
                 OnSelectionChanged();
 
                 UpdateCheckBoxesVisibility();
             }
         }
 
-        private bool displayAll;
+        private bool displayUnselected;
 
-        public bool DisplayAll
+        public bool DisplayUnselected
         {
-            get { return displayAll; }
+            get { return displayUnselected; }
             set
             {
-                if (value == displayAll)
+                if (value == displayUnselected)
                     return;
 
-                displayAll = value;
-
-                if (value)
-                {
-                    DisplayOnlySelected = false;
-                    DisplayOnlyUnselected = false;
-                }
-
-                OnSelectionChanged();
-
-                UpdateCheckBoxesVisibility();
-            }
-        }
-
-        private bool displayOnlyUnselected;
-
-        public bool DisplayOnlyUnselected
-        {
-            get { return displayOnlyUnselected; }
-            set
-            {
-                if (value == displayOnlyUnselected)
-                    return;
-
-                displayOnlyUnselected = value;
-
-                if (value)
-                {
-                    DisplayAll = false;
-                    DisplayOnlySelected = false;
-                }
-
+                displayUnselected = value;
                 OnSelectionChanged();
 
                 UpdateCheckBoxesVisibility();
@@ -125,7 +87,7 @@ namespace DustInTheWind.FlagCalculator.UI
         {
             Items.ForEach(x =>
             {
-                bool display = displayAll || (x.IsChecked && displayOnlySelected) || (!x.IsChecked && displayOnlyUnselected);
+                bool display = (x.IsChecked && displaySelected) || (!x.IsChecked && displayUnselected);
                 x.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
             });
         }

@@ -46,21 +46,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Display:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
-                <ToggleButton IsChecked="{Binding DisplayAll}" Margin="0 0 8 0">
-                    <Image
-                        Source="pack://application:,,,/Resources/checkbox/all-checkbox-16.png"
-                        Width="16"
-                        Height="16"/>
-                </ToggleButton>
-
-                <ToggleButton IsChecked="{Binding DisplayOnlySelected}" Margin="0 0 8 0">
+                <ToggleButton IsChecked="{Binding DisplaySelected}" Margin="0 0 8 0">
                     <Image
                         Source="pack://application:,,,/Resources/checkbox/checked-checkbox-16.png"
                         Width="16"
                         Height="16"/>
                 </ToggleButton>
 
-                <ToggleButton IsChecked="{Binding DisplayOnlyUnselected}" Margin="0 0 8 0">
+                <ToggleButton IsChecked="{Binding DisplayUnselected}" Margin="0 0 8 0">
                     <Image
                         Source="pack://application:,,,/Resources/checkbox/unchecked-checkbox-16.png"
                         Width="16"

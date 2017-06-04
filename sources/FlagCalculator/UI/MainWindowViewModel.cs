@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using DustInTheWind.FlagCalculator.Business;
 
@@ -27,7 +28,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
         private string title;
         private string value;
-        private const string TitleBase = "Flag Calculator";
+        private readonly string TitleBase;
 
         public string Title
         {
@@ -59,55 +60,38 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
-        private bool displayOnlySelected;
+        private bool displaySelected;
 
-        public bool DisplayOnlySelected
+        public bool DisplaySelected
         {
-            get { return displayOnlySelected; }
+            get { return displaySelected; }
             set
             {
-                if (value == displayOnlySelected)
+                if (value == displaySelected)
                     return;
 
-                displayOnlySelected = value;
+                displaySelected = value;
                 OnPropertyChanged();
 
-                FlagsViewModel.DisplayOnlySelected = value;
+                FlagsViewModel.DisplaySelected = value;
             }
         }
-
-        private bool displayAll;
-
-        public bool DisplayAll
-        {
-            get { return displayAll; }
-            set
-            {
-                if (value == displayAll)
-                    return;
-
-                displayAll = value;
-                OnPropertyChanged();
-
-                FlagsViewModel.DisplayAll = value;
-            }
-        }
-
-        private bool displayOnlyUnselected;
+        
+        private bool displayUnselected;
         private string numericalBase;
 
-        public bool DisplayOnlyUnselected
+        public bool DisplayUnselected
         {
-            get { return displayOnlyUnselected; }
+            get { return displayUnselected; }
             set
             {
-                if (value == displayOnlyUnselected)
+                if (value == displayUnselected)
                     return;
 
-                displayOnlyUnselected = value;
+                displayUnselected = value;
                 OnPropertyChanged();
 
-                FlagsViewModel.DisplayOnlyUnselected = value;
+                FlagsViewModel.DisplayUnselected = value;
             }
         }
 
@@ -125,6 +109,9 @@ namespace DustInTheWind.FlagCalculator.UI
         {
             userInterface = new UserInterface();
 
+            Assembly assembly = Assembly.GetEntryAssembly();
+            TitleBase = "Flag Calculator " + assembly.GetName().Version.ToString(3);
+
             Title = TitleBase;
             EscapeCommand = new EscapeCommand(flagNumber);
             CopyCommand = new CopyCommand(flagNumber);
@@ -140,7 +127,8 @@ namespace DustInTheWind.FlagCalculator.UI
             flagNumber.ValueChanged += HandleFlagNumberValueChanged;
             flagNumber.BaseChanged += HandleFlagNumberBaseChanged;
 
-            FlagsViewModel.DisplayAll = true;
+            FlagsViewModel.DisplaySelected = true;
+            FlagsViewModel.DisplayUnselected = true;
 
             flagNumber.Value = 0;
 
@@ -176,9 +164,8 @@ namespace DustInTheWind.FlagCalculator.UI
 
         private void HandleFlagItemsSelectionChanged(object sender, EventArgs e)
         {
-            DisplayAll = FlagsViewModel.DisplayAll;
-            DisplayOnlySelected = FlagsViewModel.DisplayOnlySelected;
-            DisplayOnlyUnselected = FlagsViewModel.DisplayOnlyUnselected;
+            DisplaySelected = FlagsViewModel.DisplaySelected;
+            DisplayUnselected = FlagsViewModel.DisplayUnselected;
         }
 
         private void HandleFlagNumberValueChanged(object sender, EventArgs e)
@@ -199,7 +186,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
                 flagNumber.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
 
-                Title = string.Format("{0} - {1}", TitleBase, flagInfoCollection.Name);
+                Title = string.Format("{1} ({2}) - {0}", TitleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);
             }
             catch (Exception ex)
             {
