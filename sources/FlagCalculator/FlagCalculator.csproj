@@ -81,15 +81,15 @@
     <Compile Include="UI\PasteCommand.cs" />
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
-    <Page Include="UI\ButtonStylesDictionary.xaml">
+    <Page Include="UI\Styles\ButtonStylesDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\CheckBoxStylesDictionary.xaml">
+    <Page Include="UI\Styles\CheckBoxStylesDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\ScrollBarStylesDictionary.xaml">
+    <Page Include="UI\Styles\ScrollBarStylesDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -109,7 +109,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UI\ToggleButtonStylesDictionary.xaml">
+    <Page Include="UI\Styles\ToggleButtonStylesDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

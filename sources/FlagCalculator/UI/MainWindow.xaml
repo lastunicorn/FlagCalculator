@@ -1,11 +1,30 @@
-﻿<Window x:Class="DustInTheWind.FlagCalculator.UI.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ui="clr-namespace:DustInTheWind.FlagCalculator.UI"
-        Title="{Binding Title}"
-        Height="480"
-        Width="640"
-        ResizeMode="CanResizeWithGrip">
+﻿<!--
+FlagCalculator
+Copyright (C) 2017 Dust in the Wind
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<Window
+    x:Class="DustInTheWind.FlagCalculator.UI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:DustInTheWind.FlagCalculator.UI"
+    Title="{Binding Title}"
+    Height="480"
+    Width="640"
+    ResizeMode="CanResizeWithGrip">
 
     <Window.Resources>
 
@@ -14,10 +33,10 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ScrollBarStylesDictionary.xaml"/>
-                <ResourceDictionary Source="ButtonStylesDictionary.xaml"/>
-                <ResourceDictionary Source="ToggleButtonStylesDictionary.xaml"/>
-                <ResourceDictionary Source="CheckBoxStylesDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/ScrollBarStylesDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/ButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/ToggleButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/CheckBoxStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
