@@ -40,12 +40,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            ulong value;
-
-            bool success = ulong.TryParse(Clipboard.GetText(), out value);
-
-            if (success)
-                flagNumber.Value = value;
+            flagNumber.SetValue(Clipboard.GetText());
         }
     }
 }

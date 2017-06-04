@@ -105,6 +105,25 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
+        public void AddDigit(uint digit)
+        {
+            if (digit >= (uint)numericalBase)
+                return;
+
+            Value = Value * (uint)numericalBase + digit;
+        }
+
+        public void SetValue(string newValue)
+        {
+            try
+            {
+                int @base = (int)numericalBase;
+                ulong uInt64 = Convert.ToUInt64(newValue.Replace(" ", string.Empty), @base);
+                Value = uInt64;
+            }
+            catch { }
+        }
+
         private void OnBaseChanged()
         {
             BaseChanged?.Invoke(this, EventArgs.Empty);
@@ -147,14 +166,6 @@ namespace DustInTheWind.FlagCalculator.Business
             chars.Reverse();
 
             return string.Join(string.Empty, chars);
-        }
-
-        public void AddDigit(uint digit)
-        {
-            if (digit >= (uint)numericalBase)
-                return;
-
-            Value = Value * (uint)numericalBase + digit;
         }
     }
 }
