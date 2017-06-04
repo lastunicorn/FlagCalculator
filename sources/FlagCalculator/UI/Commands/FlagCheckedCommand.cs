@@ -29,9 +29,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
             if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
             this.flagNumber = flagNumber;
         }
-
-        public ulong Value { get; set; }
-
+        
         public bool CanExecute(object parameter)
         {
             return true;
@@ -41,21 +39,23 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            if (!(parameter is bool))
+            CheckableItem checkableItem = parameter as CheckableItem;
+
+            if (checkableItem == null)
                 return;
 
-            bool isChecked = (bool)parameter;
+            ulong value = checkableItem.Value;
 
-            if (isChecked)
+            if (checkableItem.IsChecked)
             {
-                if (Value == 0)
+                if (value == 0)
                     flagNumber.Clear();
                 else
-                    flagNumber.AddFlags(Value);
+                    flagNumber.AddFlags(value);
             }
             else
             {
-                flagNumber.RemoveFlags(Value);
+                flagNumber.RemoveFlags(value);
             }
         }
     }

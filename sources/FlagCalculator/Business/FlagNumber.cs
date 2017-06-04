@@ -15,8 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
@@ -48,7 +46,7 @@ namespace DustInTheWind.FlagCalculator.Business
         public int BitCount { get; set; }
 
         public event EventHandler ValueChanged;
-        public event EventHandler BaseChanged;
+        public event EventHandler NumericalBaseChanged;
 
         public FlagNumber()
         {
@@ -126,7 +124,7 @@ namespace DustInTheWind.FlagCalculator.Business
 
         private void OnBaseChanged()
         {
-            BaseChanged?.Invoke(this, EventArgs.Empty);
+            NumericalBaseChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public override string ToString()
@@ -134,38 +132,17 @@ namespace DustInTheWind.FlagCalculator.Business
             switch (NumericalBase)
             {
                 case NumericalBase.Decimal:
-                    return value.ToString(CultureInfo.CurrentCulture);
+                    return value.ToStringDecimal();
 
                 case NumericalBase.Hexadecimal:
-                    return value.ToString("X");
+                    return value.ToStringHexa();
 
                 case NumericalBase.Binary:
-                    return ToBinaryString();
+                    return value.ToStringBinary();
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        public string ToBinaryString()
-        {
-            ulong v = value;
-            List<char> chars = new List<char>(BitCount + (BitCount / 4 - 1));
-
-            for (int i = 0; i < BitCount; i++)
-            {
-                if (i != 0 && i % 4 == 0)
-                    chars.Add(' ');
-
-                bool bit = (v & 1) == 1;
-                chars.Add(bit ? '1' : '0');
-
-                v = v >> 1;
-            }
-
-            chars.Reverse();
-
-            return string.Join(string.Empty, chars);
         }
     }
 }

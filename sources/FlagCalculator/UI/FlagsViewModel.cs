@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 
@@ -95,41 +94,10 @@ namespace DustInTheWind.FlagCalculator.UI
         public void Load(FlagInfoCollection flagInfoCollection)
         {
             List<CheckableItem> checkableItems = flagInfoCollection
-                .Select(x => ToCheckableItem(x, flagInfoCollection.UnderlyingType))
+                .Select(x => new CheckableItem(flagNumber, x))
                 .ToList();
 
             Items.AddRange(checkableItems);
-        }
-
-        private CheckableItem ToCheckableItem(FlagInfo flagInfo, Type enumUnderlyingType)
-        {
-            return new CheckableItem(flagNumber)
-            {
-                IsChecked = false,
-                Value = flagInfo.Value,
-                Text = string.Format("{0} ({1})", flagInfo.Name, flagInfo.Value, ToBinary(flagInfo.Value, enumUnderlyingType))
-            };
-        }
-
-        public static string ToBinary(ulong value, Type enumUnderlyingType)
-        {
-            int size = Marshal.SizeOf(enumUnderlyingType) * 8;
-            List<char> chars = new List<char>(size + (size / 4 - 1));
-
-            for (int i = 0; i < size; i++)
-            {
-                if (i != 0 && i % 4 == 0)
-                    chars.Add(' ');
-
-                bool bit = (value & 1) == 1;
-                chars.Add(bit ? '1' : '0');
-
-                value = value >> 1;
-            }
-
-            chars.Reverse();
-
-            return string.Join(string.Empty, chars);
         }
 
         protected virtual void OnSelectionChanged()

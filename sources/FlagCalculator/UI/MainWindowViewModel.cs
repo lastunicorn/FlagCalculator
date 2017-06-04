@@ -126,7 +126,7 @@ namespace DustInTheWind.FlagCalculator.UI
             LoadFlagCollection();
 
             flagNumber.ValueChanged += HandleFlagNumberValueChanged;
-            flagNumber.BaseChanged += HandleFlagNumberBaseChanged;
+            flagNumber.NumericalBaseChanged += HandleFlagNumberBaseChanged;
 
             FlagsViewModel.DisplaySelected = true;
             FlagsViewModel.DisplayUnselected = true;

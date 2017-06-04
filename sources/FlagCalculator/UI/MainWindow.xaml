@@ -176,7 +176,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 Visibility="{Binding Visibility}"
                                 Tag="{Binding Value}"
                                 Command="{Binding FlagCheckedCommand}"
-                                CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                CommandParameter="{Binding}"
                                 Foreground="#4a2200"
                                 RequestBringIntoView="FrameworkElement_OnRequestBringIntoView">
 

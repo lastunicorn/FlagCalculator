@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
@@ -22,9 +23,12 @@ namespace DustInTheWind.FlagCalculator.UI
 {
     internal class CheckableItem : ViewModelBase
     {
+        private readonly FlagNumber flagNumber;
+        private readonly FlagInfo flagInfo;
         private bool isChecked;
         private Visibility visibility;
         private ulong value;
+        private string text;
 
         public bool IsChecked
         {
@@ -36,7 +40,15 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
-        public string Text { get; set; }
+        public string Text
+        {
+            get { return text; }
+            set
+            {
+                text = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ulong Value
         {
@@ -44,9 +56,7 @@ namespace DustInTheWind.FlagCalculator.UI
             set
             {
                 this.value = value;
-
-                if (FlagCheckedCommand != null)
-                    FlagCheckedCommand.Value = value;
+                OnPropertyChanged();
             }
         }
 
@@ -62,12 +72,44 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public FlagCheckedCommand FlagCheckedCommand { get; }
 
-        public CheckableItem(FlagNumber flagNumber)
+        public CheckableItem(FlagNumber flagNumber, FlagInfo flagInfo)
         {
-            FlagCheckedCommand = new FlagCheckedCommand(flagNumber)
+            if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
+            if (flagInfo == null) throw new ArgumentNullException(nameof(flagInfo));
+
+            this.flagNumber = flagNumber;
+            this.flagInfo = flagInfo;
+
+            flagNumber.NumericalBaseChanged += HandleFlagNumberBaseChanged;
+
+            FlagCheckedCommand = new FlagCheckedCommand(flagNumber);
+
+            IsChecked = false;
+            Value = flagInfo.Value;
+            Text = string.Format("{0} - {1}", flagInfo.Name, ValueAsString());
+        }
+
+        private string ValueAsString()
+        {
+            switch (flagNumber.NumericalBase)
             {
-                Value = value
-            };
+                case NumericalBase.Decimal:
+                    return flagInfo.Value.ToStringDecimal();
+
+                case NumericalBase.Hexadecimal:
+                    return flagInfo.Value.ToStringHexa();
+
+                case NumericalBase.Binary:
+                    return flagInfo.Value.ToStringBinary();
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void HandleFlagNumberBaseChanged(object sender, EventArgs eventArgs)
+        {
+            Text = string.Format("{0} - {1}", flagInfo.Name, ValueAsString());
         }
 
         public override string ToString()
