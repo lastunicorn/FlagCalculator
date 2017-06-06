@@ -16,15 +16,15 @@
 
 using System;
 
-namespace DustInTheWind.SomeData.BasicEnums
+namespace DustInTheWind.ExampleData.BasicEnums
 {
     [Flags]
-    enum ByteEnum : byte
+    enum UShortEnum : ushort
     {
         None = 0,
         Value1 = 1,
         Value2 = 1 << 1,
         Value3 = 1 << 2,
-        All = byte.MaxValue
+        All = ushort.MaxValue
     }
 }

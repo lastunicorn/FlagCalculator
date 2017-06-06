@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:ui="clr-namespace:DustInTheWind.FlagCalculator.UI"
     Title="{Binding Title}"
     Height="480"
-    Width="640"
+    Width="750"
     ResizeMode="CanResizeWithGrip">
 
     <Window.Resources>
@@ -80,6 +80,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <KeyBinding Command="{Binding DigitCommand}" Key="NumPad9" CommandParameter="9"/>
 
     </Window.InputBindings>
+
+    <Window.Triggers>
+
+    </Window.Triggers>
 
     <DockPanel Background="#ffcb9e">
 
@@ -185,7 +189,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                         Text="{Binding Text}"
                                         FontWeight="DemiBold"
                                         Padding="5"
-                                        VerticalAlignment="Center"/>
+                                        VerticalAlignment="Center"
+                                        MinWidth="250"/>
                                     <TextBlock
                                         Padding="4 0 4 0"
                                         Text="-"

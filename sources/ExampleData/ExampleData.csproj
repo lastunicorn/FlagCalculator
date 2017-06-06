@@ -7,8 +7,8 @@
     <ProjectGuid>{324D12B0-DD5B-495C-8970-C93FC144FD28}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DustInTheWind.SomeData</RootNamespace>
-    <AssemblyName>DustInTheWind.SomeData</AssemblyName>
+    <RootNamespace>DustInTheWind.ExampleData</RootNamespace>
+    <AssemblyName>DustInTheWind.ExampleData</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

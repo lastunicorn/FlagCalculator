@@ -16,15 +16,15 @@
 
 using System;
 
-namespace DustInTheWind.SomeData.BasicEnums
+namespace DustInTheWind.ExampleData.BasicEnums
 {
     [Flags]
-    enum SByteEnum : sbyte
+    enum UIntEnum : uint
     {
         None = 0,
         Value1 = 1,
         Value2 = 1 << 1,
         Value3 = 1 << 2,
-        All = sbyte.MaxValue
+        All = uint.MaxValue
     }
 }

@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.SomeData
+namespace DustInTheWind.ExampleData
 {
     /// <summary>
     /// Represents parts of a house. Usually types of rooms.

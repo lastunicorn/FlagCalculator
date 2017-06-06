@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlagCalculator", "FlagCalcu
 		{324D12B0-DD5B-495C-8970-C93FC144FD28} = {324D12B0-DD5B-495C-8970-C93FC144FD28}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeData", "SomeData\SomeData.csproj", "{324D12B0-DD5B-495C-8970-C93FC144FD28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleData", "ExampleData\ExampleData.csproj", "{324D12B0-DD5B-495C-8970-C93FC144FD28}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyBrowse", "AssemblyBrowse\AssemblyBrowse.csproj", "{C5A5BC39-0BC8-45DC-99FC-C6694B2D25A4}"
 EndProject

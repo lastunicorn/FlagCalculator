@@ -14,9 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.SomeData
+using System;
+
+namespace DustInTheWind.ExampleData.BasicEnums
 {
-    public class PublicClass
+    [Flags]
+    enum SByteEnum : sbyte
     {
+        None = 0,
+        Value1 = 1,
+        Value2 = 1 << 1,
+        Value3 = 1 << 2,
+        All = sbyte.MaxValue
     }
 }

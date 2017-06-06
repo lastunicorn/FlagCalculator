@@ -14,17 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-
-namespace DustInTheWind.SomeData.BasicEnums
+namespace DustInTheWind.ExampleData
 {
-    [Flags]
-    enum LongEnum : long
+    public class PublicClass
     {
-        None = 0,
-        Value1 = 1,
-        Value2 = 1 << 1,
-        Value3 = 1 << 2,
-        All = long.MaxValue
     }
 }
