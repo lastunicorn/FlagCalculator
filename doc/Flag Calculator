@@ -1,6 +1,12 @@
 Flag Calculator
 ---------------
 
+Undo functionality
+- As a user I want to be able to undo the select/deselect of the flags.
+
+Redo functionality
+- As a user I want to be able to redo steps previously undone by the undo functionality.
+
 Button to Select All
 - As a user I want to be able to select all flags at once.
 
