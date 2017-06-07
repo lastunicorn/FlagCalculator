@@ -43,15 +43,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </StatusBar.ItemsPanel>
 
-        <StatusBarItem>
+        <!--<StatusBarItem Grid.Column="0">
             <Button
                 MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" 
                 MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                 Command="{Binding HelpCommand}"
                 CommandParameter="true"
                 Content="?"/>
+        </StatusBarItem>-->
+
+        <StatusBarItem Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <Button
+                    Command="{Binding CopyCommand}"
+                    Content="Copy"
+                    ToolTip="Ctrl+C"
+                    Margin="0 0 0 0"/>
+
+                <Button
+                    Command="{Binding PasteCommand}"
+                    Content="Paste"
+                    ToolTip="Ctrl+V"
+                    Margin="8 0 0 0"/>
+
+            </StackPanel>
         </StatusBarItem>
-        
+
         <!--<StatusBarItem Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Select:" VerticalAlignment="Center" Margin="0 0 8 0"/>

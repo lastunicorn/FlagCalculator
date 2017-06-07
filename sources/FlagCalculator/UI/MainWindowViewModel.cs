@@ -82,6 +82,7 @@ namespace DustInTheWind.FlagCalculator.UI
         private bool displayUnselected;
         private string numericalBase;
         private Visibility helpPageVisibility;
+        private Visibility copyPasteHintVisibility;
 
         public bool DisplayUnselected
         {
@@ -115,6 +116,16 @@ namespace DustInTheWind.FlagCalculator.UI
             set
             {
                 helpPageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility CopyPasteHintVisibility
+        {
+            get { return copyPasteHintVisibility; }
+            set
+            {
+                copyPasteHintVisibility = value;
                 OnPropertyChanged();
             }
         }

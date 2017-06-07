@@ -77,6 +77,9 @@
     <Compile Include="UI\Commands\EmptyCommand.cs" />
     <Compile Include="UI\Commands\EscapeCommand.cs" />
     <Compile Include="UI\Commands\HelpCommand.cs" />
+    <Compile Include="UI\FlagListView.xaml.cs">
+      <DependentUpon>FlagListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\FlagsViewModel.cs" />
     <Compile Include="UI\HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
@@ -84,12 +87,23 @@
     <Compile Include="UI\MainStatusBar.xaml.cs">
       <DependentUpon>MainStatusBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\MainValueView.xaml.cs">
+      <DependentUpon>MainValueView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MainWindowViewModel.cs" />
     <Compile Include="UI\MultiKeyBinding.cs" />
     <Compile Include="UI\Commands\PasteCommand.cs" />
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
+    <Page Include="UI\FlagListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\HelpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\MainValueView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

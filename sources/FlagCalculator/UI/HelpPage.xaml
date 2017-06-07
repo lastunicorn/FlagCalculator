@@ -93,8 +93,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             Text="Pastes from the clipboard a value. The application expects the value from the clipboard to be in the selected numerical base."/>
                         <TextBlock
                             FontStyle="Italic"
-                            FontSize="18"
-                            Text="Note: The numerical base can be selected from the button in the top left corner of the window."/>
+                            FontSize="18">
+                            Note: The numerical base can be selected from the button in the top left corner of the window.<LineBreak/>Possible values: 10, 16, 2.
+                        </TextBlock>
 
                     </StackPanel>
 
