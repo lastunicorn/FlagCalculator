@@ -81,15 +81,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     </Window.InputBindings>
 
-    <DockPanel Background="#ffcb9e">
+    <Grid>
 
-        <Grid
+        <DockPanel Background="#ffcb9e">
+
+            <Grid
             DockPanel.Dock="Top"
             Background="#f97300"
-            x:Name="grid1">
+            x:Name="Grid1">
 
-            <Grid.Triggers>
-                <EventTrigger SourceName="grid1" RoutedEvent="Window.KeyDown">
+                <!--<Grid.Triggers>
+                <EventTrigger SourceName="Grid1" RoutedEvent="Window.KeyDown">
                     <EventTrigger.EnterActions>
                         <BeginStoryboard>
                             <Storyboard>
@@ -107,12 +109,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </BeginStoryboard>
                     </EventTrigger.EnterActions>
                 </EventTrigger>
-            </Grid.Triggers>
-            
-            <Grid.Style>
-                <Style TargetType="Grid">
-                    <Style.Triggers>
-                        <!--<Trigger Property="IsMouseOver" Value="True">
+            </Grid.Triggers>-->
+
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <!--<Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -130,37 +132,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                         </Trigger>-->
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Button
+                <Button
                 Grid.Column="0"
                 HorizontalAlignment="left"
                 Margin="8"
                 Padding="8"
-                FontSize="20"
                 Content="{Binding NumericalBase}"
                 Command="{Binding BaseRollCommand}"
                 MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" 
                 MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"/>
 
-            <Grid Grid.Column="1">
+                <Grid Grid.Column="1">
 
-                <Viewbox MaxHeight="50" MinHeight="20" HorizontalAlignment="Right" Stretch="Uniform">
-                    <Grid Margin="20 0 20 0">
+                    <Viewbox MaxHeight="50" MinHeight="20" HorizontalAlignment="Right" Stretch="Uniform">
+                        <Grid Margin="20 0 20 0">
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock
+                            <TextBlock
                             Grid.Column="0"
                             Name="TextBlockValue"
                             FontSize="50"
@@ -169,53 +170,53 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             TextAlignment="Right"
                             Foreground="#4a2200"/>
 
-                        <TextBlock
+                            <TextBlock
                             Grid.Column="1"
                             FontSize="20"
                             Margin="4 0 0 4"
                             VerticalAlignment="Bottom"
                             Text="{Binding NumericalBase}"/>
-                        
-                    </Grid>
-                </Viewbox>
+
+                        </Grid>
+                    </Viewbox>
+
+                </Grid>
 
             </Grid>
 
-        </Grid>
-
-        <ui:MainStatusBar
+            <ui:MainStatusBar
             DockPanel.Dock="Bottom"/>
-        
-        <ScrollViewer
+
+            <ScrollViewer
             x:Name="ScrollViewer1"
             DataContext="{Binding FlagsViewModel}"
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto">
 
-            <ItemsControl
+                <ItemsControl
                 x:Name="ItemsControl1"
                 ItemsSource="{Binding Items}"
                 HorizontalAlignment="Stretch">
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
 
-                        <StackPanel>
+                            <StackPanel>
 
-                            <StackPanel.Style>
-                                <Style TargetType="StackPanel">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsChecked}" Value="true">
-                                            <Setter Property="Background" Value="#ffbc83"/>
-                                        </DataTrigger>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#ff9a4e"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </StackPanel.Style>
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked}" Value="true">
+                                                <Setter Property="Background" Value="#ffbc83"/>
+                                            </DataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#ff9a4e"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
 
-                            <CheckBox
+                                <CheckBox
                                 IsChecked="{Binding IsChecked, Mode=TwoWay}" 
                                 VerticalContentAlignment="Center"
                                 VerticalAlignment="Center"
@@ -228,34 +229,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 Foreground="#4a2200"
                                 RequestBringIntoView="FrameworkElement_OnRequestBringIntoView">
 
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
                                         Text="{Binding Text}"
                                         FontWeight="DemiBold"
                                         Padding="5"
                                         VerticalAlignment="Center"
                                         MinWidth="250"/>
-                                    <TextBlock
+                                        <TextBlock
                                         Padding="4 0 4 0"
                                         Text="-"
                                         VerticalAlignment="Center"/>
-                                    <TextBlock
+                                        <TextBlock
                                         Text="{Binding ValueAsString}"
                                         Padding="5"
                                         VerticalAlignment="Center"/>
-                                </StackPanel>
+                                    </StackPanel>
 
-                            </CheckBox>
+                                </CheckBox>
 
-                        </StackPanel>
+                            </StackPanel>
 
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
 
-            </ItemsControl>
+                </ItemsControl>
 
-        </ScrollViewer>
+            </ScrollViewer>
 
-    </DockPanel>
+        </DockPanel>
+
+        <ui:HelpPage
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Visibility="{Binding HelpPageVisibility}"
+            Focusable="True"/>
+
+    </Grid>
 
 </Window>

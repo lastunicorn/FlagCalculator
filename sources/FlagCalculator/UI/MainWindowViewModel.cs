@@ -17,6 +17,7 @@
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
@@ -80,6 +81,7 @@ namespace DustInTheWind.FlagCalculator.UI
         
         private bool displayUnselected;
         private string numericalBase;
+        private Visibility helpPageVisibility;
 
         public bool DisplayUnselected
         {
@@ -103,8 +105,19 @@ namespace DustInTheWind.FlagCalculator.UI
         public PasteCommand PasteCommand { get; }
         public DigitCommand DigitCommand { get; }
         public BaseRollCommand BaseRollCommand { get; }
+        public HelpCommand HelpCommand { get; }
 
         public string Base { get; set; }
+
+        public Visibility HelpPageVisibility
+        {
+            get { return helpPageVisibility; }
+            set
+            {
+                helpPageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
 
         public MainWindowViewModel()
         {
@@ -119,6 +132,9 @@ namespace DustInTheWind.FlagCalculator.UI
             PasteCommand = new PasteCommand(flagNumber);
             DigitCommand = new DigitCommand(flagNumber);
             BaseRollCommand = new BaseRollCommand(flagNumber);
+            HelpCommand = new HelpCommand(this);
+
+            HelpPageVisibility = Visibility.Collapsed;
 
             FlagsViewModel = new FlagsViewModel(flagNumber);
             FlagsViewModel.SelectionChanged += HandleFlagItemsSelectionChanged;

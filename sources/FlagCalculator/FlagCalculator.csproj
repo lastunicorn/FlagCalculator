@@ -76,7 +76,11 @@
     <Compile Include="UI\Commands\DigitCommand.cs" />
     <Compile Include="UI\Commands\EmptyCommand.cs" />
     <Compile Include="UI\Commands\EscapeCommand.cs" />
+    <Compile Include="UI\Commands\HelpCommand.cs" />
     <Compile Include="UI\FlagsViewModel.cs" />
+    <Compile Include="UI\HelpPage.xaml.cs">
+      <DependentUpon>HelpPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MainStatusBar.xaml.cs">
       <DependentUpon>MainStatusBar.xaml</DependentUpon>
     </Compile>
@@ -85,6 +89,10 @@
     <Compile Include="UI\Commands\PasteCommand.cs" />
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
+    <Page Include="UI\HelpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Styles\ButtonStylesDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

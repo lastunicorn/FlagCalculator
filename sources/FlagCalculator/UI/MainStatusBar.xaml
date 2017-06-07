@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <ItemsPanelTemplate>
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
@@ -42,6 +43,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </StatusBar.ItemsPanel>
 
+        <StatusBarItem>
+            <Button
+                MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" 
+                MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                Command="{Binding HelpCommand}"
+                CommandParameter="true"
+                Content="?"/>
+        </StatusBarItem>
+        
         <!--<StatusBarItem Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Select:" VerticalAlignment="Center" Margin="0 0 8 0"/>
@@ -63,7 +73,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </StackPanel>
         </StatusBarItem>-->
 
-        <StatusBarItem Grid.Column="1">
+        <StatusBarItem Grid.Column="2">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Display:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
