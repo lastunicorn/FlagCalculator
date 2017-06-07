@@ -15,6 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
@@ -30,6 +33,7 @@ namespace DustInTheWind.FlagCalculator.UI
         private ulong value;
         private string text;
         private string valueAsString;
+        private string toolTip;
 
         public bool IsChecked
         {
@@ -81,6 +85,16 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
+        public string ToolTip
+        {
+            get { return toolTip; }
+            set
+            {
+                toolTip = value;
+                OnPropertyChanged();
+            }
+        }
+
         public FlagCheckedCommand FlagCheckedCommand { get; }
 
         public CheckableItem(FlagNumber flagNumber, FlagInfo flagInfo)
@@ -99,6 +113,7 @@ namespace DustInTheWind.FlagCalculator.UI
             Value = flagInfo.Value;
             Text = flagInfo.Name;
             ValueAsString = CalculateValueAsString();
+            ToolTip = CalculateToolTip();
         }
 
         private string CalculateValueAsString()
@@ -119,9 +134,37 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
+        private IEnumerable<int> GetSelectedIndexes()
+        {
+            ulong v = value;
+            int index = -1;
+
+            while (v != 0)
+            {
+                index++;
+
+                ulong bitValue = v % 2;
+                v = v / 2;
+
+                if (bitValue == 1)
+                    yield return index;
+            }
+        }
+
         private void HandleFlagNumberBaseChanged(object sender, EventArgs eventArgs)
         {
             ValueAsString = CalculateValueAsString();
+            ToolTip = CalculateToolTip();
+        }
+
+        private string CalculateToolTip()
+        {
+            IEnumerable<int> indexes = GetSelectedIndexes();
+
+            if (!indexes.Any())
+                return string.Empty;
+
+            return "bit: " + string.Join(", ", indexes);
         }
 
         public override string ToString()

@@ -27,19 +27,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     d:DesignWidth="300">
 
     <ScrollViewer
-            x:Name="ScrollViewer1"
-            HorizontalScrollBarVisibility="Auto"
-            VerticalScrollBarVisibility="Auto">
+        x:Name="ScrollViewer1"
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto">
 
         <ItemsControl
-                x:Name="ItemsControl1"
-                ItemsSource="{Binding Items}"
-                HorizontalAlignment="Stretch">
+            x:Name="ItemsControl1"
+            ItemsSource="{Binding Items}"
+            HorizontalAlignment="Stretch">
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
 
-                    <StackPanel>
+                    <StackPanel HorizontalAlignment="Stretch">
 
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
@@ -55,33 +55,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </StackPanel.Style>
 
                         <CheckBox
-                                IsChecked="{Binding IsChecked, Mode=TwoWay}" 
-                                VerticalContentAlignment="Center"
-                                VerticalAlignment="Center"
-                                Margin="10 0 10 0"
-                                FontSize="20"
-                                Visibility="{Binding Visibility}"
-                                Tag="{Binding Value}"
-                                Command="{Binding FlagCheckedCommand}"
-                                CommandParameter="{Binding}"
-                                Foreground="#4a2200"
-                                RequestBringIntoView="FrameworkElement_OnRequestBringIntoView">
+                            IsChecked="{Binding IsChecked, Mode=TwoWay}" 
+                            VerticalContentAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="10 0 10 0"
+                            FontSize="20"
+                            Visibility="{Binding Visibility}"
+                            Tag="{Binding Value}"
+                            Command="{Binding FlagCheckedCommand}"
+                            CommandParameter="{Binding}"
+                            Foreground="#4a2200"
+                            RequestBringIntoView="FrameworkElement_OnRequestBringIntoView"
+                            HorizontalAlignment="Stretch">
 
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                ToolTip="{Binding ToolTip}"
+                                HorizontalAlignment="Stretch">
+                                
                                 <TextBlock
-                                        Text="{Binding Text}"
-                                        FontWeight="DemiBold"
-                                        Padding="5"
-                                        VerticalAlignment="Center"
-                                        MinWidth="250"/>
+                                    Text="{Binding Text}"
+                                    FontWeight="DemiBold"
+                                    Padding="5"
+                                    VerticalAlignment="Center"
+                                    MinWidth="250"/>
                                 <TextBlock
-                                        Padding="4 0 4 0"
-                                        Text="-"
-                                        VerticalAlignment="Center"/>
+                                    Padding="4 0 4 0"
+                                    Text="-"
+                                    VerticalAlignment="Center"/>
                                 <TextBlock
-                                        Text="{Binding ValueAsString}"
-                                        Padding="5"
-                                        VerticalAlignment="Center"/>
+                                    Text="{Binding ValueAsString}"
+                                    Padding="5"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Stretch"/>
+                                
                             </StackPanel>
 
                         </CheckBox>

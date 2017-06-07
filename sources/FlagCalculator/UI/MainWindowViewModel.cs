@@ -16,7 +16,6 @@
 
 using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
@@ -107,8 +106,6 @@ namespace DustInTheWind.FlagCalculator.UI
         public DigitCommand DigitCommand { get; }
         public BaseRollCommand BaseRollCommand { get; }
         public HelpCommand HelpCommand { get; }
-
-        public string Base { get; set; }
 
         public Visibility HelpPageVisibility
         {
