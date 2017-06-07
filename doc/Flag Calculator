@@ -1,6 +1,9 @@
 Flag Calculator
 ---------------
 
+Flash when copy/paste
+- As a user I want the top label to flush 3 times when I copy (Ctrl+C) or paste (Ctrl+V) the value.
+
 Undo functionality
 - As a user I want to be able to undo the select/deselect of the flags.
 

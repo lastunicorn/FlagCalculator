@@ -81,44 +81,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     </Window.InputBindings>
 
-    <Window.Triggers>
-
-    </Window.Triggers>
-
     <DockPanel Background="#ffcb9e">
 
         <Grid
             DockPanel.Dock="Top"
-            Background="#f97300">
+            Background="#f97300"
+            x:Name="grid1">
 
+            <Grid.Triggers>
+                <EventTrigger SourceName="grid1" RoutedEvent="Window.KeyDown">
+                    <EventTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation
+                                    Duration="0:0:0.500"
+                                    Storyboard.TargetProperty="Background.Color"
+                                    FillBehavior="HoldEnd"
+                                    From="#ffcb9e"
+                                    To="#f97300">
+                                    <ColorAnimation.EasingFunction>
+                                        <SineEase EasingMode="EaseInOut"/>
+                                    </ColorAnimation.EasingFunction>
+                                </ColorAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.EnterActions>
+                </EventTrigger>
+            </Grid.Triggers>
+            
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
+                        <!--<Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <ColorAnimation
-                                            Duration="0:0:0.200"
+                                            Duration="0:0:0.500"
                                             Storyboard.TargetProperty="Background.Color"
                                             FillBehavior="HoldEnd"
-                                            RepeatBehavior="3"
-                                            To="Red"/>
+                                            From="#ffcb9e"
+                                            To="#f97300">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseInOut"/>
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
-                            <!--<Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation
-                                            Duration="0:0:0.400"
-                                            Storyboard.TargetProperty="Background.Color"
-                                            FillBehavior="Stop"
-                                            To="Blue"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>-->
-                        </Trigger>
+                        </Trigger>-->
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
@@ -164,21 +175,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             Margin="4 0 0 4"
                             VerticalAlignment="Bottom"
                             Text="{Binding NumericalBase}"/>
-
-                        <!--<Button Content="Button" Height="75" HorizontalAlignment="Left" Margin="27,12,0,0" Name="btnImgBrush" VerticalAlignment="Top" Width="160" Background="LightGray">
-                            <Button.Triggers>
-                                <EventTrigger RoutedEvent="Button.MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation To="Green" 
-                                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
-                                                            FillBehavior="Stop" 
-                                                            Duration="0:0:1"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Button.Triggers>
-                        </Button>-->
+                        
                     </Grid>
                 </Viewbox>
 
@@ -188,39 +185,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <ui:MainStatusBar
             DockPanel.Dock="Bottom"/>
-
-        <Grid DockPanel.Dock="Bottom">
-            <Border Background="LightGreen" Width="100" Height="100" BorderBrush="Green">
-                <Border.Style>
-                    <Style TargetType="Border">
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ThicknessAnimation Duration="0:0:0.400" To="3" Storyboard.TargetProperty="BorderThickness" />
-                                            <DoubleAnimation Duration="0:0:0.300" To="125" Storyboard.TargetProperty="Height" />
-                                            <DoubleAnimation Duration="0:0:0.300" To="125" Storyboard.TargetProperty="Width" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ThicknessAnimation Duration="0:0:0.250" To="0" Storyboard.TargetProperty="BorderThickness" />
-                                            <DoubleAnimation Duration="0:0:0.150" To="100" Storyboard.TargetProperty="Height" />
-                                            <DoubleAnimation Duration="0:0:0.150" To="100" Storyboard.TargetProperty="Width" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-            </Border>
-        </Grid>
-
-
+        
         <ScrollViewer
             x:Name="ScrollViewer1"
             DataContext="{Binding FlagsViewModel}"
