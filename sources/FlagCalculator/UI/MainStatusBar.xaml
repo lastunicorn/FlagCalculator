@@ -30,6 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/CheckBoxIconTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/CopyPasteIconTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -64,11 +65,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <StackPanel Orientation="Horizontal">
                 <Button
                     Command="{Binding CopyCommand}"
-                    ToolTip="Ctrl+C"
+                    ToolTip="Copy (Ctrl+C)"
                     Margin="0 0 0 0">
 
                     <ContentControl
-                        Template="{StaticResource CheckBoxCheckedTemplate}"
+                        Template="{StaticResource CopyIconTemplate}"
                         Width="16"
                         Height="16"
                         Foreground="#FB805400"/>
@@ -77,11 +78,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <Button
                     Command="{Binding PasteCommand}"
-                    ToolTip="Ctrl+V"
+                    ToolTip="Paste (Ctrl+V)"
                     Margin="8 0 0 0">
 
                     <ContentControl
-                        Template="{StaticResource CheckBoxUncheckedTemplate}"
+                        Template="{StaticResource PasteIconTemplate}"
                         Width="16"
                         Height="16"
                         Foreground="#FB805400"/>
