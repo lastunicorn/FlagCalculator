@@ -26,6 +26,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     d:DesignHeight="300"
     d:DesignWidth="300">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/CheckBoxIconTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <StatusBar
         Padding="8"
         Background="#f97300">
@@ -56,15 +64,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <StackPanel Orientation="Horizontal">
                 <Button
                     Command="{Binding CopyCommand}"
-                    Content="Copy"
                     ToolTip="Ctrl+C"
-                    Margin="0 0 0 0"/>
+                    Margin="0 0 0 0">
+
+                    <ContentControl
+                        Template="{StaticResource CheckBoxCheckedTemplate}"
+                        Width="16"
+                        Height="16"
+                        Foreground="#FB805400"/>
+
+                </Button>
 
                 <Button
                     Command="{Binding PasteCommand}"
-                    Content="Paste"
                     ToolTip="Ctrl+V"
-                    Margin="8 0 0 0"/>
+                    Margin="8 0 0 0">
+
+                    <ContentControl
+                        Template="{StaticResource CheckBoxUncheckedTemplate}"
+                        Width="16"
+                        Height="16"
+                        Foreground="#FB805400"/>
+
+                </Button>
 
             </StackPanel>
         </StatusBarItem>
@@ -95,17 +117,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <TextBlock Text="Display:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
                 <ToggleButton IsChecked="{Binding DisplaySelected}" Margin="0 0 8 0">
-                    <Image
-                        Source="pack://application:,,,/Resources/checkbox/checked-checkbox-16.png"
+                    <ContentControl
+                        Template="{StaticResource CheckBoxCheckedTemplate}"
                         Width="16"
-                        Height="16"/>
+                        Height="16"
+                        Foreground="#FB805400"/>
                 </ToggleButton>
 
                 <ToggleButton IsChecked="{Binding DisplayUnselected}" Margin="0 0 8 0">
-                    <Image
-                        Source="pack://application:,,,/Resources/checkbox/unchecked-checkbox-16.png"
+                    <ContentControl
+                        Template="{StaticResource CheckBoxUncheckedTemplate}"
                         Width="16"
-                        Height="16"/>
+                        Height="16"
+                        Foreground="#FB805400"/>
                 </ToggleButton>
 
             </StackPanel>

@@ -96,6 +96,10 @@
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\Converters\SmartNumberToStringConverter.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
+    <Page Include="Resources\CheckBoxIconTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\FlagListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -167,19 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\checkbox\checked-checkbox-16.png" />
-    <Resource Include="Resources\checkbox\unchecked-checkbox-16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\checkbox\checked-disabled-checkbox-16.png" />
-    <Resource Include="Resources\checkbox\checked-hover-checkbox-16.png" />
-    <Resource Include="Resources\checkbox\unchecked-disabled-checkbox-16.png" />
-    <Resource Include="Resources\checkbox\unchecked-hover-checkbox-16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\checkbox\all-checkbox-16.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
