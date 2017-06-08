@@ -10,7 +10,7 @@
             Height="{TemplateBinding Height}"
             SnapsToDevicePixels="False">
 
-            <Canvas Width="462" Height="462">
+            <Canvas Width="462" Height="462" SnapsToDevicePixels="True">
 
                 <Rectangle
                     Width="462"
@@ -51,9 +51,10 @@
         <Viewbox 
             Stretch="Uniform"
             Width="{TemplateBinding Width}"
-            Height="{TemplateBinding Height}">
+            Height="{TemplateBinding Height}"
+            SnapsToDevicePixels="True">
 
-            <Canvas Width="462" Height="462">
+            <Canvas Width="462" Height="462" SnapsToDevicePixels="True">
 
                 <Rectangle
                     Width="462"

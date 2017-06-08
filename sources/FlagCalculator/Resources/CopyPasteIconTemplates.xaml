@@ -8,9 +8,9 @@
             Stretch="Uniform"
             Width="{TemplateBinding Width}"
             Height="{TemplateBinding Height}"
-            SnapsToDevicePixels="False">
+            SnapsToDevicePixels="True">
 
-            <Canvas Name="svg2" Width="511.99998" Height="511.99998">
+            <Canvas Name="svg2" Width="511.99998" Height="511.99998" SnapsToDevicePixels="True">
                 <Canvas.RenderTransform>
                     <TranslateTransform X="0" Y="0"/>
                 </Canvas.RenderTransform>
@@ -124,9 +124,10 @@
         <Viewbox 
             Stretch="Uniform"
             Width="{TemplateBinding Width}"
-            Height="{TemplateBinding Height}">
+            Height="{TemplateBinding Height}"
+            SnapsToDevicePixels="True">
 
-            <Canvas Name="svg2" Width="511.99998" Height="511.99998">
+            <Canvas Name="svg2" Width="511.99998" Height="511.99998" SnapsToDevicePixels="True">
                 <Canvas.RenderTransform>
                     <TranslateTransform X="0" Y="0"/>
                 </Canvas.RenderTransform>
