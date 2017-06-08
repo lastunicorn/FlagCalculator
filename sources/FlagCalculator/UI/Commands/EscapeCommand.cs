@@ -22,12 +22,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class EscapeCommand : ICommand
     {
-        private readonly FlagNumber flagNumber;
+        private readonly SmartNumber smartNumber;
 
-        public EscapeCommand(FlagNumber flagNumber)
+        public EscapeCommand(SmartNumber smartNumber)
         {
-            if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
-            this.flagNumber = flagNumber;
+            if (smartNumber == null) throw new ArgumentNullException(nameof(smartNumber));
+            this.smartNumber = smartNumber;
         }
 
         public bool CanExecute(object parameter)
@@ -39,7 +39,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            flagNumber.Clear();
+            smartNumber.Clear();
         }
     }
 }

@@ -87,7 +87,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             Margin="8"
             Padding="8"
             Content="{Binding NumericalBase}"
-            Command="{Binding BaseRollCommand}"
+            Command="{Binding NumericalBaseRollCommand}"
             MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" 
             MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"/>
 

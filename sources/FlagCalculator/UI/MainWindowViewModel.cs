@@ -16,7 +16,6 @@
 
 using System;
 using System.Reflection;
-using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
@@ -24,12 +23,16 @@ namespace DustInTheWind.FlagCalculator.UI
 {
     internal sealed class MainWindowViewModel : ViewModelBase
     {
-        private readonly FlagNumber flagNumber = new FlagNumber();
         private readonly UserInterface userInterface;
 
-        private string title;
-        private string value;
         private readonly string TitleBase;
+        private string title;
+
+        private bool displayUnselected;
+        private string numericalBase;
+        private bool isHelpPageVisible;
+        private bool displaySelected;
+        private SmartNumber value;
 
         public string Title
         {
@@ -41,7 +44,7 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
-        public string Value
+        public SmartNumber Value
         {
             get { return value; }
             private set
@@ -61,8 +64,6 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
-        private bool displaySelected;
-
         public bool DisplaySelected
         {
             get { return displaySelected; }
@@ -77,11 +78,6 @@ namespace DustInTheWind.FlagCalculator.UI
                 FlagsViewModel.DisplaySelected = value;
             }
         }
-        
-        private bool displayUnselected;
-        private string numericalBase;
-        private Visibility helpPageVisibility;
-        private Visibility copyPasteHintVisibility;
 
         public bool DisplayUnselected
         {
@@ -104,25 +100,15 @@ namespace DustInTheWind.FlagCalculator.UI
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public DigitCommand DigitCommand { get; }
-        public BaseRollCommand BaseRollCommand { get; }
+        public NumericalBaseRollCommand NumericalBaseRollCommand { get; }
         public HelpCommand HelpCommand { get; }
 
-        public Visibility HelpPageVisibility
+        public bool IsHelpPageVisible
         {
-            get { return helpPageVisibility; }
+            get { return isHelpPageVisible; }
             set
             {
-                helpPageVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Visibility CopyPasteHintVisibility
-        {
-            get { return copyPasteHintVisibility; }
-            set
-            {
-                copyPasteHintVisibility = value;
+                isHelpPageVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -135,40 +121,43 @@ namespace DustInTheWind.FlagCalculator.UI
             TitleBase = "Flag Calculator " + assembly.GetName().Version.ToString(3);
 
             Title = TitleBase;
-            EscapeCommand = new EscapeCommand(flagNumber);
-            CopyCommand = new CopyCommand(flagNumber);
-            PasteCommand = new PasteCommand(flagNumber);
-            DigitCommand = new DigitCommand(flagNumber);
-            BaseRollCommand = new BaseRollCommand(flagNumber);
+
+            value = new SmartNumber();
+
+            EscapeCommand = new EscapeCommand(Value);
+            CopyCommand = new CopyCommand(Value);
+            PasteCommand = new PasteCommand(Value);
+            DigitCommand = new DigitCommand(Value);
+            NumericalBaseRollCommand = new NumericalBaseRollCommand(Value);
             HelpCommand = new HelpCommand(this);
 
-            HelpPageVisibility = Visibility.Collapsed;
+            isHelpPageVisible = false;
 
-            FlagsViewModel = new FlagsViewModel(flagNumber);
+            FlagsViewModel = new FlagsViewModel(Value);
             FlagsViewModel.SelectionChanged += HandleFlagItemsSelectionChanged;
 
             LoadFlagCollection();
 
-            flagNumber.ValueChanged += HandleFlagNumberValueChanged;
-            flagNumber.NumericalBaseChanged += HandleFlagNumberBaseChanged;
+            Value.ValueChanged += HandleMainValueChanged;
+            Value.NumericalBaseChanged += HandleMainValueNumericalBaseChanged;
 
             FlagsViewModel.DisplaySelected = true;
             FlagsViewModel.DisplayUnselected = true;
 
-            flagNumber.Clear();
+            Value.Clear();
 
             UpdateNumericalBase();
         }
 
-        private void HandleFlagNumberBaseChanged(object sender, EventArgs e)
+        private void HandleMainValueNumericalBaseChanged(object sender, EventArgs e)
         {
             UpdateNumericalBase();
-            Value = flagNumber.ToString();
+            Value = value;
         }
 
         private void UpdateNumericalBase()
         {
-            switch (flagNumber.NumericalBase)
+            switch (Value.NumericalBase)
             {
                 case Business.NumericalBase.Decimal:
                     NumericalBase = "10";
@@ -193,22 +182,22 @@ namespace DustInTheWind.FlagCalculator.UI
             DisplayUnselected = FlagsViewModel.DisplayUnselected;
         }
 
-        private void HandleFlagNumberValueChanged(object sender, EventArgs e)
+        private void HandleMainValueChanged(object sender, EventArgs e)
         {
-            Value = flagNumber.ToString();
+            Value = value;
         }
 
         private void LoadFlagCollection()
         {
             try
             {
-                flagNumber.Clear();
+                Value.Clear();
 
                 FlagCollectionProvider flagCollectionProvider = new FlagCollectionProvider();
                 FlagInfoCollection flagInfoCollection = flagCollectionProvider.LoadFlagCollection();
 
                 FlagsViewModel.Load(flagInfoCollection);
-                
+
                 Title = string.Format("{1} ({2}) - {0}", TitleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);
             }
             catch (Exception ex)

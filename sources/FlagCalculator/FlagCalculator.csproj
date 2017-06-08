@@ -63,15 +63,14 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
-    <Compile Include="Business\NumberExtensions.cs" />
     <Compile Include="Business\NumericalBase.cs" />
-    <Compile Include="UI\Commands\BaseRollCommand.cs" />
+    <Compile Include="UI\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="UI\Commands\NumericalBaseRollCommand.cs" />
     <Compile Include="UI\CheckableItem.cs" />
     <Compile Include="UI\Commands\FlagCheckedCommand.cs" />
     <Compile Include="Business\FlagInfoCollection.cs" />
     <Compile Include="Business\FlagCollectionProvider.cs" />
     <Compile Include="Business\FlagInfo.cs" />
-    <Compile Include="Business\FlagNumber.cs" />
     <Compile Include="UI\Commands\CopyCommand.cs" />
     <Compile Include="UI\Commands\DigitCommand.cs" />
     <Compile Include="UI\Commands\EmptyCommand.cs" />
@@ -93,7 +92,9 @@
     <Compile Include="UI\MainWindowViewModel.cs" />
     <Compile Include="UI\MultiKeyBinding.cs" />
     <Compile Include="UI\Commands\PasteCommand.cs" />
+    <Compile Include="Business\SmartNumber.cs" />
     <Compile Include="UI\UserInterface.cs" />
+    <Compile Include="UI\Converters\SmartNumberToStringConverter.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
     <Page Include="UI\FlagListView.xaml">
       <SubType>Designer</SubType>

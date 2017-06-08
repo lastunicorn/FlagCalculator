@@ -22,9 +22,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ui="clr-namespace:DustInTheWind.FlagCalculator.UI"
+    xmlns:converters="clr-namespace:DustInTheWind.FlagCalculator.UI.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <converters:SmartNumberToStringConverter x:Key="CustomValueConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
 
     <ScrollViewer
         x:Name="ScrollViewer1"
@@ -60,7 +67,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             VerticalAlignment="Center"
                             Margin="10 0 10 0"
                             FontSize="20"
-                            Visibility="{Binding Visibility}"
+                            Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                             Tag="{Binding Value}"
                             Command="{Binding FlagCheckedCommand}"
                             CommandParameter="{Binding}"
@@ -72,7 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 Orientation="Horizontal"
                                 ToolTip="{Binding ToolTip}"
                                 HorizontalAlignment="Stretch">
-                                
+
                                 <TextBlock
                                     Text="{Binding Text}"
                                     FontWeight="DemiBold"
@@ -83,12 +90,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     Padding="4 0 4 0"
                                     Text="-"
                                     VerticalAlignment="Center"/>
-                                <TextBlock
-                                    Text="{Binding ValueAsString}"
+                                <ContentControl
+                                    Content="{Binding FlagValue, Converter={StaticResource CustomValueConverter}}"
                                     Padding="5"
                                     VerticalAlignment="Center"
-                                    HorizontalAlignment="Stretch"/>
-                                
+                                    HorizontalAlignment="Stretch">
+                                    
+                                    <!--<ContentControl.BindingGroup>
+                                        <MultiBinding Converter="{StaticResource CustomValueConverter}">
+                                            <Binding Path="Value"></Binding>
+                                        </MultiBinding>
+                                    </ContentControl.BindingGroup>
+                                    
+                                    <ContentControl.Style>
+                                        <Style TargetType="ContentControl">
+                                            <Setter Property="Content">
+                                                <MultiBinding Converter="{StaticResource CustomValueConverter}">
+                                                    <Binding Path=""></Binding>
+                                                </MultiBinding>
+                                            </Setter>
+                                        </Style>
+                                    </ContentControl.Style>-->
+                                </ContentControl>
+
                             </StackPanel>
 
                         </CheckBox>

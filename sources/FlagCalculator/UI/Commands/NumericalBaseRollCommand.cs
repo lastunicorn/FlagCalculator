@@ -20,14 +20,14 @@ using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class BaseRollCommand : ICommand
+    internal class NumericalBaseRollCommand : ICommand
     {
-        private readonly FlagNumber flagNumber;
+        private readonly SmartNumber smartNumber;
 
-        public BaseRollCommand(FlagNumber flagNumber)
+        public NumericalBaseRollCommand(SmartNumber smartNumber)
         {
-            if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
-            this.flagNumber = flagNumber;
+            if (smartNumber == null) throw new ArgumentNullException(nameof(smartNumber));
+            this.smartNumber = smartNumber;
         }
 
         public bool CanExecute(object parameter)
@@ -39,7 +39,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            flagNumber.RollBase();
+            smartNumber.RollBase();
         }
     }
 }

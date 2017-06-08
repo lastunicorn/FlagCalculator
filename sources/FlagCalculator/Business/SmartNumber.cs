@@ -15,15 +15,17 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
-    internal sealed class FlagNumber
+    internal class SmartNumber
     {
         private ulong value;
         private NumericalBase numericalBase;
 
-        public ulong Value
+        private ulong Value
         {
             get { return value; }
             set
@@ -36,10 +38,10 @@ namespace DustInTheWind.FlagCalculator.Business
         public NumericalBase NumericalBase
         {
             get { return numericalBase; }
-            private set
+            set
             {
                 numericalBase = value;
-                OnBaseChanged();
+                OnNumericalBaseChanged();
             }
         }
 
@@ -48,10 +50,26 @@ namespace DustInTheWind.FlagCalculator.Business
         public event EventHandler ValueChanged;
         public event EventHandler NumericalBaseChanged;
 
-        public FlagNumber()
+        public SmartNumber()
+            : this(0)
         {
+        }
+
+        public SmartNumber(ulong value)
+        {
+            this.value = value;
             numericalBase = NumericalBase.Decimal;
             BitCount = 64;
+        }
+
+        public static implicit operator ulong(SmartNumber smartNumber)
+        {
+            return smartNumber.value;
+        }
+
+        public static implicit operator SmartNumber(ulong value)
+        {
+            return new SmartNumber(value);
         }
 
         public void AddFlags(ulong flags)
@@ -74,12 +92,6 @@ namespace DustInTheWind.FlagCalculator.Business
             return flags == 0
                 ? value == 0
                 : (value & flags) == flags;
-        }
-
-        private void OnValueChanged()
-        {
-            EventHandler handler = ValueChanged;
-            handler?.Invoke(this, EventArgs.Empty);
         }
 
         public void RollBase()
@@ -122,27 +134,71 @@ namespace DustInTheWind.FlagCalculator.Business
             catch { }
         }
 
-        private void OnBaseChanged()
+        public override string ToString()
         {
-            NumericalBaseChanged?.Invoke(this, EventArgs.Empty);
+            return CalculateValueAsString();
         }
 
-        public override string ToString()
+        private string CalculateValueAsString()
         {
             switch (NumericalBase)
             {
                 case NumericalBase.Decimal:
-                    return value.ToStringDecimal();
+                    return ToStringDecimal();
 
                 case NumericalBase.Hexadecimal:
-                    return value.ToStringHexa();
+                    return ToStringHexa();
 
                 case NumericalBase.Binary:
-                    return value.ToStringBinary(BitCount);
+                    return ToStringBinary();
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private string ToStringDecimal()
+        {
+            return value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        private string ToStringHexa()
+        {
+            return value.ToString("X", CultureInfo.CurrentCulture);
+        }
+
+        private string ToStringBinary()
+        {
+            ulong v = value;
+            int bitCount = BitCount;
+
+            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
+
+            for (int i = 0; i < bitCount; i++)
+            {
+                if (i != 0 && i % 4 == 0)
+                    chars.Add(' ');
+
+                bool bit = (v & 1) == 1;
+                chars.Add(bit ? '1' : '0');
+
+                v = v >> 1;
+            }
+
+            chars.Reverse();
+
+            return string.Join(string.Empty, chars);
+        }
+
+        private void OnValueChanged()
+        {
+            EventHandler handler = ValueChanged;
+            handler?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OnNumericalBaseChanged()
+        {
+            NumericalBaseChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

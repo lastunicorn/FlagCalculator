@@ -42,11 +42,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
             bool display;
 
             if (bool.TryParse(parameter as string, out display))
-            {
-                mainWindowViewModel.HelpPageVisibility = display
-                    ? Visibility.Visible
-                    : Visibility.Collapsed;
-            }
+                mainWindowViewModel.IsHelpPageVisible = display;
         }
     }
 }

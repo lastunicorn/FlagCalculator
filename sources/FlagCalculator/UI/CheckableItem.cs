@@ -15,10 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
@@ -26,13 +23,10 @@ namespace DustInTheWind.FlagCalculator.UI
 {
     internal class CheckableItem : ViewModelBase
     {
-        private readonly FlagNumber flagNumber;
-        private readonly FlagInfo flagInfo;
+        private readonly SmartNumber mainValue;
         private bool isChecked;
-        private Visibility visibility;
-        private ulong value;
+        private bool isVisible;
         private string text;
-        private string valueAsString;
         private string toolTip;
 
         public bool IsChecked
@@ -55,32 +49,12 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
 
-        public ulong Value
+        public bool IsVisible
         {
-            get { return value; }
+            get { return isVisible; }
             set
             {
-                this.value = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string ValueAsString
-        {
-            get { return valueAsString; }
-            set
-            {
-                valueAsString = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Visibility Visibility
-        {
-            get { return visibility; }
-            set
-            {
-                visibility = value;
+                isVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -94,49 +68,45 @@ namespace DustInTheWind.FlagCalculator.UI
                 OnPropertyChanged();
             }
         }
-
+        
         public FlagCheckedCommand FlagCheckedCommand { get; }
 
-        public CheckableItem(FlagNumber flagNumber, FlagInfo flagInfo)
+        private SmartNumber flagValue;
+
+        public SmartNumber FlagValue
         {
-            if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
-            if (flagInfo == null) throw new ArgumentNullException(nameof(flagInfo));
-
-            this.flagNumber = flagNumber;
-            this.flagInfo = flagInfo;
-
-            flagNumber.NumericalBaseChanged += HandleFlagNumberBaseChanged;
-
-            FlagCheckedCommand = new FlagCheckedCommand(flagNumber);
-
-            IsChecked = false;
-            Value = flagInfo.Value;
-            Text = flagInfo.Name;
-            ValueAsString = CalculateValueAsString();
-            ToolTip = CalculateToolTip();
+            get { return flagValue; }
+            private set
+            {
+                flagValue = value;
+                OnPropertyChanged();
+            }
         }
 
-        private string CalculateValueAsString()
+        public CheckableItem(SmartNumber mainValue, FlagInfo flagInfo)
         {
-            switch (flagNumber.NumericalBase)
+            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            if (flagInfo == null) throw new ArgumentNullException(nameof(flagInfo));
+
+            this.mainValue = mainValue;
+
+            mainValue.NumericalBaseChanged += HandleFlagNumberBaseChanged;
+
+            FlagCheckedCommand = new FlagCheckedCommand(mainValue);
+
+            IsChecked = false;
+            flagValue = new SmartNumber(flagInfo.Value)
             {
-                case NumericalBase.Decimal:
-                    return flagInfo.Value.ToStringDecimal();
-
-                case NumericalBase.Hexadecimal:
-                    return flagInfo.Value.ToStringHexa();
-
-                case NumericalBase.Binary:
-                    return flagInfo.Value.ToStringBinary(flagNumber.BitCount);
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                NumericalBase = mainValue.NumericalBase,
+                BitCount = mainValue.BitCount
+            };
+            Text = flagInfo.Name;
+            ToolTip = CalculateToolTip();
         }
 
         private IEnumerable<int> GetSelectedIndexes()
         {
-            ulong v = value;
+            ulong v = flagValue;
             int index = -1;
 
             while (v != 0)
@@ -153,18 +123,20 @@ namespace DustInTheWind.FlagCalculator.UI
 
         private void HandleFlagNumberBaseChanged(object sender, EventArgs eventArgs)
         {
-            ValueAsString = CalculateValueAsString();
-            ToolTip = CalculateToolTip();
+            flagValue.NumericalBase = mainValue.NumericalBase;
+            FlagValue = flagValue;
         }
 
         private string CalculateToolTip()
         {
             IEnumerable<int> indexes = GetSelectedIndexes();
 
-            if (!indexes.Any())
-                return string.Empty;
+            string bitListCsv = string.Join(", ", indexes);
 
-            return "bit: " + string.Join(", ", indexes);
+            if (string.IsNullOrEmpty(bitListCsv))
+                bitListCsv = "<none>";
+
+            return "bit: " + bitListCsv;
         }
 
         public override string ToString()

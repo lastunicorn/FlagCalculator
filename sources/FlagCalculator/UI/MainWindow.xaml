@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="clr-namespace:DustInTheWind.FlagCalculator.UI"
+    xmlns:converters="clr-namespace:DustInTheWind.FlagCalculator.UI.Converters"
     Title="{Binding Title}"
     Height="480"
     Width="750"
@@ -38,6 +39,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <ResourceDictionary Source="Styles/ToggleButtonStylesDictionary.xaml"/>
                 <ResourceDictionary Source="Styles/CheckBoxStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         </ResourceDictionary>
 
     </Window.Resources>
@@ -96,7 +99,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <ui:HelpPage
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Visibility="{Binding HelpPageVisibility}"
+            Visibility="{Binding IsHelpPageVisible, Converter={StaticResource BoolToVisibilityConverter}}"
             Focusable="True"/>
 
     </Grid>

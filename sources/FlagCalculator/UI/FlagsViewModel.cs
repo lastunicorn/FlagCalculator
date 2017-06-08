@@ -18,14 +18,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI
 {
     internal class FlagsViewModel : ViewModelBase
     {
-        private readonly FlagNumber flagNumber;
+        private readonly SmartNumber mainValue;
 
         public List<CheckableItem> Items { get; }
 
@@ -65,20 +64,20 @@ namespace DustInTheWind.FlagCalculator.UI
 
         public event EventHandler SelectionChanged;
 
-        public FlagsViewModel(FlagNumber flagNumber)
+        public FlagsViewModel(SmartNumber mainValue)
         {
-            if (flagNumber == null) throw new ArgumentNullException(nameof(flagNumber));
-            this.flagNumber = flagNumber;
+            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            this.mainValue = mainValue;
 
             Items = new List<CheckableItem>();
 
-            flagNumber.ValueChanged += HandleFlagNumberValueChanged;
+            mainValue.ValueChanged += HandleFlagNumberValueChanged;
         }
 
         private void HandleFlagNumberValueChanged(object sender, EventArgs e)
         {
             foreach (CheckableItem checkableItem in Items)
-                checkableItem.IsChecked = flagNumber.IsFlagSet(checkableItem.Value);
+                checkableItem.IsChecked = mainValue.IsFlagSet(checkableItem.FlagValue);
 
             UpdateCheckBoxesVisibility();
         }
@@ -87,20 +86,19 @@ namespace DustInTheWind.FlagCalculator.UI
         {
             Items.ForEach(x =>
             {
-                bool display = (x.IsChecked && displaySelected) || (!x.IsChecked && displayUnselected);
-                x.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+                x.IsVisible = (x.IsChecked && displaySelected) || (!x.IsChecked && displayUnselected);
             });
         }
 
         public void Load(FlagInfoCollection flagInfoCollection)
         {
+            mainValue.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
+
             List<CheckableItem> checkableItems = flagInfoCollection
-                .Select(x => new CheckableItem(flagNumber, x))
+                .Select(x => new CheckableItem(mainValue, x))
                 .ToList();
 
             Items.AddRange(checkableItems);
-
-            flagNumber.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
         }
 
         protected virtual void OnSelectionChanged()
