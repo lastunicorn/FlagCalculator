@@ -25,7 +25,6 @@ namespace DustInTheWind.FlagCalculator.UI
     {
         private readonly SmartNumber mainValue;
         private bool isChecked;
-        private bool isVisible;
         private string text;
         private string toolTip;
 
@@ -45,16 +44,6 @@ namespace DustInTheWind.FlagCalculator.UI
             set
             {
                 text = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsVisible
-        {
-            get { return isVisible; }
-            set
-            {
-                isVisible = value;
                 OnPropertyChanged();
             }
         }

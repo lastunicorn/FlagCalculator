@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <ItemsControl
             x:Name="ItemsControl1"
-            ItemsSource="{Binding Items}"
+            ItemsSource="{Binding ItemsView}"
             HorizontalAlignment="Stretch">
 
             <ItemsControl.ItemTemplate>
@@ -67,7 +67,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             VerticalAlignment="Center"
                             Margin="10 0 10 0"
                             FontSize="20"
-                            Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                             Tag="{Binding Value}"
                             Command="{Binding FlagCheckedCommand}"
                             CommandParameter="{Binding}"

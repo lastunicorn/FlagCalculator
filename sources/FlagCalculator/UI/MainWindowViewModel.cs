@@ -136,13 +136,13 @@ namespace DustInTheWind.FlagCalculator.UI
             FlagsViewModel = new FlagsViewModel(Value);
             FlagsViewModel.SelectionChanged += HandleFlagItemsSelectionChanged;
 
+            DisplaySelected = FlagsViewModel.DisplaySelected;
+            DisplayUnselected = FlagsViewModel.DisplayUnselected;
+
             LoadFlagCollection();
 
             Value.ValueChanged += HandleMainValueChanged;
             Value.NumericalBaseChanged += HandleMainValueNumericalBaseChanged;
-
-            FlagsViewModel.DisplaySelected = true;
-            FlagsViewModel.DisplayUnselected = true;
 
             Value.Clear();
 

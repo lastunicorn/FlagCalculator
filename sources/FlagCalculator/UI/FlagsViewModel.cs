@@ -16,8 +16,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows.Data;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI
@@ -26,9 +28,12 @@ namespace DustInTheWind.FlagCalculator.UI
     {
         private readonly SmartNumber mainValue;
 
-        public List<CheckableItem> Items { get; }
-
         private bool displaySelected;
+        private bool displayUnselected;
+
+        private readonly List<CheckableItem> items;
+        private readonly CollectionViewSource itemsViewSource;
+        public ICollectionView ItemsView { get; }
 
         public bool DisplaySelected
         {
@@ -41,11 +46,9 @@ namespace DustInTheWind.FlagCalculator.UI
                 displaySelected = value;
                 OnSelectionChanged();
 
-                UpdateCheckBoxesVisibility();
+                ItemsView.Refresh();
             }
         }
-
-        private bool displayUnselected;
 
         public bool DisplayUnselected
         {
@@ -58,7 +61,7 @@ namespace DustInTheWind.FlagCalculator.UI
                 displayUnselected = value;
                 OnSelectionChanged();
 
-                UpdateCheckBoxesVisibility();
+                ItemsView.Refresh();
             }
         }
 
@@ -67,27 +70,36 @@ namespace DustInTheWind.FlagCalculator.UI
         public FlagsViewModel(SmartNumber mainValue)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+
             this.mainValue = mainValue;
 
-            Items = new List<CheckableItem>();
+            items = new List<CheckableItem>();
 
-            mainValue.ValueChanged += HandleFlagNumberValueChanged;
+            itemsViewSource = new CollectionViewSource();
+            itemsViewSource.Source = items;
+            itemsViewSource.Filter += HandleCollectionViewSourceFilter;
+
+            ItemsView = itemsViewSource.View;
+
+            DisplaySelected = true;
+            DisplayUnselected = true;
+
+            mainValue.ValueChanged += HandleMainValueChanged;
         }
 
-        private void HandleFlagNumberValueChanged(object sender, EventArgs e)
+        private void HandleCollectionViewSourceFilter(object sender, FilterEventArgs e)
         {
-            foreach (CheckableItem checkableItem in Items)
+            CheckableItem checkableItem = e.Item as CheckableItem;
+
+            e.Accepted = checkableItem != null && ((checkableItem.IsChecked && displaySelected) || (!checkableItem.IsChecked && displayUnselected));
+        }
+
+        private void HandleMainValueChanged(object sender, EventArgs e)
+        {
+            foreach (CheckableItem checkableItem in items)
                 checkableItem.IsChecked = mainValue.IsFlagSet(checkableItem.FlagValue);
 
-            UpdateCheckBoxesVisibility();
-        }
-
-        public void UpdateCheckBoxesVisibility()
-        {
-            Items.ForEach(x =>
-            {
-                x.IsVisible = (x.IsChecked && displaySelected) || (!x.IsChecked && displayUnselected);
-            });
+            ItemsView.Refresh();
         }
 
         public void Load(FlagInfoCollection flagInfoCollection)
@@ -98,7 +110,7 @@ namespace DustInTheWind.FlagCalculator.UI
                 .Select(x => new CheckableItem(mainValue, x))
                 .ToList();
 
-            Items.AddRange(checkableItems);
+            items.AddRange(checkableItems);
         }
 
         protected virtual void OnSelectionChanged()
