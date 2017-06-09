@@ -95,10 +95,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <StatusBarItem Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Select:" VerticalAlignment="Center" Margin="0 0 8 0"/>
+                <!--<TextBlock Text="Select:" VerticalAlignment="Center" Margin="0 0 8 0"/>-->
 
                 <Button
-                    Margin="0 0 8 0"
+                    Margin="0 0 0 0"
                     Command="{Binding SelectAllFlagsCommand}">
 
                     <ContentControl
@@ -110,7 +110,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </Button>
 
                 <Button
-                    Margin="0 0 8 0"
+                    Margin="0 0 0 0"
                     Command="{Binding SelectNoFlagsCommand}">
 
                     <ContentControl
