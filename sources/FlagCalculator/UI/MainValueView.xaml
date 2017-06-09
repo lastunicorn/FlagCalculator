@@ -42,6 +42,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Numerical Base Buttons -->
+        
         <Button
             Grid.Column="0"
             HorizontalAlignment="left"
@@ -54,17 +56,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             FontSize="25"
             BorderBrush="#ff9f4d"/>
 
+        <!-- Value container -->
+
         <Grid
             Grid.Column="1"
             HorizontalAlignment="Stretch"
             Background="Transparent">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel
+            <!-- Copy/Paste Buttons -->
+            
+            <!--<StackPanel
                 Grid.Column="0"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal"
@@ -115,8 +121,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </Button>
 
-            </StackPanel>
+            </StackPanel>-->
 
+            <!-- Value -->
+            
             <Viewbox
                 Grid.Column="1"
                 MaxHeight="50"

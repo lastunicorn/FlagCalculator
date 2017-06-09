@@ -22,6 +22,9 @@
     <SolidColorBrush x:Key="ButtonCheckedBackgroundColor" Color="#ff9f4d"/>
     <SolidColorBrush x:Key="ButtonCheckedForegroundColor" Color="#ffffff"/>
 
+    <SolidColorBrush x:Key="ButtonCheckedOverBackgroundColor" Color="#ff9f4d"/>
+    <SolidColorBrush x:Key="ButtonCheckedOverForegroundColor" Color="#ffffff"/>
+
     <!-- CheckBox -->
 
     <SolidColorBrush x:Key="CheckBoxNormalBackgroundColor" Color="Transparent"/>
