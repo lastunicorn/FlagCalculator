@@ -134,6 +134,11 @@ namespace DustInTheWind.FlagCalculator.Business
             catch { }
         }
 
+        public void SetValue(ulong newValue)
+        {
+            Value = newValue;
+        }
+
         public override string ToString()
         {
             return CalculateValueAsString();

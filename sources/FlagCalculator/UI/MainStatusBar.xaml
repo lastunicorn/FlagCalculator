@@ -93,26 +93,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </StackPanel>
         </StatusBarItem>-->
 
-        <!--<StatusBarItem Grid.Column="0">
+        <StatusBarItem Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Select:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
-                <Button Margin="0 0 8 0">
-                    <Image
-                        Source="pack://application:,,,/Resources/checkbox/checked-checkbox-16.png"
+                <Button
+                    Margin="0 0 8 0"
+                    Command="{Binding SelectAllFlagsCommand}">
+
+                    <ContentControl
+                        Template="{StaticResource CheckBoxCheckedIconTemplate}"
                         Width="16"
-                        Height="16"/>
+                        Height="16"
+                        Foreground="{StaticResource IconNormalForeground}"/>
+
                 </Button>
 
-                <Button Margin="0 0 8 0">
-                    <Image
-                        Source="pack://application:,,,/Resources/checkbox/unchecked-checkbox-16.png"
+                <Button
+                    Margin="0 0 8 0"
+                    Command="{Binding SelectNoFlagsCommand}">
+
+                    <ContentControl
+                        Template="{StaticResource CheckBoxUncheckedIconTemplate}"
                         Width="16"
-                        Height="16"/>
+                        Height="16"
+                        Foreground="{StaticResource IconNormalForeground}"/>
+
                 </Button>
 
             </StackPanel>
-        </StatusBarItem>-->
+        </StatusBarItem>
 
         <StatusBarItem Grid.Column="2">
             <StackPanel Orientation="Horizontal">
@@ -122,26 +132,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     IsChecked="{Binding DisplaySelected}"
                     Margin="0 0 8 0"
                     ToolTip="Display Selected Flags">
-                    
+
                     <ContentControl
                         Template="{StaticResource CheckBoxCheckedIconTemplate}"
                         Width="16"
                         Height="16"
                         Foreground="{StaticResource IconNormalForeground}"/>
-                    
+
                 </ToggleButton>
 
                 <ToggleButton
                     IsChecked="{Binding DisplayUnselected}"
                     Margin="0 0 8 0"
                     ToolTip="Display Unselected Flags">
-                    
+
                     <ContentControl
                         Template="{StaticResource CheckBoxUncheckedIconTemplate}"
                         Width="16"
                         Height="16"
                         Foreground="{StaticResource IconNormalForeground}"/>
-                    
+
                 </ToggleButton>
 
             </StackPanel>

@@ -113,6 +113,21 @@ namespace DustInTheWind.FlagCalculator.UI
             items.AddRange(checkableItems);
         }
 
+        public void SelectAllFlags()
+        {
+            ulong value = 0;
+
+            foreach (CheckableItem item in items)
+                value |= item.FlagValue;
+
+            mainValue.SetValue(value);
+        }
+
+        public void ClearAllFlags()
+        {
+            mainValue.Clear();
+        }
+
         protected virtual void OnSelectionChanged()
         {
             SelectionChanged?.Invoke(this, EventArgs.Empty);

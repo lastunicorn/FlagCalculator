@@ -19,14 +19,14 @@ using System.Windows.Input;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class HelpCommand : ICommand
+    internal class SelectNoFlagsCommand : ICommand
     {
-        private readonly MainWindowViewModel mainWindowViewModel;
+        private readonly FlagsViewModel flagsViewModel;
 
-        public HelpCommand(MainWindowViewModel mainWindowViewModel)
+        public SelectNoFlagsCommand(FlagsViewModel flagsViewModel)
         {
-            if (mainWindowViewModel == null) throw new ArgumentNullException(nameof(mainWindowViewModel));
-            this.mainWindowViewModel = mainWindowViewModel;
+            if (flagsViewModel == null) throw new ArgumentNullException(nameof(flagsViewModel));
+            this.flagsViewModel = flagsViewModel;
         }
 
         public bool CanExecute(object parameter)
@@ -38,10 +38,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            bool display;
-
-            if (bool.TryParse(parameter as string, out display))
-                mainWindowViewModel.IsHelpPageVisible = display;
+            flagsViewModel.ClearAllFlags();
         }
     }
 }

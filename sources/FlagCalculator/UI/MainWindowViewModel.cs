@@ -102,6 +102,8 @@ namespace DustInTheWind.FlagCalculator.UI
         public DigitCommand DigitCommand { get; }
         public NumericalBaseRollCommand NumericalBaseRollCommand { get; }
         public HelpCommand HelpCommand { get; }
+        public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
+        public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
 
         public bool IsHelpPageVisible
         {
@@ -124,16 +126,19 @@ namespace DustInTheWind.FlagCalculator.UI
 
             value = new SmartNumber();
 
+            FlagsViewModel = new FlagsViewModel(Value);
+
             EscapeCommand = new EscapeCommand(Value);
             CopyCommand = new CopyCommand(Value);
             PasteCommand = new PasteCommand(Value);
             DigitCommand = new DigitCommand(Value);
             NumericalBaseRollCommand = new NumericalBaseRollCommand(Value);
             HelpCommand = new HelpCommand(this);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(FlagsViewModel);
+            SelectNoFlagsCommand = new SelectNoFlagsCommand(FlagsViewModel);
 
             isHelpPageVisible = false;
 
-            FlagsViewModel = new FlagsViewModel(Value);
             FlagsViewModel.SelectionChanged += HandleFlagItemsSelectionChanged;
 
             DisplaySelected = FlagsViewModel.DisplaySelected;
