@@ -26,8 +26,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     d:DesignHeight="300"
     d:DesignWidth="300">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid
-        Background="#f97300"
+        Background="{StaticResource StatusBarBackground}"
         x:Name="Grid1">
 
         <!--<Grid.Triggers>
@@ -85,11 +93,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             Grid.Column="0"
             HorizontalAlignment="left"
             Margin="8"
-            Padding="8"
+            Padding="6"
             Content="{Binding NumericalBase}"
             Command="{Binding NumericalBaseRollCommand}"
             MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" 
-            MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"/>
+            MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+            FontSize="25"
+            BorderBrush="#ff9f4d"/>
 
         <Grid
             Grid.Column="1"

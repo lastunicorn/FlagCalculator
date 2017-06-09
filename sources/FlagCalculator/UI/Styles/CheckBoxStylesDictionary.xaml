@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/CheckBoxIconTemplates.xaml"/>
+        <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type CheckBox}">
@@ -36,18 +37,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                             <ContentControl
                                 x:Name="checkboxImage"
-                                Template="{StaticResource CheckBoxCheckedTemplate}"
+                                Template="{StaticResource CheckBoxCheckedIconTemplate}"
                                 Width="16"
                                 Height="16"
                                 Margin="5 0 5 0"
-                                Foreground="#FB805400"/>
-
-                            <!--<Image
-                                x:Name="checkboxImage"
-                                Width="16"
-                                Height="16"
-                                Margin="5 0 5 0"
-                                VerticalAlignment="Center"/>-->
+                                Background="{StaticResource CheckBoxNormalBackgroundColor}"
+                                Foreground="{StaticResource CheckBoxNormalForegroundColor}"/>
 
                             <ContentPresenter/>
 
@@ -58,12 +53,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                         <!-- Checked -->
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxCheckedTemplate}"/>
+                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxCheckedIconTemplate}"/>
                         </Trigger>
 
                         <!-- Unchecked -->
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxUncheckedTemplate}"/>
+                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxUncheckedIconTemplate}"/>
                         </Trigger>
 
                         <!-- Checked and Disabled -->
@@ -72,8 +67,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <Condition Property="IsChecked" Value="True"/>
                                 <Condition Property="IsEnabled" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxCheckedTemplate}"/>
-                            <Setter TargetName="checkboxImage" Property="Foreground" Value="Gray"/>
+                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxCheckedIconTemplate}"/>
+                            <Setter TargetName="checkboxImage" Property="Foreground" Value="{StaticResource CheckBoxDisabledForegroundColor}"/>
                         </MultiTrigger>
 
                         <!-- Unchecked and Disabled -->
@@ -82,8 +77,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <Condition Property="IsChecked" Value="False"/>
                                 <Condition Property="IsEnabled" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxUncheckedTemplate}"/>
-                            <Setter TargetName="checkboxImage" Property="Foreground" Value="Gray"/>
+                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxUncheckedIconTemplate}"/>
+                            <Setter TargetName="checkboxImage" Property="Foreground" Value="{StaticResource CheckBoxDisabledForegroundColor}"/>
                         </MultiTrigger>
 
                         <!-- Checked and MouseOver -->
@@ -92,8 +87,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <Condition Property="IsChecked" Value="True"/>
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxCheckedTemplate}"/>
-                            <Setter TargetName="checkboxImage" Property="Foreground" Value="Black"/>
+                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxCheckedIconTemplate}"/>
+                            <Setter TargetName="checkboxImage" Property="Foreground" Value="{StaticResource CheckBoxOverForegroundColor}"/>
                         </MultiTrigger>
 
                         <!-- Unchecked and MouseOver -->
@@ -102,8 +97,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <Condition Property="IsChecked" Value="False"/>
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxUncheckedTemplate}"/>
-                            <Setter TargetName="checkboxImage" Property="Foreground" Value="Black"/>
+                            <Setter TargetName="checkboxImage" Property="Template" Value="{StaticResource CheckBoxUncheckedIconTemplate}"/>
+                            <Setter TargetName="checkboxImage" Property="Foreground" Value="{StaticResource CheckBoxOverForegroundColor}"/>
                         </MultiTrigger>
 
                     </ControlTemplate.Triggers>
@@ -111,20 +106,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-        <Style.Triggers>
-            <Trigger Property="IsChecked" Value="False">
-                <Setter Property="Foreground" Value="#4a2200"/>
-            </Trigger>
-
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="#a0a0a0"/>
-            </Trigger>
-
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="Black"/>
-            </Trigger>
-        </Style.Triggers>
 
     </Style>
 

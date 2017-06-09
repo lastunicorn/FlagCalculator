@@ -31,13 +31,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/CheckBoxIconTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/CopyPasteIconTemplates.xaml"/>
+                <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <StatusBar
         Padding="8"
-        Background="#f97300">
+        Background="{StaticResource StatusBarBackground}">
 
         <StatusBar.ItemsPanel>
             <ItemsPanelTemplate>
@@ -72,7 +73,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Template="{StaticResource CopyIconTemplate}"
                         Width="16"
                         Height="16"
-                        Foreground="#FB805400"/>
+                        Foreground="{StaticResource IconNormalForeground}"/>
 
                 </Button>
 
@@ -85,7 +86,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Template="{StaticResource PasteIconTemplate}"
                         Width="16"
                         Height="16"
-                        Foreground="#FB805400"/>
+                        Foreground="{StaticResource IconNormalForeground}"/>
 
                 </Button>
 
@@ -119,18 +120,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <ToggleButton IsChecked="{Binding DisplaySelected}" Margin="0 0 8 0">
                     <ContentControl
-                        Template="{StaticResource CheckBoxCheckedTemplate}"
+                        Template="{StaticResource CheckBoxCheckedIconTemplate}"
                         Width="16"
                         Height="16"
-                        Foreground="#FB805400"/>
+                        Foreground="{StaticResource IconNormalForeground}"/>
                 </ToggleButton>
 
                 <ToggleButton IsChecked="{Binding DisplayUnselected}" Margin="0 0 8 0">
                     <ContentControl
-                        Template="{StaticResource CheckBoxUncheckedTemplate}"
+                        Template="{StaticResource CheckBoxUncheckedIconTemplate}"
                         Width="16"
                         Height="16"
-                        Foreground="#FB805400"/>
+                        Foreground="{StaticResource IconNormalForeground}"/>
                 </ToggleButton>
 
             </StackPanel>

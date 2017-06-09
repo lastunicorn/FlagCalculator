@@ -27,7 +27,8 @@ namespace DustInTheWind.FlagCalculator.UI
         private bool isChecked;
         private string text;
         private string toolTip;
-
+        private SmartNumber flagValue;
+        
         public bool IsChecked
         {
             get { return isChecked; }
@@ -58,10 +59,6 @@ namespace DustInTheWind.FlagCalculator.UI
             }
         }
         
-        public FlagCheckedCommand FlagCheckedCommand { get; }
-
-        private SmartNumber flagValue;
-
         public SmartNumber FlagValue
         {
             get { return flagValue; }
@@ -71,6 +68,8 @@ namespace DustInTheWind.FlagCalculator.UI
                 OnPropertyChanged();
             }
         }
+
+        public FlagCheckedCommand FlagCheckedCommand { get; }
 
         public CheckableItem(SmartNumber mainValue, FlagInfo flagInfo)
         {

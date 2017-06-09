@@ -86,7 +86,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <Grid>
 
-        <DockPanel Background="#ffcb9e">
+        <DockPanel Background="{StaticResource MainBackground}">
 
             <ui:MainValueView DockPanel.Dock="Top"/>
 

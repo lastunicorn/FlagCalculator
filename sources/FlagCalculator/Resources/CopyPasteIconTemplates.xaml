@@ -71,7 +71,7 @@
                             </Path>
                             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path41705" StrokeThickness="35" Stroke="#FB805400" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Square" StrokeEndLineCap="Square">
                                 <Path.Data>
-                                    <PathGeometry Figures="m 100.12518 496.91857 135.39772 -0.9031" FillRule="evenodd"/>
+                                    <PathGeometry Figures="m 100.12518 490.91857 135.39772 -0.9031" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
                         </Canvas>
@@ -107,7 +107,7 @@
                             </Path>
                             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path417058" StrokeThickness="35" Stroke="#FB805400" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Square" StrokeEndLineCap="Square">
                                 <Path.Data>
-                                    <PathGeometry Figures="m 100.12518 496.91857 135.39772 -0.9031" FillRule="evenodd"/>
+                                    <PathGeometry Figures="m 100.12518 490.91857 135.39772 -0.9031" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
                         </Canvas>
@@ -207,7 +207,7 @@
                             </Path>
                             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path417058" StrokeThickness="35" Stroke="#FB805400" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Square" StrokeEndLineCap="Square">
                                 <Path.Data>
-                                    <PathGeometry Figures="m 100.12518 496.91857 135.39772 -0.9031" FillRule="evenodd"/>
+                                    <PathGeometry Figures="m 100.12518 490.91857 135.39772 -0.9031" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
                         </Canvas>
