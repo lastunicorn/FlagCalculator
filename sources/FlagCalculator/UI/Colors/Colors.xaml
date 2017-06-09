@@ -31,7 +31,7 @@
     <SolidColorBrush x:Key="CheckBoxDisabledForegroundColor" Color="Gray"/>
 
     <SolidColorBrush x:Key="CheckBoxOverBackgroundColor" Color="Transparent"/>
-    <SolidColorBrush x:Key="CheckBoxOverForegroundColor" Color="#000000"/>
+    <SolidColorBrush x:Key="CheckBoxOverForegroundColor" Color="#805400"/>
     
     <!-- Status Bar -->
 

@@ -62,7 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Content="?"/>
         </StatusBarItem>-->
 
-        <StatusBarItem Grid.Column="1">
+        <!--<StatusBarItem Grid.Column="1">
             <StackPanel Orientation="Horizontal">
                 <Button
                     Command="{Binding CopyCommand}"
@@ -91,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </Button>
 
             </StackPanel>
-        </StatusBarItem>
+        </StatusBarItem>-->
 
         <!--<StatusBarItem Grid.Column="0">
             <StackPanel Orientation="Horizontal">
@@ -118,20 +118,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Display:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
-                <ToggleButton IsChecked="{Binding DisplaySelected}" Margin="0 0 8 0">
+                <ToggleButton
+                    IsChecked="{Binding DisplaySelected}"
+                    Margin="0 0 8 0"
+                    ToolTip="Display Selected Flags">
+                    
                     <ContentControl
                         Template="{StaticResource CheckBoxCheckedIconTemplate}"
                         Width="16"
                         Height="16"
                         Foreground="{StaticResource IconNormalForeground}"/>
+                    
                 </ToggleButton>
 
-                <ToggleButton IsChecked="{Binding DisplayUnselected}" Margin="0 0 8 0">
+                <ToggleButton
+                    IsChecked="{Binding DisplayUnselected}"
+                    Margin="0 0 8 0"
+                    ToolTip="Display Unselected Flags">
+                    
                     <ContentControl
                         Template="{StaticResource CheckBoxUncheckedIconTemplate}"
                         Width="16"
                         Height="16"
                         Foreground="{StaticResource IconNormalForeground}"/>
+                    
                 </ToggleButton>
 
             </StackPanel>

@@ -29,60 +29,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/CopyPasteIconTemplates.xaml"/>
                 <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid
-        Background="{StaticResource StatusBarBackground}"
-        x:Name="Grid1">
-
-        <!--<Grid.Triggers>
-                <EventTrigger SourceName="Grid1" RoutedEvent="Window.KeyDown">
-                    <EventTrigger.EnterActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation
-                                    Duration="0:0:0.500"
-                                    Storyboard.TargetProperty="Background.Color"
-                                    FillBehavior="HoldEnd"
-                                    From="#ffcb9e"
-                                    To="#f97300">
-                                    <ColorAnimation.EasingFunction>
-                                        <SineEase EasingMode="EaseInOut"/>
-                                    </ColorAnimation.EasingFunction>
-                                </ColorAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.EnterActions>
-                </EventTrigger>
-            </Grid.Triggers>-->
-
-        <Grid.Style>
-            <Style TargetType="Grid">
-                <Style.Triggers>
-                    <!--<Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation
-                                            Duration="0:0:0.500"
-                                            Storyboard.TargetProperty="Background.Color"
-                                            FillBehavior="HoldEnd"
-                                            From="#ffcb9e"
-                                            To="#f97300">
-                                            <ColorAnimation.EasingFunction>
-                                                <SineEase EasingMode="EaseInOut"/>
-                                            </ColorAnimation.EasingFunction>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                        </Trigger>-->
-                </Style.Triggers>
-            </Style>
-        </Grid.Style>
+    <Grid Background="{StaticResource StatusBarBackground}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -106,7 +59,71 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             HorizontalAlignment="Stretch"
             Background="Transparent">
 
-            <Viewbox MaxHeight="50" MinHeight="20" HorizontalAlignment="Right" Stretch="Uniform">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
+                Grid.Column="0"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal"
+                Margin="20 0 20 0">
+
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
+                <Button
+                    Command="{Binding CopyCommand}"
+                    ToolTip="Copy (Ctrl+C)"
+                    Margin="0 0 0 0"
+                    VerticalAlignment="Center"
+                    MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                    MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}">
+
+                    <ContentControl
+                        Template="{StaticResource CopyIconTemplate}"
+                        Width="16"
+                        Height="16"
+                        Foreground="{StaticResource IconNormalForeground}"/>
+
+                </Button>
+
+                <Button
+                    Command="{Binding PasteCommand}"
+                    ToolTip="Paste (Ctrl+V)"
+                    Margin="4 0 0 0"
+                    VerticalAlignment="Center"
+                    MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                    MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}">
+
+                    <ContentControl
+                        Template="{StaticResource PasteIconTemplate}"
+                        Width="16"
+                        Height="16"
+                        Foreground="{StaticResource IconNormalForeground}"/>
+
+                </Button>
+
+            </StackPanel>
+
+            <Viewbox
+                Grid.Column="1"
+                MaxHeight="50"
+                MinHeight="20"
+                HorizontalAlignment="Right"
+                Stretch="Uniform">
+
                 <Grid Margin="20 0 20 0">
 
                     <Grid.ColumnDefinitions>
