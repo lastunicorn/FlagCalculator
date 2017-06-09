@@ -110,18 +110,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Orientation="Vertical"
                 Margin="0">
 
-                <!--<StackPanel.Style>
+                <StackPanel.Style>
                     <Style TargetType="StackPanel">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="False">
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </StackPanel.Style>-->
+                </StackPanel.Style>
 
                 <Button
                     Command="{Binding CopyCommand}"
