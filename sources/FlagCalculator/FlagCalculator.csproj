@@ -71,7 +71,7 @@
     <Compile Include="UI\CheckableItem.cs" />
     <Compile Include="UI\Commands\FlagCheckedCommand.cs" />
     <Compile Include="Business\FlagInfoCollection.cs" />
-    <Compile Include="Business\FlagCollectionProvider.cs" />
+    <Compile Include="Business\FlagInfoCollectionProvider.cs" />
     <Compile Include="Business\FlagInfo.cs" />
     <Compile Include="UI\Commands\CopyCommand.cs" />
     <Compile Include="UI\Commands\DigitCommand.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="UI\FlagListView.xaml.cs">
       <DependentUpon>FlagListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\FlagsList.cs" />
     <Compile Include="UI\FlagsViewModel.cs" />
     <Compile Include="UI\HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
@@ -88,11 +89,11 @@
     <Compile Include="UI\MainStatusBar.xaml.cs">
       <DependentUpon>MainStatusBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\MainStatusBarViewModel.cs" />
     <Compile Include="UI\MainValueView.xaml.cs">
       <DependentUpon>MainValueView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\MainWindowViewModel.cs" />
-    <Compile Include="UI\MultiKeyBinding.cs" />
     <Compile Include="UI\Commands\PasteCommand.cs" />
     <Compile Include="Business\SmartNumber.cs" />
     <Compile Include="UI\UserInterface.cs" />

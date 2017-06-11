@@ -90,7 +90,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <ui:MainValueView DockPanel.Dock="Top"/>
 
-            <ui:MainStatusBar DockPanel.Dock="Bottom"/>
+            <ui:MainStatusBar DockPanel.Dock="Bottom" DataContext="{Binding MainStatusBarViewModel}"/>
 
             <ui:FlagListView DataContext="{Binding FlagsViewModel}"/>
 

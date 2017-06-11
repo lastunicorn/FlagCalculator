@@ -21,12 +21,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class SelectNoFlagsCommand : ICommand
     {
-        private readonly FlagsViewModel flagsViewModel;
+        private readonly FlagsList flagsList;
 
-        public SelectNoFlagsCommand(FlagsViewModel flagsViewModel)
+        public SelectNoFlagsCommand(FlagsList flagsList)
         {
-            if (flagsViewModel == null) throw new ArgumentNullException(nameof(flagsViewModel));
-            this.flagsViewModel = flagsViewModel;
+            if (flagsList == null) throw new ArgumentNullException(nameof(flagsList));
+            this.flagsList = flagsList;
         }
 
         public bool CanExecute(object parameter)
@@ -38,7 +38,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            flagsViewModel.ClearAllFlags();
+            flagsList.ClearAllFlags();
         }
     }
 }

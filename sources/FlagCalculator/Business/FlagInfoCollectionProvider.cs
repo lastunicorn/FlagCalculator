@@ -22,7 +22,7 @@ using System.Reflection;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class FlagCollectionProvider
+    internal class FlagInfoCollectionProvider
     {
         public Func<Type, bool> OnEnumIsNotFlags { get; set; }
 
@@ -44,7 +44,7 @@ namespace DustInTheWind.FlagCalculator.Business
             Type enumType = Type.GetType(enumTypeFullName);
 
             if (enumType == null)
-                throw new ApplicationException(string.Format("The enum type '{0}' specified in the configuration file could not be loaded.", enumTypeFullName));
+                throw new ApplicationException($"The enum type '{enumTypeFullName}' specified in the configuration file could not be loaded.");
 
             if (!enumType.IsEnum)
                 throw new ApplicationException("Specified type is not an enum.");

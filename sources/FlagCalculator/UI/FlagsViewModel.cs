@@ -15,10 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Data;
 using DustInTheWind.FlagCalculator.Business;
 
@@ -27,110 +24,48 @@ namespace DustInTheWind.FlagCalculator.UI
     internal class FlagsViewModel : ViewModelBase
     {
         private readonly SmartNumber mainValue;
-
-        private bool displaySelected;
-        private bool displayUnselected;
-
-        private readonly List<CheckableItem> items;
+        
+        private readonly FlagsList flags;
         private readonly CollectionViewSource itemsViewSource;
         public ICollectionView ItemsView { get; }
-
-        public bool DisplaySelected
-        {
-            get { return displaySelected; }
-            set
-            {
-                if (value == displaySelected)
-                    return;
-
-                displaySelected = value;
-                OnSelectionChanged();
-
-                ItemsView.Refresh();
-            }
-        }
-
-        public bool DisplayUnselected
-        {
-            get { return displayUnselected; }
-            set
-            {
-                if (value == displayUnselected)
-                    return;
-
-                displayUnselected = value;
-                OnSelectionChanged();
-
-                ItemsView.Refresh();
-            }
-        }
-
-        public event EventHandler SelectionChanged;
-
-        public FlagsViewModel(SmartNumber mainValue)
+        
+        public FlagsViewModel(SmartNumber mainValue, FlagsList flags)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
 
             this.mainValue = mainValue;
 
-            items = new List<CheckableItem>();
+            this.flags = flags;
 
             itemsViewSource = new CollectionViewSource();
-            itemsViewSource.Source = items;
+            itemsViewSource.Source = this.flags;
             itemsViewSource.Filter += HandleCollectionViewSourceFilter;
 
             ItemsView = itemsViewSource.View;
-
-            DisplaySelected = true;
-            DisplayUnselected = true;
+            
+            this.flags.SelectionChanged += HandleFlagsSelectionChanged;
 
             mainValue.ValueChanged += HandleMainValueChanged;
+        }
+
+        private void HandleFlagsSelectionChanged(object sender, EventArgs eventArgs)
+        {
+            ItemsView.Refresh();
         }
 
         private void HandleCollectionViewSourceFilter(object sender, FilterEventArgs e)
         {
             CheckableItem checkableItem = e.Item as CheckableItem;
 
-            e.Accepted = checkableItem != null && ((checkableItem.IsChecked && displaySelected) || (!checkableItem.IsChecked && displayUnselected));
+            e.Accepted = checkableItem != null && ((checkableItem.IsChecked && flags.DisplaySelected) || (!checkableItem.IsChecked && flags.DisplayUnselected));
         }
 
         private void HandleMainValueChanged(object sender, EventArgs e)
         {
-            foreach (CheckableItem checkableItem in items)
+            foreach (CheckableItem checkableItem in flags)
                 checkableItem.IsChecked = mainValue.IsFlagSet(checkableItem.FlagValue);
 
             ItemsView.Refresh();
-        }
-
-        public void Load(FlagInfoCollection flagInfoCollection)
-        {
-            mainValue.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
-
-            List<CheckableItem> checkableItems = flagInfoCollection
-                .Select(x => new CheckableItem(mainValue, x))
-                .ToList();
-
-            items.AddRange(checkableItems);
-        }
-
-        public void SelectAllFlags()
-        {
-            ulong value = 0;
-
-            foreach (CheckableItem item in items)
-                value |= item.FlagValue;
-
-            mainValue.SetValue(value);
-        }
-
-        public void ClearAllFlags()
-        {
-            mainValue.Clear();
-        }
-
-        protected virtual void OnSelectionChanged()
-        {
-            SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
