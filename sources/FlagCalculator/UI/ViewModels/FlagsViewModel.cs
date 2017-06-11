@@ -57,7 +57,9 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         {
             CheckableItem checkableItem = e.Item as CheckableItem;
 
-            e.Accepted = checkableItem != null && ((checkableItem.IsChecked && flags.DisplaySelected) || (!checkableItem.IsChecked && flags.DisplayUnselected));
+            bool allOptionsAreUnselected = !flags.DisplaySelected && !flags.DisplayUnselected;
+
+            e.Accepted = allOptionsAreUnselected || checkableItem != null && ((checkableItem.IsChecked && flags.DisplaySelected) || (!checkableItem.IsChecked && flags.DisplayUnselected));
         }
 
         private void HandleMainValueChanged(object sender, EventArgs e)

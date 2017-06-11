@@ -69,6 +69,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public MainStatusBarViewModel MainStatusBarViewModel { get; }
 
         public EscapeCommand EscapeCommand { get; }
+        public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public DigitCommand DigitCommand { get; }
@@ -103,6 +104,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             MainStatusBarViewModel = new MainStatusBarViewModel(flags, statusInfo);
 
             EscapeCommand = new EscapeCommand(Value);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(flags);
             CopyCommand = new CopyCommand(Value);
             PasteCommand = new PasteCommand(Value);
             DigitCommand = new DigitCommand(Value);

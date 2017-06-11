@@ -39,14 +39,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <StatusBar
         Padding="8"
-        Background="{StaticResource StatusBarBackground}">
+        Background="{StaticResource StatusBarBackground}"
+        Foreground="#4a2200"
+        Height="60">
 
         <StatusBar.ItemsPanel>
             <ItemsPanelTemplate>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                 </Grid>
@@ -56,10 +60,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <StatusBarItem Grid.Column="0">
             <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Select:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
-                <Button
-                    Margin="0 0 0 0"
-                    Command="{Binding SelectAllFlagsCommand}">
+                <Button Command="{Binding SelectAllFlagsCommand}">
 
                     <ContentControl
                         Template="{StaticResource CheckBoxCheckedIconTemplate}"
@@ -69,7 +72,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
-                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Select all flags"/>
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Select all flags (Ctrl+A)."/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="MouseLeave">
                             <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>
@@ -78,9 +81,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </Button>
 
-                <Button
-                    Margin="0 0 0 0"
-                    Command="{Binding SelectNoFlagsCommand}">
+                <Button Command="{Binding SelectNoFlagsCommand}">
 
                     <ContentControl
                         Template="{StaticResource CheckBoxUncheckedIconTemplate}"
@@ -90,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
-                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Unselect all flags"/>
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Unselect all flags (ESC)."/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="MouseLeave">
                             <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>
@@ -102,19 +103,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </StackPanel>
         </StatusBarItem>
 
-        <StatusBarItem Grid.Column="1">
+        <Separator Grid.Column="1" Background="#c35a00" Margin="8"/>
+
+        <StatusBarItem Grid.Column="2">
             <TextBlock
                 Text="{Binding StatusText}"
-                TextWrapping="NoWrap"
+                TextWrapping="Wrap"
                 TextTrimming="WordEllipsis"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left"
-                Margin="20 0"
+                Margin="10 0"
                 FontSize="14"
-                Foreground="#4a2200"/>
+                TextAlignment="Justify"/>
         </StatusBarItem>
 
-        <StatusBarItem Grid.Column="2">
+        <Separator Grid.Column="3" Background="#c35a00" Margin="8"/>
+
+        <StatusBarItem Grid.Column="4">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Display:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
@@ -130,7 +135,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
-                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Display selected flags"/>
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Display selected flags."/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="MouseLeave">
                             <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>
@@ -151,7 +156,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
-                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Display unselected flags"/>
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Display unselected flags."/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="MouseLeave">
                             <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>

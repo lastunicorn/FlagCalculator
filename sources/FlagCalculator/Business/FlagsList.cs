@@ -62,8 +62,8 @@ namespace DustInTheWind.FlagCalculator.Business
 
             this.mainValue = mainValue;
 
-            DisplaySelected = true;
-            DisplayUnselected = true;
+            DisplaySelected = false;
+            DisplayUnselected = false;
         }
 
         public void Load(FlagInfoCollection flagInfoCollection, StatusInfo statusInfo)
