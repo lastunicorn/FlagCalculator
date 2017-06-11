@@ -66,12 +66,14 @@ namespace DustInTheWind.FlagCalculator.Business
             DisplayUnselected = true;
         }
 
-        public void Load(FlagInfoCollection flagInfoCollection)
+        public void Load(FlagInfoCollection flagInfoCollection, StatusInfo statusInfo)
         {
+            if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
+
             mainValue.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
 
             List<CheckableItem> checkableItems = flagInfoCollection
-                .Select(x => new CheckableItem(mainValue, x))
+                .Select(x => new CheckableItem(mainValue, x, statusInfo))
                 .ToList();
 
             foreach (CheckableItem item in checkableItems)

@@ -70,8 +70,9 @@ namespace DustInTheWind.FlagCalculator.Business
         }
 
         public FlagCheckedCommand FlagCheckedCommand { get; }
+        public StatusInfoCommand StatusInfoCommand { get; }
 
-        public CheckableItem(SmartNumber mainValue, FlagInfo flagInfo)
+        public CheckableItem(SmartNumber mainValue, FlagInfo flagInfo, StatusInfo statusInfo)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
             if (flagInfo == null) throw new ArgumentNullException(nameof(flagInfo));
@@ -81,6 +82,7 @@ namespace DustInTheWind.FlagCalculator.Business
             mainValue.NumericalBaseChanged += HandleFlagNumberBaseChanged;
 
             FlagCheckedCommand = new FlagCheckedCommand(mainValue);
+            StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
             IsChecked = false;
             flagValue = new SmartNumber(flagInfo.Value)
@@ -124,7 +126,7 @@ namespace DustInTheWind.FlagCalculator.Business
             if (string.IsNullOrEmpty(bitListCsv))
                 bitListCsv = "<none>";
 
-            return "bit: " + bitListCsv;
+            return "Bit: " + bitListCsv;
         }
 
         public override string ToString()

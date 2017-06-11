@@ -35,10 +35,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/ScrollBarStylesDictionary.xaml"/>
-                <ResourceDictionary Source="Styles/ButtonStylesDictionary.xaml"/>
-                <ResourceDictionary Source="Styles/ToggleButtonStylesDictionary.xaml"/>
-                <ResourceDictionary Source="Styles/CheckBoxStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/UI/Styles/ScrollBarStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/UI/Styles/ButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/UI/Styles/ToggleButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/UI/Styles/CheckBoxStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>

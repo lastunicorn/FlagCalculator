@@ -28,11 +28,12 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private readonly string titleBase;
         private string title;
-        
+
         private string numericalBase;
         private bool isHelpPageVisible;
         private SmartNumber value;
         private readonly FlagsList flags;
+        private StatusInfo statusInfo;
 
         public string Title
         {
@@ -63,7 +64,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public FlagsViewModel FlagsViewModel { get; }
         public MainStatusBarViewModel MainStatusBarViewModel { get; }
 
@@ -73,6 +74,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public DigitCommand DigitCommand { get; }
         public NumericalBaseRollCommand NumericalBaseRollCommand { get; }
         public HelpCommand HelpCommand { get; }
+        public StatusInfoCommand StatusInfoCommand { get; }
 
         public bool IsHelpPageVisible
         {
@@ -94,11 +96,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             Title = titleBase;
 
             value = new SmartNumber();
-
             flags = new FlagsList(value);
+            statusInfo = new StatusInfo();
 
             FlagsViewModel = new FlagsViewModel(Value, flags);
-            MainStatusBarViewModel = new MainStatusBarViewModel(flags);
+            MainStatusBarViewModel = new MainStatusBarViewModel(flags, statusInfo);
 
             EscapeCommand = new EscapeCommand(Value);
             CopyCommand = new CopyCommand(Value);
@@ -106,9 +108,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             DigitCommand = new DigitCommand(Value);
             NumericalBaseRollCommand = new NumericalBaseRollCommand(Value);
             HelpCommand = new HelpCommand(this);
+            StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
             isHelpPageVisible = false;
-            
+
             LoadFlagCollection();
 
             Value.ValueChanged += HandleMainValueChanged;
@@ -144,7 +147,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 FlagInfoCollectionProvider flagInfoCollectionProvider = new FlagInfoCollectionProvider();
                 FlagInfoCollection flagInfoCollection = flagInfoCollectionProvider.LoadFlagCollection();
 
-                flags.Load(flagInfoCollection);
+                flags.Load(flagInfoCollection, statusInfo);
 
                 Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);
             }

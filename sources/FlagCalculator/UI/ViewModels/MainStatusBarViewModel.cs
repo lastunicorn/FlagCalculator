@@ -23,8 +23,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
     internal class MainStatusBarViewModel : ViewModelBase
     {
         private readonly FlagsList flags;
+        private readonly StatusInfo statusInfo;
         private bool displaySelected;
         private bool displayUnselected;
+        private string statusText;
 
         public bool DisplaySelected
         {
@@ -56,22 +58,42 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
+        public string StatusText
+        {
+            get { return statusText; }
+            private set
+            {
+                statusText = value;
+                OnPropertyChanged();
+            }
+        }
+
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
+        public StatusInfoCommand StatusInfoCommand { get; }
 
-        public MainStatusBarViewModel(FlagsList flags)
+        public MainStatusBarViewModel(FlagsList flags, StatusInfo statusInfo)
         {
             if (flags == null) throw new ArgumentNullException(nameof(flags));
+            if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
             this.flags = flags;
+            this.statusInfo = statusInfo;
 
             SelectAllFlagsCommand = new SelectAllFlagsCommand(flags);
             SelectNoFlagsCommand = new SelectNoFlagsCommand(flags);
+            StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
             DisplaySelected = flags.DisplaySelected;
             DisplayUnselected = flags.DisplayUnselected;
 
+            statusInfo.StatusTextChanged += HandleStatusTextChanged;
             flags.SelectionChanged += HandleFlagsSelectionChanged;
+        }
+
+        private void HandleStatusTextChanged(object sender, EventArgs eventArgs)
+        {
+            StatusText = statusInfo.StatusText;
         }
 
         private void HandleFlagsSelectionChanged(object sender, EventArgs eventArgs)

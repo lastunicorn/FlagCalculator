@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300">
@@ -53,49 +54,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </StatusBar.ItemsPanel>
 
-        <!--<StatusBarItem Grid.Column="0">
-            <Button
-                MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" 
-                MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
-                Command="{Binding HelpCommand}"
-                CommandParameter="true"
-                Content="?"/>
-        </StatusBarItem>-->
-
-        <!--<StatusBarItem Grid.Column="1">
-            <StackPanel Orientation="Horizontal">
-                <Button
-                    Command="{Binding CopyCommand}"
-                    ToolTip="Copy (Ctrl+C)"
-                    Margin="0 0 0 0">
-
-                    <ContentControl
-                        Template="{StaticResource CopyIconTemplate}"
-                        Width="16"
-                        Height="16"
-                        Foreground="{StaticResource IconNormalForeground}"/>
-
-                </Button>
-
-                <Button
-                    Command="{Binding PasteCommand}"
-                    ToolTip="Paste (Ctrl+V)"
-                    Margin="8 0 0 0">
-
-                    <ContentControl
-                        Template="{StaticResource PasteIconTemplate}"
-                        Width="16"
-                        Height="16"
-                        Foreground="{StaticResource IconNormalForeground}"/>
-
-                </Button>
-
-            </StackPanel>
-        </StatusBarItem>-->
-
         <StatusBarItem Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <!--<TextBlock Text="Select:" VerticalAlignment="Center" Margin="0 0 8 0"/>-->
 
                 <Button
                     Margin="0 0 0 0"
@@ -106,6 +66,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Width="16"
                         Height="16"
                         Foreground="{StaticResource IconNormalForeground}"/>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Select all flags"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
                 </Button>
 
@@ -119,9 +88,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Height="16"
                         Foreground="{StaticResource IconNormalForeground}"/>
 
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Unselect all flags"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
                 </Button>
 
             </StackPanel>
+        </StatusBarItem>
+
+        <StatusBarItem Grid.Column="1">
+            <TextBlock
+                Text="{Binding StatusText}"
+                TextWrapping="NoWrap"
+                TextTrimming="WordEllipsis"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Margin="20 0"
+                FontSize="14"
+                Foreground="#4a2200"/>
         </StatusBarItem>
 
         <StatusBarItem Grid.Column="2">
@@ -130,8 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <ToggleButton
                     IsChecked="{Binding DisplaySelected}"
-                    Margin="0 0 8 0"
-                    ToolTip="Display Selected Flags">
+                    Margin="0 0 8 0">
 
                     <ContentControl
                         Template="{StaticResource CheckBoxCheckedIconTemplate}"
@@ -139,18 +128,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Height="16"
                         Foreground="{StaticResource IconNormalForeground}"/>
 
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Display selected flags"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
                 </ToggleButton>
 
                 <ToggleButton
                     IsChecked="{Binding DisplayUnselected}"
-                    Margin="0 0 8 0"
-                    ToolTip="Display Unselected Flags">
+                    Margin="0 0 8 0">
 
                     <ContentControl
                         Template="{StaticResource CheckBoxUncheckedIconTemplate}"
                         Width="16"
                         Height="16"
                         Foreground="{StaticResource IconNormalForeground}"/>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Display unselected flags"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
                 </ToggleButton>
 
