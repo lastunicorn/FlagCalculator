@@ -20,7 +20,7 @@ using System.Reflection;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal sealed class MainWindowViewModel : ViewModelBase
     {

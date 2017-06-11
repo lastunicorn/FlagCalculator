@@ -16,7 +16,7 @@
 
 using System.Windows.Controls;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.Views
 {
     /// <summary>
     /// Interaction logic for HelpPage.xaml

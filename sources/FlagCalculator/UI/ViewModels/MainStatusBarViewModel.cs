@@ -15,9 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal class MainStatusBarViewModel : ViewModelBase
     {

@@ -19,7 +19,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal class FlagsViewModel : ViewModelBase
     {

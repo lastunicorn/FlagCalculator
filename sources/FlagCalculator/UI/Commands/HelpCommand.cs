@@ -16,6 +16,7 @@
 
 using System;
 using System.Windows.Input;
+using DustInTheWind.FlagCalculator.UI.ViewModels;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {

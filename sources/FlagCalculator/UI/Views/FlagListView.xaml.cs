@@ -14,18 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Windows;
 using System.Windows.Controls;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.Views
 {
     /// <summary>
-    /// Interaction logic for MainValueView.xaml
+    /// Interaction logic for FlagListView.xaml
     /// </summary>
-    public partial class MainValueView : UserControl
+    public partial class FlagListView : UserControl
     {
-        public MainValueView()
+        public FlagListView()
         {
             InitializeComponent();
+        }
+
+        private void FrameworkElement_OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

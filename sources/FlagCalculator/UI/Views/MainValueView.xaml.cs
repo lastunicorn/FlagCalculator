@@ -16,14 +16,14 @@
 
 using System.Windows.Controls;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.UI.Views
 {
     /// <summary>
-    /// Interaction logic for MainStatusBar.xaml
+    /// Interaction logic for MainValueView.xaml
     /// </summary>
-    public partial class MainStatusBar : UserControl
+    public partial class MainValueView : UserControl
     {
-        public MainStatusBar()
+        public MainValueView()
         {
             InitializeComponent();
         }

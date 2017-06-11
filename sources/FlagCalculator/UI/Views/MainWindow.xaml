@@ -17,11 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <Window
-    x:Class="DustInTheWind.FlagCalculator.UI.MainWindow"
+    x:Class="DustInTheWind.FlagCalculator.UI.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="clr-namespace:DustInTheWind.FlagCalculator.UI"
     xmlns:converters="clr-namespace:DustInTheWind.FlagCalculator.UI.Converters"
+    xmlns:views="clr-namespace:DustInTheWind.FlagCalculator.UI.Views"
     Title="{Binding Title}"
     Height="480"
     Width="750"
@@ -88,15 +89,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <DockPanel Background="{StaticResource MainBackground}">
 
-            <ui:MainValueView DockPanel.Dock="Top"/>
+            <views:MainValueView DockPanel.Dock="Top"/>
 
-            <ui:MainStatusBar DockPanel.Dock="Bottom" DataContext="{Binding MainStatusBarViewModel}"/>
+            <views:MainStatusBar DockPanel.Dock="Bottom" DataContext="{Binding MainStatusBarViewModel}"/>
 
-            <ui:FlagListView DataContext="{Binding FlagsViewModel}"/>
+            <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
 
         </DockPanel>
 
-        <ui:HelpPage
+        <views:HelpPage
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Visibility="{Binding IsHelpPageVisible, Converter={StaticResource BoolToVisibilityConverter}}"

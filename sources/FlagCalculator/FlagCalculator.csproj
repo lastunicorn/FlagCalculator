@@ -68,7 +68,7 @@
     <Compile Include="UI\Commands\SelectNoFlagsCommand.cs" />
     <Compile Include="UI\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="UI\Commands\NumericalBaseRollCommand.cs" />
-    <Compile Include="UI\CheckableItem.cs" />
+    <Compile Include="Business\CheckableItem.cs" />
     <Compile Include="UI\Commands\FlagCheckedCommand.cs" />
     <Compile Include="Business\FlagInfoCollection.cs" />
     <Compile Include="Business\FlagInfoCollectionProvider.cs" />
@@ -78,22 +78,22 @@
     <Compile Include="UI\Commands\EmptyCommand.cs" />
     <Compile Include="UI\Commands\EscapeCommand.cs" />
     <Compile Include="UI\Commands\HelpCommand.cs" />
-    <Compile Include="UI\FlagListView.xaml.cs">
+    <Compile Include="UI\Views\FlagListView.xaml.cs">
       <DependentUpon>FlagListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\FlagsList.cs" />
-    <Compile Include="UI\FlagsViewModel.cs" />
-    <Compile Include="UI\HelpPage.xaml.cs">
+    <Compile Include="Business\FlagsList.cs" />
+    <Compile Include="UI\ViewModels\FlagsViewModel.cs" />
+    <Compile Include="UI\Views\HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\MainStatusBar.xaml.cs">
+    <Compile Include="UI\Views\MainStatusBar.xaml.cs">
       <DependentUpon>MainStatusBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\MainStatusBarViewModel.cs" />
-    <Compile Include="UI\MainValueView.xaml.cs">
+    <Compile Include="UI\ViewModels\MainStatusBarViewModel.cs" />
+    <Compile Include="UI\Views\MainValueView.xaml.cs">
       <DependentUpon>MainValueView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\MainWindowViewModel.cs" />
+    <Compile Include="UI\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="UI\Commands\PasteCommand.cs" />
     <Compile Include="Business\SmartNumber.cs" />
     <Compile Include="UI\UserInterface.cs" />
@@ -111,15 +111,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\FlagListView.xaml">
+    <Page Include="UI\Views\FlagListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\HelpPage.xaml">
+    <Page Include="UI\Views\HelpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\MainValueView.xaml">
+    <Page Include="UI\Views\MainValueView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,11 +135,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\MainStatusBar.xaml">
+    <Page Include="UI\Views\MainStatusBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\MainWindow.xaml">
+    <Page Include="UI\Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -147,7 +147,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\MainWindow.xaml.cs">
+    <Compile Include="UI\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -186,6 +186,7 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

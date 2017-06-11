@@ -10,14 +10,14 @@ Undo functionality
 Redo functionality
 - As a user I want to be able to redo steps previously undone by the undo functionality.
 
-Button to Select All
-- As a user I want to be able to select all flags at once.
-
-Button to Select None
-- As a user I want to be able to unselect all flags at once.
-
 Load enums from UI
 - As a user I want to be able to have a File->Open menu item that lets me select an assembly file, open the assembly browse window and then let me choos an enum to be loaded.
+
+* Button to Select All
+- As a user I want to be able to select all flags at once.
+
+* Button to Select None
+- As a user I want to be able to unselect all flags at once.
 
 * Display only selected
 - As a user I want to have a checkbox that displays only the selected items.

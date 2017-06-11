@@ -19,9 +19,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
-using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator.UI
+namespace DustInTheWind.FlagCalculator.Business
 {
     internal class FlagsList : ObservableCollection<CheckableItem>
     {
