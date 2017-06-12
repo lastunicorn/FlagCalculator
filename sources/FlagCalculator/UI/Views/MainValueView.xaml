@@ -122,7 +122,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Orientation="Vertical"
                 Margin="0">
 
-                <StackPanel.Style>
+                <!--<StackPanel.Style>
                     <Style TargetType="StackPanel">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="True">
@@ -133,7 +133,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </StackPanel.Style>
+                </StackPanel.Style>-->
 
                 <Button
                     Command="{Binding CopyCommand}"
