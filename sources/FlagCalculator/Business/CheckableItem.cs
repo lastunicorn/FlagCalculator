@@ -23,7 +23,8 @@ namespace DustInTheWind.FlagCalculator.Business
 {
     internal class CheckableItem : ViewModelBase
     {
-        private readonly SmartNumber mainValue;
+        private readonly MainValue mainValue;
+        private readonly NumericalBaseService numericalBaseService;
         private readonly FlagInfo flagInfo;
         private bool isChecked;
         private string text;
@@ -73,16 +74,18 @@ namespace DustInTheWind.FlagCalculator.Business
         public FlagCheckedCommand FlagCheckedCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
 
-        public CheckableItem(SmartNumber mainValue, FlagInfo flagInfo, StatusInfo statusInfo)
+        public CheckableItem(MainValue mainValue, NumericalBaseService numericalBaseService, FlagInfo flagInfo, StatusInfo statusInfo)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
             if (flagInfo == null) throw new ArgumentNullException(nameof(flagInfo));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
             this.mainValue = mainValue;
+            this.numericalBaseService = numericalBaseService;
             this.flagInfo = flagInfo;
 
-            mainValue.NumericalBaseChanged += HandleNumericalBaseChanged;
+            numericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
 
             FlagCheckedCommand = new FlagCheckedCommand(mainValue);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
@@ -94,7 +97,7 @@ namespace DustInTheWind.FlagCalculator.Business
             FlagValue = new SmartValue
             {
                 Value = flagInfo.Value,
-                NumericalBase = mainValue.NumericalBase,
+                NumericalBase = numericalBaseService.NumericalBase,
                 BitCount = mainValue.BitCount
             };
         }
@@ -121,7 +124,7 @@ namespace DustInTheWind.FlagCalculator.Business
             FlagValue = new SmartValue
             {
                 Value = flagInfo.Value,
-                NumericalBase = mainValue.NumericalBase,
+                NumericalBase = numericalBaseService.NumericalBase,
                 BitCount = mainValue.BitCount
             };
         }

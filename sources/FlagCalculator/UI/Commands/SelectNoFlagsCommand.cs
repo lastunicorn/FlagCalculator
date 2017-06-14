@@ -22,9 +22,9 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class SelectNoFlagsCommand : ICommand
     {
-        private readonly SmartNumber mainValue;
+        private readonly MainValue mainValue;
 
-        public SelectNoFlagsCommand(SmartNumber mainValue)
+        public SelectNoFlagsCommand(MainValue mainValue)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
             this.mainValue = mainValue;

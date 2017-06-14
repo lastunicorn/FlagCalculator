@@ -16,7 +16,6 @@
 
 using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
@@ -28,11 +27,12 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private readonly string titleBase;
         private string title;
-        
+
         private bool isHelpPageVisible;
-        private SmartNumber mainValue;
+        private MainValue mainValue;
         private readonly FlagCollection flagCollection;
         private readonly StatusInfo statusInfo;
+        private NumericalBaseService numericalBaseService;
 
         public string Title
         {
@@ -44,7 +44,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public SmartNumber MainValue
+        public MainValue MainValue
         {
             get { return mainValue; }
             private set
@@ -85,13 +85,14 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             Title = titleBase;
 
-            mainValue = new SmartNumber();
-            flagCollection = new FlagCollection(mainValue);
+            numericalBaseService = new NumericalBaseService();
+            mainValue = new MainValue(numericalBaseService);
+            flagCollection = new FlagCollection(mainValue, numericalBaseService);
             statusInfo = new StatusInfo();
 
             FlagsViewModel = new FlagsViewModel(MainValue, flagCollection);
             MainStatusBarViewModel = new MainStatusBarViewModel(mainValue, flagCollection, statusInfo);
-            MainValueViewModel = new MainValueViewModel(mainValue, statusInfo);
+            MainValueViewModel = new MainValueViewModel(mainValue, numericalBaseService, statusInfo);
 
             EscapeCommand = new EscapeCommand(MainValue);
             SelectAllFlagsCommand = new SelectAllFlagsCommand(mainValue, flagCollection);
@@ -116,7 +117,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 FlagInfoCollectionProvider flagInfoCollectionProvider = new FlagInfoCollectionProvider();
                 FlagInfoCollection flagInfoCollection = flagInfoCollectionProvider.LoadFlagCollection();
 
-                MainValue.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
+                MainValue.BitCount = flagInfoCollection.BitCount;
                 flagCollection.Load(flagInfoCollection, statusInfo);
 
                 Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);

@@ -35,6 +35,9 @@ namespace DustInTheWind.FlagCalculator.Business
         {
             switch (NumericalBase)
             {
+                case NumericalBase.None:
+                    return string.Empty;
+
                 case NumericalBase.Decimal:
                     return ToStringDecimal();
 

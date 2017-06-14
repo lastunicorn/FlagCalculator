@@ -72,7 +72,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
 
-        public MainStatusBarViewModel(SmartNumber mainValue, FlagCollection flagCollection, StatusInfo statusInfo)
+        public MainStatusBarViewModel(MainValue mainValue, FlagCollection flagCollection, StatusInfo statusInfo)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
             if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));

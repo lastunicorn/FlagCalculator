@@ -15,10 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Reflection;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
@@ -34,9 +31,8 @@ namespace DustInTheWind.FlagCalculator.Business
                 return new FlagInfoCollection();
 
             Type enumType = GetEnumeType(enumTypeFullName);
-            IEnumerable<FlagInfo> list = BuildListOfFields(enumType);
 
-            return ToFlagInfoCollection(list, enumType);
+            return FlagInfoCollection.FromEnum(enumType);
         }
 
         private Type GetEnumeType(string enumTypeFullName)
@@ -61,33 +57,6 @@ namespace DustInTheWind.FlagCalculator.Business
             }
 
             return enumType;
-        }
-
-        private static IEnumerable<FlagInfo> BuildListOfFields(Type enumType)
-        {
-            FieldInfo[] fieldInfos = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
-
-            return fieldInfos
-                .Select(x => new FlagInfo
-                {
-                    Value = (ulong)Convert.ChangeType(x.GetRawConstantValue(), typeof(ulong)),
-                    Name = x.Name
-                })
-                .ToList();
-        }
-
-        public static FlagInfoCollection ToFlagInfoCollection(IEnumerable<FlagInfo> flagInfos, Type enumType)
-        {
-            FlagInfoCollection flagInfoCollection = new FlagInfoCollection
-            {
-                Name = enumType.Name,
-                UnderlyingType = enumType.GetEnumUnderlyingType()
-            };
-
-            foreach (FlagInfo flagInfo in flagInfos)
-                flagInfoCollection.Add(flagInfo);
-
-            return flagInfoCollection;
         }
     }
 }

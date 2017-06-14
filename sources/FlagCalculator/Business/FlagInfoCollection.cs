@@ -17,14 +17,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
     internal class FlagInfoCollection : IEnumerable<FlagInfo>
     {
         private readonly List<FlagInfo> flags;
-        public string Name { get; set; }
-        public Type UnderlyingType { get; set; }
+        public string Name { get; private set; }
+        public Type UnderlyingType { get; private set; }
+
+        public int BitCount => Marshal.SizeOf(UnderlyingType) * 8;
 
         public FlagInfoCollection()
         {
@@ -41,9 +46,37 @@ namespace DustInTheWind.FlagCalculator.Business
             return GetEnumerator();
         }
 
-        public void Add(FlagInfo flagInfo)
+        public static FlagInfoCollection FromEnum(Type enumType)
         {
-            flags.Add(flagInfo);
+            IEnumerable<FlagInfo> list = BuildListOfFields(enumType);
+            return ToFlagInfoCollection(list, enumType);
+        }
+
+        private static IEnumerable<FlagInfo> BuildListOfFields(Type enumType)
+        {
+            FieldInfo[] fieldInfos = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
+
+            return fieldInfos
+                .Select(x => new FlagInfo
+                {
+                    Value = (ulong)Convert.ChangeType(x.GetRawConstantValue(), typeof(ulong)),
+                    Name = x.Name
+                })
+                .ToList();
+        }
+
+        private static FlagInfoCollection ToFlagInfoCollection(IEnumerable<FlagInfo> flagInfos, Type enumType)
+        {
+            FlagInfoCollection flagInfoCollection = new FlagInfoCollection
+            {
+                Name = enumType.Name,
+                UnderlyingType = enumType.GetEnumUnderlyingType()
+            };
+
+            foreach (FlagInfo flagInfo in flagInfos)
+                flagInfoCollection.flags.Add(flagInfo);
+
+            return flagInfoCollection;
         }
     }
 }

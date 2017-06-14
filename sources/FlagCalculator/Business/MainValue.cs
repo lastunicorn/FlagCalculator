@@ -18,10 +18,10 @@ using System;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class SmartNumber
+    internal class MainValue
     {
+        private readonly NumericalBaseService numericalBaseService;
         private ulong value;
-        private NumericalBase numericalBase;
 
         private ulong Value
         {
@@ -33,41 +33,14 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
-        public NumericalBase NumericalBase
-        {
-            get { return numericalBase; }
-            set
-            {
-                numericalBase = value;
-                OnNumericalBaseChanged();
-            }
-        }
-
         public int BitCount { get; set; }
 
         public event EventHandler ValueChanged;
-        public event EventHandler NumericalBaseChanged;
 
-        public SmartNumber()
-            : this(0)
+        public MainValue(NumericalBaseService numericalBaseService)
         {
-        }
-
-        public SmartNumber(ulong value)
-        {
-            this.value = value;
-            numericalBase = NumericalBase.Decimal;
-            BitCount = 64;
-        }
-
-        public static implicit operator ulong(SmartNumber smartNumber)
-        {
-            return smartNumber.value;
-        }
-
-        public static implicit operator SmartNumber(ulong value)
-        {
-            return new SmartNumber(value);
+            if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
+            this.numericalBaseService = numericalBaseService;
         }
 
         public void AddFlags(ulong flags)
@@ -92,29 +65,10 @@ namespace DustInTheWind.FlagCalculator.Business
                 : (value & flags) == flags;
         }
 
-        public void RollBase()
-        {
-            switch (numericalBase)
-            {
-                case NumericalBase.Decimal:
-                    NumericalBase = NumericalBase.Hexadecimal;
-                    break;
-
-                case NumericalBase.Hexadecimal:
-                    NumericalBase = NumericalBase.Binary;
-                    break;
-
-                case NumericalBase.Binary:
-                    NumericalBase = NumericalBase.Decimal;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
         public void AddDigit(uint digit)
         {
+            NumericalBase numericalBase = numericalBaseService.NumericalBase;
+
             if (digit >= (uint)numericalBase)
                 return;
 
@@ -125,8 +79,8 @@ namespace DustInTheWind.FlagCalculator.Business
         {
             try
             {
-                int @base = (int)numericalBase;
-                ulong uInt64 = Convert.ToUInt64(newValue.Replace(" ", string.Empty), @base);
+                int numericalBase = (int)numericalBaseService.NumericalBase;
+                ulong uInt64 = Convert.ToUInt64(newValue.Replace(" ", string.Empty), numericalBase);
                 Value = uInt64;
             }
             catch { }
@@ -137,12 +91,22 @@ namespace DustInTheWind.FlagCalculator.Business
             Value = newValue;
         }
 
+        public SmartValue ToSmartValue()
+        {
+            return new SmartValue
+            {
+                Value = value,
+                NumericalBase = numericalBaseService.NumericalBase,
+                BitCount = BitCount
+            };
+        }
+
         public override string ToString()
         {
             SmartValue smartValue = new SmartValue
             {
                 Value = value,
-                NumericalBase = numericalBase,
+                NumericalBase = numericalBaseService.NumericalBase,
                 BitCount = BitCount
             };
 
@@ -153,11 +117,6 @@ namespace DustInTheWind.FlagCalculator.Business
         {
             EventHandler handler = ValueChanged;
             handler?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void OnNumericalBaseChanged()
-        {
-            NumericalBaseChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

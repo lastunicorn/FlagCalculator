@@ -25,7 +25,8 @@ namespace DustInTheWind.FlagCalculator.Business
 {
     internal sealed class FlagCollection
     {
-        private readonly SmartNumber mainValue;
+        private readonly MainValue mainValue;
+        private readonly NumericalBaseService numericalBaseService;
         private bool displaySelected;
         private bool displayUnselected;
         private readonly ObservableCollection<CheckableItem> flags;
@@ -65,11 +66,13 @@ namespace DustInTheWind.FlagCalculator.Business
 
         public event EventHandler SelectionChanged;
 
-        public FlagCollection(SmartNumber mainValue)
+        public FlagCollection(MainValue mainValue, NumericalBaseService numericalBaseService)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
 
             this.mainValue = mainValue;
+            this.numericalBaseService = numericalBaseService;
 
             flags = new ObservableCollection<CheckableItem>();
             DisplaySelected = false;
@@ -93,7 +96,7 @@ namespace DustInTheWind.FlagCalculator.Business
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
             List<CheckableItem> checkableItems = flagInfoCollection
-                .Select(x => new CheckableItem(mainValue, x, statusInfo))
+                .Select(x => new CheckableItem(mainValue, numericalBaseService, x, statusInfo))
                 .ToList();
 
             foreach (CheckableItem item in checkableItems)
@@ -110,7 +113,7 @@ namespace DustInTheWind.FlagCalculator.Business
             return value;
         }
 
-        public void UpdateFlags(SmartNumber mainValue)
+        public void UpdateFlags(MainValue mainValue)
         {
             foreach (CheckableItem checkableItem in flags)
                 checkableItem.IsChecked = mainValue.IsFlagSet(checkableItem.FlagValue.Value);

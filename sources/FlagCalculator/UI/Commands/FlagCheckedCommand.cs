@@ -22,9 +22,9 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class FlagCheckedCommand : ICommand
     {
-        private readonly SmartNumber mainValue;
+        private readonly MainValue mainValue;
 
-        public FlagCheckedCommand(SmartNumber mainValue)
+        public FlagCheckedCommand(MainValue mainValue)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
             this.mainValue = mainValue;

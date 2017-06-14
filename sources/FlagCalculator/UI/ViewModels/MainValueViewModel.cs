@@ -23,15 +23,18 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal class MainValueViewModel : ViewModelBase
     {
-        private SmartNumber mainValue;
+        private readonly MainValue mainValue;
+        private readonly NumericalBaseService numericalBaseService;
+
+        private SmartValue smartValue;
         private string numericalBase;
 
-        public SmartNumber MainValue
+        public SmartValue MainValue
         {
-            get { return mainValue; }
+            get { return smartValue; }
             private set
             {
-                this.mainValue = value;
+                smartValue = value;
                 OnPropertyChanged();
             }
         }
@@ -51,38 +54,40 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public NumericalBaseRollCommand NumericalBaseRollCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
 
-        public MainValueViewModel(SmartNumber mainValue, StatusInfo statusInfo)
+        public MainValueViewModel(MainValue mainValue, NumericalBaseService numericalBaseService, StatusInfo statusInfo)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
             this.mainValue = mainValue;
+            this.numericalBaseService = numericalBaseService;
 
-            CopyCommand = new CopyCommand(MainValue);
-            PasteCommand = new PasteCommand(MainValue);
-            NumericalBaseRollCommand = new NumericalBaseRollCommand(MainValue);
+            CopyCommand = new CopyCommand(mainValue);
+            PasteCommand = new PasteCommand(mainValue);
+            NumericalBaseRollCommand = new NumericalBaseRollCommand(numericalBaseService);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
             mainValue.ValueChanged += HandleMainValueChanged;
-            MainValue.NumericalBaseChanged += HandleMainValueNumericalBaseChanged;
+            numericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
 
-            UpdateNumericalBase();
+            UpdateNumericalBaseText();
         }
 
         private void HandleMainValueChanged(object sender, EventArgs e)
         {
-            MainValue = mainValue;
+            MainValue = mainValue.ToSmartValue();
         }
 
-        private void HandleMainValueNumericalBaseChanged(object sender, EventArgs e)
+        private void HandleNumericalBaseChanged(object sender, EventArgs e)
         {
-            UpdateNumericalBase();
-            MainValue = mainValue;
+            UpdateNumericalBaseText();
+            MainValue = mainValue.ToSmartValue();
         }
 
-        private void UpdateNumericalBase()
+        private void UpdateNumericalBaseText()
         {
-            NumericalBase = ((int)MainValue.NumericalBase).ToString(CultureInfo.CurrentCulture);
+            NumericalBase = ((int)numericalBaseService.NumericalBase).ToString(CultureInfo.CurrentCulture);
         }
     }
 }

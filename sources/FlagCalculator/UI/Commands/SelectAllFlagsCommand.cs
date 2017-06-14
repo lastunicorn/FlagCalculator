@@ -22,10 +22,10 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class SelectAllFlagsCommand : ICommand
     {
-        private readonly SmartNumber mainValue;
+        private readonly MainValue mainValue;
         private readonly FlagCollection flagCollection;
 
-        public SelectAllFlagsCommand(SmartNumber mainValue, FlagCollection flagCollection)
+        public SelectAllFlagsCommand(MainValue mainValue, FlagCollection flagCollection)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
             if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
