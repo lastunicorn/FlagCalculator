@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using DustInTheWind.FlagCalculator.Business;
@@ -29,12 +28,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private readonly string titleBase;
         private string title;
-
-        private string numericalBase;
+        
         private bool isHelpPageVisible;
         private SmartNumber mainValue;
         private readonly FlagCollection flagCollection;
-        private StatusInfo statusInfo;
+        private readonly StatusInfo statusInfo;
 
         public string Title
         {
@@ -56,25 +54,15 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public string NumericalBase
-        {
-            get { return numericalBase; }
-            set
-            {
-                numericalBase = value;
-                OnPropertyChanged();
-            }
-        }
-
         public FlagsViewModel FlagsViewModel { get; }
         public MainStatusBarViewModel MainStatusBarViewModel { get; }
+        public MainValueViewModel MainValueViewModel { get; }
 
         public EscapeCommand EscapeCommand { get; }
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public DigitCommand DigitCommand { get; }
-        public NumericalBaseRollCommand NumericalBaseRollCommand { get; }
         public HelpCommand HelpCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
 
@@ -103,42 +91,19 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             FlagsViewModel = new FlagsViewModel(MainValue, flagCollection);
             MainStatusBarViewModel = new MainStatusBarViewModel(mainValue, flagCollection, statusInfo);
+            MainValueViewModel = new MainValueViewModel(mainValue, statusInfo);
 
             EscapeCommand = new EscapeCommand(MainValue);
             SelectAllFlagsCommand = new SelectAllFlagsCommand(mainValue, flagCollection);
             CopyCommand = new CopyCommand(MainValue);
             PasteCommand = new PasteCommand(MainValue);
             DigitCommand = new DigitCommand(MainValue);
-            NumericalBaseRollCommand = new NumericalBaseRollCommand(MainValue);
             HelpCommand = new HelpCommand(this);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
             isHelpPageVisible = false;
 
             LoadFlagCollection();
-
-            MainValue.ValueChanged += HandleMainValueChanged;
-            MainValue.NumericalBaseChanged += HandleMainValueNumericalBaseChanged;
-
-            MainValue.Clear();
-
-            UpdateNumericalBase();
-        }
-
-        private void HandleMainValueNumericalBaseChanged(object sender, EventArgs e)
-        {
-            UpdateNumericalBase();
-            MainValue = mainValue;
-        }
-
-        private void UpdateNumericalBase()
-        {
-            NumericalBase = ((int)MainValue.NumericalBase).ToString(CultureInfo.CurrentCulture);
-        }
-
-        private void HandleMainValueChanged(object sender, EventArgs e)
-        {
-            MainValue = mainValue;
         }
 
         private void LoadFlagCollection()

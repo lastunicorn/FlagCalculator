@@ -83,6 +83,7 @@
     <Compile Include="UI\Commands\EmptyCommand.cs" />
     <Compile Include="UI\Commands\EscapeCommand.cs" />
     <Compile Include="UI\Commands\HelpCommand.cs" />
+    <Compile Include="UI\ViewModels\MainValueViewModel.cs" />
     <Compile Include="UI\Views\FlagListView.xaml.cs">
       <DependentUpon>FlagListView.xaml</DependentUpon>
     </Compile>
