@@ -17,6 +17,7 @@
 using System;
 using System.Globalization;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
@@ -31,8 +32,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private string numericalBase;
         private bool isHelpPageVisible;
-        private SmartNumber value;
-        private readonly FlagsList flags;
+        private SmartNumber mainValue;
+        private readonly FlagCollection flagCollection;
         private StatusInfo statusInfo;
 
         public string Title
@@ -45,12 +46,12 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public SmartNumber Value
+        public SmartNumber MainValue
         {
-            get { return value; }
+            get { return mainValue; }
             private set
             {
-                this.value = value;
+                this.mainValue = value;
                 OnPropertyChanged();
             }
         }
@@ -96,19 +97,19 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             Title = titleBase;
 
-            value = new SmartNumber();
-            flags = new FlagsList(value);
+            mainValue = new SmartNumber();
+            flagCollection = new FlagCollection(mainValue);
             statusInfo = new StatusInfo();
 
-            FlagsViewModel = new FlagsViewModel(Value, flags);
-            MainStatusBarViewModel = new MainStatusBarViewModel(flags, statusInfo);
+            FlagsViewModel = new FlagsViewModel(MainValue, flagCollection);
+            MainStatusBarViewModel = new MainStatusBarViewModel(mainValue, flagCollection, statusInfo);
 
-            EscapeCommand = new EscapeCommand(Value);
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(flags);
-            CopyCommand = new CopyCommand(Value);
-            PasteCommand = new PasteCommand(Value);
-            DigitCommand = new DigitCommand(Value);
-            NumericalBaseRollCommand = new NumericalBaseRollCommand(Value);
+            EscapeCommand = new EscapeCommand(MainValue);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(mainValue, flagCollection);
+            CopyCommand = new CopyCommand(MainValue);
+            PasteCommand = new PasteCommand(MainValue);
+            DigitCommand = new DigitCommand(MainValue);
+            NumericalBaseRollCommand = new NumericalBaseRollCommand(MainValue);
             HelpCommand = new HelpCommand(this);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
@@ -116,10 +117,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             LoadFlagCollection();
 
-            Value.ValueChanged += HandleMainValueChanged;
-            Value.NumericalBaseChanged += HandleMainValueNumericalBaseChanged;
+            MainValue.ValueChanged += HandleMainValueChanged;
+            MainValue.NumericalBaseChanged += HandleMainValueNumericalBaseChanged;
 
-            Value.Clear();
+            MainValue.Clear();
 
             UpdateNumericalBase();
         }
@@ -127,29 +128,30 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private void HandleMainValueNumericalBaseChanged(object sender, EventArgs e)
         {
             UpdateNumericalBase();
-            Value = value;
+            MainValue = mainValue;
         }
 
         private void UpdateNumericalBase()
         {
-            NumericalBase = ((int)Value.NumericalBase).ToString(CultureInfo.CurrentCulture);
+            NumericalBase = ((int)MainValue.NumericalBase).ToString(CultureInfo.CurrentCulture);
         }
 
         private void HandleMainValueChanged(object sender, EventArgs e)
         {
-            Value = value;
+            MainValue = mainValue;
         }
 
         private void LoadFlagCollection()
         {
             try
             {
-                Value.Clear();
+                MainValue.Clear();
 
                 FlagInfoCollectionProvider flagInfoCollectionProvider = new FlagInfoCollectionProvider();
                 FlagInfoCollection flagInfoCollection = flagInfoCollectionProvider.LoadFlagCollection();
 
-                flags.Load(flagInfoCollection, statusInfo);
+                MainValue.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
+                flagCollection.Load(flagInfoCollection, statusInfo);
 
                 Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);
             }

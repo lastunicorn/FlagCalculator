@@ -79,7 +79,7 @@ namespace DustInTheWind.FlagCalculator.Business
 
             this.mainValue = mainValue;
 
-            mainValue.NumericalBaseChanged += HandleFlagNumberBaseChanged;
+            mainValue.NumericalBaseChanged += HandleNumericalBaseChanged;
 
             FlagCheckedCommand = new FlagCheckedCommand(mainValue);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
@@ -111,7 +111,7 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
-        private void HandleFlagNumberBaseChanged(object sender, EventArgs eventArgs)
+        private void HandleNumericalBaseChanged(object sender, EventArgs eventArgs)
         {
             flagValue.NumericalBase = mainValue.NumericalBase;
             FlagValue = flagValue;

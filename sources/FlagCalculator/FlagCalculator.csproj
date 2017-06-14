@@ -86,7 +86,7 @@
     <Compile Include="UI\Views\FlagListView.xaml.cs">
       <DependentUpon>FlagListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Business\FlagsList.cs" />
+    <Compile Include="Business\FlagCollection.cs" />
     <Compile Include="UI\ViewModels\FlagsViewModel.cs" />
     <Compile Include="UI\Views\HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>

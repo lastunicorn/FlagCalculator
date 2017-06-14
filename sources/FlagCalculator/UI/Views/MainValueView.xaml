@@ -99,7 +99,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <TextBlock
                         Grid.Column="0"
                         FontSize="50"
-                        Text="{Binding Value}"
+                        Text="{Binding MainValue}"
                         HorizontalAlignment="Stretch"
                         TextAlignment="Right"
                         Foreground="#4a2200"/>
