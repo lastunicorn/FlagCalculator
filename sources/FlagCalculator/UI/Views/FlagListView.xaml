@@ -33,12 +33,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </UserControl.Resources>
 
     <ScrollViewer
-        x:Name="ScrollViewer1"
         HorizontalScrollBarVisibility="Auto"
         VerticalScrollBarVisibility="Auto">
 
         <ItemsControl
-            x:Name="ItemsControl1"
             ItemsSource="{Binding ItemsView}"
             HorizontalAlignment="Stretch">
 
