@@ -105,7 +105,7 @@ namespace DustInTheWind.FlagCalculator.Business
             ulong value = 0;
 
             foreach (CheckableItem item in flags)
-                value |= item.FlagValue;
+                value |= item.FlagValue.Value;
 
             return value;
         }
@@ -113,7 +113,7 @@ namespace DustInTheWind.FlagCalculator.Business
         public void UpdateFlags(SmartNumber mainValue)
         {
             foreach (CheckableItem checkableItem in flags)
-                checkableItem.IsChecked = mainValue.IsFlagSet(checkableItem.FlagValue);
+                checkableItem.IsChecked = mainValue.IsFlagSet(checkableItem.FlagValue.Value);
 
             View.Refresh();
         }

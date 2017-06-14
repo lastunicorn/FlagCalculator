@@ -22,12 +22,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class FlagCheckedCommand : ICommand
     {
-        private readonly SmartNumber smartNumber;
+        private readonly SmartNumber mainValue;
 
-        public FlagCheckedCommand(SmartNumber smartNumber)
+        public FlagCheckedCommand(SmartNumber mainValue)
         {
-            if (smartNumber == null) throw new ArgumentNullException(nameof(smartNumber));
-            this.smartNumber = smartNumber;
+            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            this.mainValue = mainValue;
         }
         
         public bool CanExecute(object parameter)
@@ -44,18 +44,18 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
             if (checkableItem == null)
                 return;
 
-            ulong value = checkableItem.FlagValue;
+            ulong value = checkableItem.FlagValue.Value;
 
             if (checkableItem.IsChecked)
             {
                 if (value == 0)
-                    smartNumber.Clear();
+                    mainValue.Clear();
                 else
-                    smartNumber.AddFlags(value);
+                    mainValue.AddFlags(value);
             }
             else
             {
-                smartNumber.RemoveFlags(value);
+                mainValue.RemoveFlags(value);
             }
         }
     }

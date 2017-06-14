@@ -24,11 +24,11 @@ using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Converters
 {
-    public class SmartNumberToStringConverter : IValueConverter
+    public class SmartValueToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is SmartNumber)
+            if (value is SmartValue)
                 return ConvertFromSmartNumber(value);
 
             return null;
@@ -36,11 +36,11 @@ namespace DustInTheWind.FlagCalculator.UI.Converters
 
         private static object ConvertFromSmartNumber(object value)
         {
-            SmartNumber smartNumber = (SmartNumber)value;
+            SmartValue smartValue = (SmartValue)value;
 
-            string xamlContent = smartNumber.ToString();
+            string xamlContent = smartValue.ToString();
 
-            if (smartNumber.NumericalBase != NumericalBase.Binary)
+            if (smartValue.NumericalBase != NumericalBase.Binary)
                 return xamlContent;
 
             xamlContent = xamlContent.Replace("1", @"<Run Foreground = ""Red"">1</Run>");

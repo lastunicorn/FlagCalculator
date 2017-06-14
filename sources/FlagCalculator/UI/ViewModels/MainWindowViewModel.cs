@@ -104,6 +104,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             isHelpPageVisible = false;
 
             LoadFlagCollection();
+            MainValue.Clear();
         }
 
         private void LoadFlagCollection()

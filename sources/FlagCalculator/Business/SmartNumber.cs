@@ -15,8 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
@@ -141,58 +139,14 @@ namespace DustInTheWind.FlagCalculator.Business
 
         public override string ToString()
         {
-            return CalculateValueAsString();
-        }
-
-        private string CalculateValueAsString()
-        {
-            switch (NumericalBase)
+            SmartValue smartValue = new SmartValue
             {
-                case NumericalBase.Decimal:
-                    return ToStringDecimal();
+                Value = value,
+                NumericalBase = numericalBase,
+                BitCount = BitCount
+            };
 
-                case NumericalBase.Hexadecimal:
-                    return ToStringHexa();
-
-                case NumericalBase.Binary:
-                    return ToStringBinary();
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private string ToStringDecimal()
-        {
-            return value.ToString(CultureInfo.CurrentCulture);
-        }
-
-        private string ToStringHexa()
-        {
-            return value.ToString("X", CultureInfo.CurrentCulture);
-        }
-
-        private string ToStringBinary()
-        {
-            ulong v = value;
-            int bitCount = BitCount;
-
-            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
-
-            for (int i = 0; i < bitCount; i++)
-            {
-                if (i != 0 && i % 4 == 0)
-                    chars.Add(' ');
-
-                bool bit = (v & 1) == 1;
-                chars.Add(bit ? '1' : '0');
-
-                v = v >> 1;
-            }
-
-            chars.Reverse();
-
-            return string.Join(string.Empty, chars);
+            return smartValue.ToString();
         }
 
         private void OnValueChanged()
