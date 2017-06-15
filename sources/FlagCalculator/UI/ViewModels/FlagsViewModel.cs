@@ -22,24 +22,14 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal class FlagsViewModel : ViewModelBase
     {
-        private readonly MainValue mainValue;
         private readonly FlagCollection flagCollection;
         public ICollectionView ItemsView => flagCollection.View;
 
-        public FlagsViewModel(MainValue mainValue, FlagCollection flagCollection)
+        public FlagsViewModel(FlagCollection flagCollection)
         {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
             if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
 
-            this.mainValue = mainValue;
             this.flagCollection = flagCollection;
-
-            mainValue.ValueChanged += HandleMainValueChanged;
-        }
-
-        private void HandleMainValueChanged(object sender, EventArgs e)
-        {
-            flagCollection.UpdateFlags(mainValue);
         }
     }
 }

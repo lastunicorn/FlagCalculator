@@ -90,7 +90,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             flagCollection = new FlagCollection(mainValue, numericalBaseService);
             statusInfo = new StatusInfo();
 
-            FlagsViewModel = new FlagsViewModel(MainValue, flagCollection);
+            FlagsViewModel = new FlagsViewModel(flagCollection);
             MainStatusBarViewModel = new MainStatusBarViewModel(mainValue, flagCollection, statusInfo);
             MainValueViewModel = new MainValueViewModel(mainValue, numericalBaseService, statusInfo);
 

@@ -90,18 +90,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <DockPanel Background="{StaticResource MainBackground}">
 
             <views:MainValueView DockPanel.Dock="Top" DataContext="{Binding MainValueViewModel}"/>
-
             <views:MainStatusBar DockPanel.Dock="Bottom" DataContext="{Binding MainStatusBarViewModel}"/>
-
             <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
 
         </DockPanel>
 
-        <views:HelpPage
+        <!--<views:HelpPage
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Visibility="{Binding IsHelpPageVisible, Converter={StaticResource BoolToVisibilityConverter}}"
-            Focusable="True"/>
+            Focusable="True"/>-->
 
     </Grid>
 

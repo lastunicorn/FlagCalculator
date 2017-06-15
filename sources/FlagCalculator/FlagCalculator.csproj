@@ -82,7 +82,6 @@
     <Compile Include="Business\FlagInfo.cs" />
     <Compile Include="UI\Commands\CopyCommand.cs" />
     <Compile Include="UI\Commands\DigitCommand.cs" />
-    <Compile Include="UI\Commands\EmptyCommand.cs" />
     <Compile Include="UI\Commands\EscapeCommand.cs" />
     <Compile Include="UI\Commands\HelpCommand.cs" />
     <Compile Include="UI\ViewModels\MainValueViewModel.cs" />
@@ -91,9 +90,6 @@
     </Compile>
     <Compile Include="Business\FlagCollection.cs" />
     <Compile Include="UI\ViewModels\FlagsViewModel.cs" />
-    <Compile Include="UI\Views\HelpPage.xaml.cs">
-      <DependentUpon>HelpPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Views\MainStatusBar.xaml.cs">
       <DependentUpon>MainStatusBar.xaml</DependentUpon>
     </Compile>
@@ -120,10 +116,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Views\FlagListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Views\HelpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -23,9 +23,9 @@ namespace DustInTheWind.FlagCalculator.Business
 {
     internal class CheckableItem : ViewModelBase
     {
-        private readonly MainValue mainValue;
         private readonly NumericalBaseService numericalBaseService;
         private readonly FlagInfo flagInfo;
+        private readonly int enumBitCount;
         private bool isChecked;
         private string text;
         private string toolTip;
@@ -51,16 +51,6 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
-        public string ToolTip
-        {
-            get { return toolTip; }
-            set
-            {
-                toolTip = value;
-                OnPropertyChanged();
-            }
-        }
-
         public SmartValue FlagValue
         {
             get { return flagValue; }
@@ -71,24 +61,34 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
+        public string ToolTip
+        {
+            get { return toolTip; }
+            set
+            {
+                toolTip = value;
+                OnPropertyChanged();
+            }
+        }
+
         public FlagCheckedCommand FlagCheckedCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
 
-        public CheckableItem(MainValue mainValue, NumericalBaseService numericalBaseService, FlagInfo flagInfo, StatusInfo statusInfo)
+        public CheckableItem(NumericalBaseService numericalBaseService, FlagInfo flagInfo, int enumBitCount, FlagCheckedCommand flagCheckedCommand, StatusInfoCommand statusInfoCommand)
         {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
             if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
             if (flagInfo == null) throw new ArgumentNullException(nameof(flagInfo));
-            if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
+            if (flagCheckedCommand == null) throw new ArgumentNullException(nameof(flagCheckedCommand));
+            if (statusInfoCommand == null) throw new ArgumentNullException(nameof(statusInfoCommand));
 
-            this.mainValue = mainValue;
             this.numericalBaseService = numericalBaseService;
             this.flagInfo = flagInfo;
+            this.enumBitCount = enumBitCount;
+
+            FlagCheckedCommand = flagCheckedCommand;
+            StatusInfoCommand = statusInfoCommand;
 
             numericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
-
-            FlagCheckedCommand = new FlagCheckedCommand(mainValue);
-            StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
             IsChecked = false;
             FlagName = flagInfo.Name;
@@ -98,8 +98,30 @@ namespace DustInTheWind.FlagCalculator.Business
             {
                 Value = flagInfo.Value,
                 NumericalBase = numericalBaseService.NumericalBase,
-                BitCount = mainValue.BitCount
+                BitCount = enumBitCount
             };
+        }
+
+        private void HandleNumericalBaseChanged(object sender, EventArgs eventArgs)
+        {
+            FlagValue = new SmartValue
+            {
+                Value = flagInfo.Value,
+                NumericalBase = numericalBaseService.NumericalBase,
+                BitCount = enumBitCount
+            };
+        }
+
+        private string CalculateToolTip()
+        {
+            IEnumerable<int> indexes = GetSelectedIndexes();
+
+            string bitListCsv = string.Join(", ", indexes);
+
+            if (string.IsNullOrEmpty(bitListCsv))
+                bitListCsv = "<none>";
+
+            return "Bit: " + bitListCsv;
         }
 
         private IEnumerable<int> GetSelectedIndexes()
@@ -117,28 +139,6 @@ namespace DustInTheWind.FlagCalculator.Business
                 if (bitValue == 1)
                     yield return index;
             }
-        }
-
-        private void HandleNumericalBaseChanged(object sender, EventArgs eventArgs)
-        {
-            FlagValue = new SmartValue
-            {
-                Value = flagInfo.Value,
-                NumericalBase = numericalBaseService.NumericalBase,
-                BitCount = mainValue.BitCount
-            };
-        }
-
-        private string CalculateToolTip()
-        {
-            IEnumerable<int> indexes = GetSelectedIndexes();
-
-            string bitListCsv = string.Join(", ", indexes);
-
-            if (string.IsNullOrEmpty(bitListCsv))
-                bitListCsv = "<none>";
-
-            return "Bit: " + bitListCsv;
         }
 
         public override string ToString()
