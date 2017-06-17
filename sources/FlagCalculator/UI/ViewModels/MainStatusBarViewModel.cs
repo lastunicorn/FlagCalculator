@@ -22,7 +22,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal class MainStatusBarViewModel : ViewModelBase
     {
-        private readonly FlagsList flags;
+        private readonly FlagCollection flagCollection;
         private readonly StatusInfo statusInfo;
         private bool displaySelected;
         private bool displayUnselected;
@@ -39,7 +39,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 displaySelected = value;
                 OnPropertyChanged();
 
-                flags.DisplaySelected = value;
+                flagCollection.DisplaySelected = value;
             }
         }
 
@@ -54,7 +54,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 displayUnselected = value;
                 OnPropertyChanged();
 
-                flags.DisplayUnselected = value;
+                flagCollection.DisplayUnselected = value;
             }
         }
 
@@ -72,23 +72,24 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
 
-        public MainStatusBarViewModel(FlagsList flags, StatusInfo statusInfo)
+        public MainStatusBarViewModel(MainValue mainValue, FlagCollection flagCollection, StatusInfo statusInfo)
         {
-            if (flags == null) throw new ArgumentNullException(nameof(flags));
+            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
-            this.flags = flags;
+            this.flagCollection = flagCollection;
             this.statusInfo = statusInfo;
 
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(flags);
-            SelectNoFlagsCommand = new SelectNoFlagsCommand(flags);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(mainValue, flagCollection);
+            SelectNoFlagsCommand = new SelectNoFlagsCommand(mainValue);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
-            DisplaySelected = flags.DisplaySelected;
-            DisplayUnselected = flags.DisplayUnselected;
+            DisplaySelected = flagCollection.DisplaySelected;
+            DisplayUnselected = flagCollection.DisplayUnselected;
 
             statusInfo.StatusTextChanged += HandleStatusTextChanged;
-            flags.SelectionChanged += HandleFlagsSelectionChanged;
+            flagCollection.SelectionChanged += HandleFlagsSelectionChanged;
         }
 
         private void HandleStatusTextChanged(object sender, EventArgs eventArgs)
@@ -98,8 +99,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void HandleFlagsSelectionChanged(object sender, EventArgs eventArgs)
         {
-            DisplaySelected = flags.DisplaySelected;
-            DisplayUnselected = flags.DisplayUnselected;
+            DisplaySelected = flagCollection.DisplaySelected;
+            DisplayUnselected = flagCollection.DisplayUnselected;
         }
     }
 }

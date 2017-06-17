@@ -29,16 +29,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     d:DesignWidth="300">
 
     <UserControl.Resources>
-        <converters:SmartNumberToStringConverter x:Key="CustomValueConverter"/>
+        <converters:SmartValueToStringConverter x:Key="CustomValueConverter"/>
     </UserControl.Resources>
 
     <ScrollViewer
-        x:Name="ScrollViewer1"
         HorizontalScrollBarVisibility="Auto"
         VerticalScrollBarVisibility="Auto">
 
         <ItemsControl
-            x:Name="ItemsControl1"
             ItemsSource="{Binding ItemsView}"
             HorizontalAlignment="Stretch">
 
@@ -66,7 +64,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             VerticalAlignment="Center"
                             Margin="10 0 10 0"
                             FontSize="20"
-                            Tag="{Binding Value}"
                             Command="{Binding FlagCheckedCommand}"
                             CommandParameter="{Binding}"
                             Foreground="#4a2200"
@@ -78,7 +75,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 HorizontalAlignment="Stretch">
 
                                 <TextBlock
-                                    Text="{Binding Text}"
+                                    Text="{Binding FlagName}"
                                     FontWeight="DemiBold"
                                     Padding="5"
                                     VerticalAlignment="Center"

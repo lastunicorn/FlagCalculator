@@ -22,12 +22,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class NumericalBaseRollCommand : ICommand
     {
-        private readonly SmartNumber mainValue;
+        private readonly NumericalBaseService numericalBaseService;
 
-        public NumericalBaseRollCommand(SmartNumber mainValue)
+        public NumericalBaseRollCommand(NumericalBaseService numericalBaseService)
         {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
-            this.mainValue = mainValue;
+            if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
+            this.numericalBaseService = numericalBaseService;
         }
 
         public bool CanExecute(object parameter)
@@ -39,7 +39,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            mainValue.RollBase();
+            numericalBaseService.Roll();
         }
     }
 }

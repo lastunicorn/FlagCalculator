@@ -99,7 +99,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <TextBlock
                         Grid.Column="0"
                         FontSize="50"
-                        Text="{Binding Value}"
+                        Text="{Binding MainValue}"
                         HorizontalAlignment="Stretch"
                         TextAlignment="Right"
                         Foreground="#4a2200"/>
@@ -121,19 +121,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 HorizontalAlignment="Right"
                 Orientation="Vertical"
                 Margin="0">
-
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="True">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="False">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
 
                 <Button
                     Command="{Binding CopyCommand}"

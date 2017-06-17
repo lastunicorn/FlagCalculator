@@ -16,58 +16,20 @@
 
 using System;
 using System.ComponentModel;
-using System.Windows.Data;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal class FlagsViewModel : ViewModelBase
     {
-        private readonly SmartNumber mainValue;
-        
-        private readonly FlagsList flags;
-        private readonly CollectionViewSource itemsViewSource;
-        public ICollectionView ItemsView { get; }
-        
-        public FlagsViewModel(SmartNumber mainValue, FlagsList flags)
+        private readonly FlagCollection flagCollection;
+        public ICollectionView ItemsView => flagCollection.View;
+
+        public FlagsViewModel(FlagCollection flagCollection)
         {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
 
-            this.mainValue = mainValue;
-
-            this.flags = flags;
-
-            itemsViewSource = new CollectionViewSource();
-            itemsViewSource.Source = this.flags;
-            itemsViewSource.Filter += HandleCollectionViewSourceFilter;
-
-            ItemsView = itemsViewSource.View;
-            
-            this.flags.SelectionChanged += HandleFlagsSelectionChanged;
-
-            mainValue.ValueChanged += HandleMainValueChanged;
-        }
-
-        private void HandleFlagsSelectionChanged(object sender, EventArgs eventArgs)
-        {
-            ItemsView.Refresh();
-        }
-
-        private void HandleCollectionViewSourceFilter(object sender, FilterEventArgs e)
-        {
-            CheckableItem checkableItem = e.Item as CheckableItem;
-
-            bool allOptionsAreUnselected = !flags.DisplaySelected && !flags.DisplayUnselected;
-
-            e.Accepted = allOptionsAreUnselected || checkableItem != null && ((checkableItem.IsChecked && flags.DisplaySelected) || (!checkableItem.IsChecked && flags.DisplayUnselected));
-        }
-
-        private void HandleMainValueChanged(object sender, EventArgs e)
-        {
-            foreach (CheckableItem checkableItem in flags)
-                checkableItem.IsChecked = mainValue.IsFlagSet(checkableItem.FlagValue);
-
-            ItemsView.Refresh();
+            this.flagCollection = flagCollection;
         }
     }
 }

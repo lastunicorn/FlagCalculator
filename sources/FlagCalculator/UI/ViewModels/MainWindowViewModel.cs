@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using System.Reflection;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
@@ -29,11 +28,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private readonly string titleBase;
         private string title;
 
-        private string numericalBase;
         private bool isHelpPageVisible;
-        private SmartNumber value;
-        private readonly FlagsList flags;
-        private StatusInfo statusInfo;
+        private MainValue mainValue;
+        private readonly FlagCollection flagCollection;
+        private readonly StatusInfo statusInfo;
+        private NumericalBaseService numericalBaseService;
 
         public string Title
         {
@@ -45,35 +44,25 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public SmartNumber Value
+        public MainValue MainValue
         {
-            get { return value; }
+            get { return mainValue; }
             private set
             {
-                this.value = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string NumericalBase
-        {
-            get { return numericalBase; }
-            set
-            {
-                numericalBase = value;
+                this.mainValue = value;
                 OnPropertyChanged();
             }
         }
 
         public FlagsViewModel FlagsViewModel { get; }
         public MainStatusBarViewModel MainStatusBarViewModel { get; }
+        public MainValueViewModel MainValueViewModel { get; }
 
         public EscapeCommand EscapeCommand { get; }
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public DigitCommand DigitCommand { get; }
-        public NumericalBaseRollCommand NumericalBaseRollCommand { get; }
         public HelpCommand HelpCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
 
@@ -96,60 +85,40 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             Title = titleBase;
 
-            value = new SmartNumber();
-            flags = new FlagsList(value);
+            numericalBaseService = new NumericalBaseService();
+            mainValue = new MainValue(numericalBaseService);
+            flagCollection = new FlagCollection(mainValue, numericalBaseService);
             statusInfo = new StatusInfo();
 
-            FlagsViewModel = new FlagsViewModel(Value, flags);
-            MainStatusBarViewModel = new MainStatusBarViewModel(flags, statusInfo);
+            FlagsViewModel = new FlagsViewModel(flagCollection);
+            MainStatusBarViewModel = new MainStatusBarViewModel(mainValue, flagCollection, statusInfo);
+            MainValueViewModel = new MainValueViewModel(mainValue, numericalBaseService, statusInfo);
 
-            EscapeCommand = new EscapeCommand(Value);
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(flags);
-            CopyCommand = new CopyCommand(Value);
-            PasteCommand = new PasteCommand(Value);
-            DigitCommand = new DigitCommand(Value);
-            NumericalBaseRollCommand = new NumericalBaseRollCommand(Value);
+            EscapeCommand = new EscapeCommand(MainValue);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(mainValue, flagCollection);
+            CopyCommand = new CopyCommand(MainValue);
+            PasteCommand = new PasteCommand(MainValue);
+            DigitCommand = new DigitCommand(MainValue);
             HelpCommand = new HelpCommand(this);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
             isHelpPageVisible = false;
 
             LoadFlagCollection();
-
-            Value.ValueChanged += HandleMainValueChanged;
-            Value.NumericalBaseChanged += HandleMainValueNumericalBaseChanged;
-
-            Value.Clear();
-
-            UpdateNumericalBase();
-        }
-
-        private void HandleMainValueNumericalBaseChanged(object sender, EventArgs e)
-        {
-            UpdateNumericalBase();
-            Value = value;
-        }
-
-        private void UpdateNumericalBase()
-        {
-            NumericalBase = ((int)Value.NumericalBase).ToString(CultureInfo.CurrentCulture);
-        }
-
-        private void HandleMainValueChanged(object sender, EventArgs e)
-        {
-            Value = value;
+            MainValue.Clear();
         }
 
         private void LoadFlagCollection()
         {
             try
             {
-                Value.Clear();
+                MainValue.Clear();
 
                 FlagInfoCollectionProvider flagInfoCollectionProvider = new FlagInfoCollectionProvider();
                 FlagInfoCollection flagInfoCollection = flagInfoCollectionProvider.LoadFlagCollection();
 
-                flags.Load(flagInfoCollection, statusInfo);
+                MainValue.BitCount = flagInfoCollection.BitCount;
+                flagCollection.Load(flagInfoCollection, statusInfo);
 
                 Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);
             }

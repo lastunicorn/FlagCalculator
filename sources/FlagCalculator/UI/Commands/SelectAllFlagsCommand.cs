@@ -22,12 +22,16 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class SelectAllFlagsCommand : ICommand
     {
-        private readonly FlagsList flagsList;
+        private readonly MainValue mainValue;
+        private readonly FlagCollection flagCollection;
 
-        public SelectAllFlagsCommand(FlagsList flagsList)
+        public SelectAllFlagsCommand(MainValue mainValue, FlagCollection flagCollection)
         {
-            if (flagsList == null) throw new ArgumentNullException(nameof(flagsList));
-            this.flagsList = flagsList;
+            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
+
+            this.mainValue = mainValue;
+            this.flagCollection = flagCollection;
         }
 
         public bool CanExecute(object parameter)
@@ -39,7 +43,8 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            flagsList.SelectAllFlags();
+            ulong value = flagCollection.GetAllFlagsCumulated();
+            mainValue.SetValue(value);
         }
     }
 }

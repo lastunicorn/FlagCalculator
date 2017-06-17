@@ -22,12 +22,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class DigitCommand : ICommand
     {
-        private readonly SmartNumber smartNumber;
+        private readonly MainValue mainValue;
 
-        public DigitCommand(SmartNumber smartNumber)
+        public DigitCommand(MainValue mainValue)
         {
-            if (smartNumber == null) throw new ArgumentNullException(nameof(smartNumber));
-            this.smartNumber = smartNumber;
+            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            this.mainValue = mainValue;
         }
 
         public bool CanExecute(object parameter)
@@ -40,7 +40,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
         public void Execute(object parameter)
         {
             uint digit = uint.Parse((string)parameter);
-            smartNumber.AddDigit(digit);
+            mainValue.AddDigit(digit);
         }
     }
 }

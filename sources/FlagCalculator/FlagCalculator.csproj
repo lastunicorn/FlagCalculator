@@ -9,12 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DustInTheWind.FlagCalculator</RootNamespace>
     <AssemblyName>FlagCalculator</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,17 +45,12 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -73,6 +67,8 @@
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
     <Compile Include="Business\NumericalBase.cs" />
+    <Compile Include="Business\NumericalBaseService.cs" />
+    <Compile Include="Business\SmartValue.cs" />
     <Compile Include="Business\StatusInfo.cs" />
     <Compile Include="UI\Commands\SelectAllFlagsCommand.cs" />
     <Compile Include="UI\Commands\SelectNoFlagsCommand.cs" />
@@ -86,17 +82,14 @@
     <Compile Include="Business\FlagInfo.cs" />
     <Compile Include="UI\Commands\CopyCommand.cs" />
     <Compile Include="UI\Commands\DigitCommand.cs" />
-    <Compile Include="UI\Commands\EmptyCommand.cs" />
     <Compile Include="UI\Commands\EscapeCommand.cs" />
     <Compile Include="UI\Commands\HelpCommand.cs" />
+    <Compile Include="UI\ViewModels\MainValueViewModel.cs" />
     <Compile Include="UI\Views\FlagListView.xaml.cs">
       <DependentUpon>FlagListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Business\FlagsList.cs" />
+    <Compile Include="Business\FlagCollection.cs" />
     <Compile Include="UI\ViewModels\FlagsViewModel.cs" />
-    <Compile Include="UI\Views\HelpPage.xaml.cs">
-      <DependentUpon>HelpPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Views\MainStatusBar.xaml.cs">
       <DependentUpon>MainStatusBar.xaml</DependentUpon>
     </Compile>
@@ -106,9 +99,9 @@
     </Compile>
     <Compile Include="UI\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="UI\Commands\PasteCommand.cs" />
-    <Compile Include="Business\SmartNumber.cs" />
+    <Compile Include="Business\MainValue.cs" />
     <Compile Include="UI\UserInterface.cs" />
-    <Compile Include="UI\Converters\SmartNumberToStringConverter.cs" />
+    <Compile Include="UI\Converters\SmartValueToStringConverter.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
     <Page Include="Resources\CopyPasteIconTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -123,10 +116,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Views\FlagListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Views\HelpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -193,9 +182,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />

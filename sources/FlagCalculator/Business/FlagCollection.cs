@@ -17,16 +17,21 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Windows.Data;
+using DustInTheWind.FlagCalculator.UI.Commands;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class FlagsList : ObservableCollection<CheckableItem>
+    internal sealed class FlagCollection
     {
-        private readonly SmartNumber mainValue;
+        private readonly MainValue mainValue;
+        private readonly NumericalBaseService numericalBaseService;
         private bool displaySelected;
         private bool displayUnselected;
+        private readonly ObservableCollection<CheckableItem> flags;
+        private readonly CollectionViewSource itemsViewSource;
 
         public bool DisplaySelected
         {
@@ -38,6 +43,8 @@ namespace DustInTheWind.FlagCalculator.Business
 
                 displaySelected = value;
                 OnSelectionChanged();
+
+                View.Refresh();
             }
         }
 
@@ -51,51 +58,77 @@ namespace DustInTheWind.FlagCalculator.Business
 
                 displayUnselected = value;
                 OnSelectionChanged();
+
+                View.Refresh();
             }
         }
 
+        public ICollectionView View => itemsViewSource.View;
+
         public event EventHandler SelectionChanged;
 
-        public FlagsList(SmartNumber mainValue)
+        public FlagCollection(MainValue mainValue, NumericalBaseService numericalBaseService)
         {
             if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+            if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
 
             this.mainValue = mainValue;
+            this.numericalBaseService = numericalBaseService;
+
+            flags = new ObservableCollection<CheckableItem>();
 
             DisplaySelected = false;
             DisplayUnselected = false;
+
+            itemsViewSource = new CollectionViewSource { Source = flags };
+            itemsViewSource.Filter += HandleCollectionViewSourceFilter;
+
+            mainValue.ValueChanged += HandleMainValueChanged;
+        }
+
+        private void HandleCollectionViewSourceFilter(object sender, FilterEventArgs e)
+        {
+            CheckableItem checkableItem = e.Item as CheckableItem;
+
+            bool allOptionsAreUnselected = !DisplaySelected && !DisplayUnselected;
+
+            e.Accepted = allOptionsAreUnselected || checkableItem != null && ((checkableItem.IsChecked && DisplaySelected) || (!checkableItem.IsChecked && DisplayUnselected));
+        }
+
+        private void HandleMainValueChanged(object sender, EventArgs e)
+        {
+            foreach (CheckableItem checkableItem in flags)
+                checkableItem.IsChecked = mainValue.IsFlagSet(checkableItem.FlagValue.Value);
+
+            View.Refresh();
         }
 
         public void Load(FlagInfoCollection flagInfoCollection, StatusInfo statusInfo)
         {
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
-            mainValue.BitCount = Marshal.SizeOf(flagInfoCollection.UnderlyingType) * 8;
+            FlagCheckedCommand flagCheckedCommand = new FlagCheckedCommand(mainValue);
+            StatusInfoCommand statusInfoCommand = new StatusInfoCommand(statusInfo);
 
             List<CheckableItem> checkableItems = flagInfoCollection
-                .Select(x => new CheckableItem(mainValue, x, statusInfo))
+                .Select(x => new CheckableItem(numericalBaseService, x, flagInfoCollection.BitCount, flagCheckedCommand, statusInfoCommand))
                 .ToList();
 
             foreach (CheckableItem item in checkableItems)
-                Items.Add(item);
+                flags.Add(item);
         }
 
-        public void SelectAllFlags()
+        public ulong GetAllFlagsCumulated()
         {
             ulong value = 0;
 
-            foreach (CheckableItem item in this)
-                value |= item.FlagValue;
+            foreach (CheckableItem item in flags)
+                value |= item.FlagValue.Value;
 
-            mainValue.SetValue(value);
+            return value;
         }
 
-        public void ClearAllFlags()
-        {
-            mainValue.Clear();
-        }
-
-        protected virtual void OnSelectionChanged()
+        private void OnSelectionChanged()
         {
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
