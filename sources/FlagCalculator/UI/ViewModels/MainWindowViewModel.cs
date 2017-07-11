@@ -33,6 +33,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private readonly FlagCollection flagCollection;
         private readonly StatusInfo statusInfo;
         private NumericalBaseService numericalBaseService;
+        private bool isOpenPanelVisible;
 
         public string Title
         {
@@ -49,7 +50,17 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             get { return mainValue; }
             private set
             {
-                this.mainValue = value;
+                mainValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsOpenPanelVisible
+        {
+            get { return isOpenPanelVisible; }
+            set
+            {
+                isOpenPanelVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -58,6 +69,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public MainStatusBarViewModel MainStatusBarViewModel { get; }
         public MainValueViewModel MainValueViewModel { get; }
 
+        public OpenAssemblyCommand OpenAssemblyCommand { get; }
         public EscapeCommand EscapeCommand { get; }
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public CopyCommand CopyCommand { get; }
@@ -84,6 +96,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             titleBase = "Flag Calculator " + assembly.GetName().Version.ToString(3);
 
             Title = titleBase;
+            IsOpenPanelVisible = true;
 
             numericalBaseService = new NumericalBaseService();
             mainValue = new MainValue(numericalBaseService);
@@ -94,6 +107,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             MainStatusBarViewModel = new MainStatusBarViewModel(mainValue, flagCollection, statusInfo);
             MainValueViewModel = new MainValueViewModel(mainValue, numericalBaseService, statusInfo);
 
+            OpenAssemblyCommand = new OpenAssemblyCommand(MainValue, flagCollection, statusInfo);
             EscapeCommand = new EscapeCommand(MainValue);
             SelectAllFlagsCommand = new SelectAllFlagsCommand(mainValue, flagCollection);
             CopyCommand = new CopyCommand(MainValue);
@@ -104,8 +118,18 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             isHelpPageVisible = false;
 
+            flagCollection.Loaded += HandleFlagCollectionLoaded;
+
             LoadFlagCollection();
             MainValue.Clear();
+        }
+
+        private void HandleFlagCollectionLoaded(object sender, EventArgs eventArgs)
+        {
+            FlagInfoCollection flagInfoCollection = flagCollection.FlagInfoCollection;
+            Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingTypeName);
+
+            IsOpenPanelVisible = false;
         }
 
         private void LoadFlagCollection()
@@ -117,10 +141,13 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 FlagInfoCollectionProvider flagInfoCollectionProvider = new FlagInfoCollectionProvider();
                 FlagInfoCollection flagInfoCollection = flagInfoCollectionProvider.LoadFlagCollection();
 
+                IsOpenPanelVisible = flagInfoCollection == null;
+
+                if (flagInfoCollection == null)
+                    return;
+
                 MainValue.BitCount = flagInfoCollection.BitCount;
                 flagCollection.Load(flagInfoCollection, statusInfo);
-
-                Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);
             }
             catch (Exception ex)
             {

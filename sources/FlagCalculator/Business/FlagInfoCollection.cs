@@ -26,10 +26,18 @@ namespace DustInTheWind.FlagCalculator.Business
     internal class FlagInfoCollection : IEnumerable<FlagInfo>
     {
         private readonly List<FlagInfo> flags;
+        private Type underlyingType;
         public string Name { get; private set; }
-        public Type UnderlyingType { get; private set; }
 
-        public int BitCount => Marshal.SizeOf(UnderlyingType) * 8;
+        public int BitCount
+        {
+            get { return underlyingType == null ? 0 : Marshal.SizeOf(underlyingType) * 8; }
+        }
+
+        public string UnderlyingTypeName
+        {
+            get { return underlyingType == null ? string.Empty : underlyingType.Name; }
+        }
 
         public FlagInfoCollection()
         {
@@ -70,7 +78,7 @@ namespace DustInTheWind.FlagCalculator.Business
             FlagInfoCollection flagInfoCollection = new FlagInfoCollection
             {
                 Name = enumType.Name,
-                UnderlyingType = enumType.GetEnumUnderlyingType()
+                underlyingType = enumType.GetEnumUnderlyingType()
             };
 
             foreach (FlagInfo flagInfo in flagInfos)

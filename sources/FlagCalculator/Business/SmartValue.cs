@@ -67,6 +67,9 @@ namespace DustInTheWind.FlagCalculator.Business
             ulong v = Value;
             int bitCount = BitCount;
 
+            if (bitCount == 0)
+                return "0";
+
             List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
 
             for (int i = 0; i < bitCount; i++)

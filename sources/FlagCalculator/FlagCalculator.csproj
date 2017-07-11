@@ -71,6 +71,7 @@
     <Compile Include="Business\NumericalBaseService.cs" />
     <Compile Include="Business\SmartValue.cs" />
     <Compile Include="Business\StatusInfo.cs" />
+    <Compile Include="UI\Commands\OpenAssemblyCommand.cs" />
     <Compile Include="UI\Commands\SelectAllFlagsCommand.cs" />
     <Compile Include="UI\Commands\SelectNoFlagsCommand.cs" />
     <Compile Include="UI\Commands\StatusInfoCommand.cs" />

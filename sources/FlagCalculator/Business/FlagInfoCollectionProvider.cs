@@ -28,14 +28,14 @@ namespace DustInTheWind.FlagCalculator.Business
             string enumTypeFullName = ConfigurationManager.AppSettings["enumTypeName"];
 
             if (enumTypeFullName == null)
-                return new FlagInfoCollection();
+                return null;
 
-            Type enumType = GetEnumeType(enumTypeFullName);
+            Type enumType = GetEnumType(enumTypeFullName);
 
             return FlagInfoCollection.FromEnum(enumType);
         }
 
-        private Type GetEnumeType(string enumTypeFullName)
+        private Type GetEnumType(string enumTypeFullName)
         {
             Type enumType = Type.GetType(enumTypeFullName);
 

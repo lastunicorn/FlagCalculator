@@ -63,8 +63,11 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
+        public FlagInfoCollection FlagInfoCollection { get; private set; }
+
         public ICollectionView View => itemsViewSource.View;
 
+        public event EventHandler Loaded;
         public event EventHandler SelectionChanged;
 
         public FlagCollection(MainValue mainValue, NumericalBaseService numericalBaseService)
@@ -116,6 +119,10 @@ namespace DustInTheWind.FlagCalculator.Business
 
             foreach (CheckableItem item in checkableItems)
                 flags.Add(item);
+
+            FlagInfoCollection = flagInfoCollection;
+
+            OnLoaded();
         }
 
         public ulong GetAllFlagsCumulated()
@@ -126,6 +133,11 @@ namespace DustInTheWind.FlagCalculator.Business
                 value |= item.FlagValue.Value;
 
             return value;
+        }
+
+        private void OnLoaded()
+        {
+            Loaded?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnSelectionChanged()

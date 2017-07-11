@@ -91,7 +91,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <views:MainValueView DockPanel.Dock="Top" DataContext="{Binding MainValueViewModel}"/>
             <views:MainStatusBar DockPanel.Dock="Bottom" DataContext="{Binding MainStatusBarViewModel}"/>
-            <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
+
+            <Grid>
+                <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
+
+                <Grid
+                    Background="{StaticResource MainBackground}"
+                    Visibility="{Binding IsOpenPanelVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                    <Button
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding OpenAssemblyCommand}"
+                        Content="Open Assembly..."/>
+
+                </Grid>
+            </Grid>
 
         </DockPanel>
 
