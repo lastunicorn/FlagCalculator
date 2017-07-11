@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 using Microsoft.Win32;
@@ -27,17 +26,14 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class OpenAssemblyCommand : ICommand
     {
-        private readonly MainValue mainValue;
         private readonly FlagCollection flagCollection;
         private readonly StatusInfo statusInfo;
 
-        public OpenAssemblyCommand(MainValue mainValue, FlagCollection flagCollection, StatusInfo statusInfo)
+        public OpenAssemblyCommand(FlagCollection flagCollection, StatusInfo statusInfo)
         {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
             if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
-            this.mainValue = mainValue;
             this.flagCollection = flagCollection;
             this.statusInfo = statusInfo;
         }
@@ -51,27 +47,33 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            openFileDialog.Filter = "Dll Files|*.dll|Exe Files|*.exe|All Files|*.*";
-
-            if (openFileDialog.ShowDialog() == true)
+            OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Assembly assembly = Assembly.LoadFrom(openFileDialog.FileName);
+                InitialDirectory = Environment.CurrentDirectory,
+                Filter = "Dll Files|*.dll|Exe Files|*.exe|All Files|*.*"
+            };
 
-                IEnumerable<Type> enumTypes = assembly.GetTypes()
-                    .Where(x => x.IsEnum);
+            if (openFileDialog.ShowDialog() != true)
+                return;
 
-                Type enumType = enumTypes.FirstOrDefault();
+            string assemblyFileName = openFileDialog.FileName;
+            LoadAssembly(assemblyFileName);
+        }
 
-                if (enumType != null)
-                {
-                    FlagInfoCollection flagInfoCollection = FlagInfoCollection.FromEnum(enumType);
-                    mainValue.BitCount = flagInfoCollection.BitCount;
-                    flagCollection.Load(flagInfoCollection, statusInfo);
-                }
+        private void LoadAssembly(string assemblyFileName)
+        {
+            Assembly assembly = Assembly.LoadFrom(assemblyFileName);
 
-                MessageBox.Show(openFileDialog.FileName);
+            IEnumerable<Type> enumTypes = assembly.GetTypes()
+                .Where(x => x.IsEnum);
+
+            // todo: must ask the user what enum to load.
+            Type enumType = enumTypes.FirstOrDefault();
+
+            if (enumType != null)
+            {
+                FlagInfoCollection flagInfoCollection = FlagInfoCollection.FromEnum(enumType);
+                flagCollection.Load(flagInfoCollection, statusInfo);
             }
         }
     }

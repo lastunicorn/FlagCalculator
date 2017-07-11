@@ -107,7 +107,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             MainStatusBarViewModel = new MainStatusBarViewModel(mainValue, flagCollection, statusInfo);
             MainValueViewModel = new MainValueViewModel(mainValue, numericalBaseService, statusInfo);
 
-            OpenAssemblyCommand = new OpenAssemblyCommand(MainValue, flagCollection, statusInfo);
+            OpenAssemblyCommand = new OpenAssemblyCommand(flagCollection, statusInfo);
             EscapeCommand = new EscapeCommand(MainValue);
             SelectAllFlagsCommand = new SelectAllFlagsCommand(mainValue, flagCollection);
             CopyCommand = new CopyCommand(MainValue);
@@ -127,6 +127,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private void HandleFlagCollectionLoaded(object sender, EventArgs eventArgs)
         {
             FlagInfoCollection flagInfoCollection = flagCollection.FlagInfoCollection;
+            MainValue.BitCount = flagInfoCollection.BitCount;
             Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingTypeName);
 
             IsOpenPanelVisible = false;
@@ -140,13 +141,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
                 FlagInfoCollectionProvider flagInfoCollectionProvider = new FlagInfoCollectionProvider();
                 FlagInfoCollection flagInfoCollection = flagInfoCollectionProvider.LoadFlagCollection();
-
-                IsOpenPanelVisible = flagInfoCollection == null;
-
+                
                 if (flagInfoCollection == null)
                     return;
 
-                MainValue.BitCount = flagInfoCollection.BitCount;
                 flagCollection.Load(flagInfoCollection, statusInfo);
             }
             catch (Exception ex)
