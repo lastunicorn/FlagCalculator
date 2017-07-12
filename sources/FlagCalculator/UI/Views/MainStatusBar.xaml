@@ -30,8 +30,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/CheckBoxIconTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/CopyPasteIconTemplates.xaml"/>
+                <ResourceDictionary Source="/UI/Resources/CheckBoxIconTemplates.xaml"/>
+                <ResourceDictionary Source="/UI/Resources/CopyPasteIconTemplates.xaml"/>
                 <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

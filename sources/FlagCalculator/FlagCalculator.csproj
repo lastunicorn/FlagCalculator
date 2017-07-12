@@ -105,11 +105,11 @@
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\Converters\SmartValueToStringConverter.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
-    <Page Include="Resources\CopyPasteIconTemplates.xaml">
+    <Page Include="UI\Resources\CopyPasteIconTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\CheckBoxIconTemplates.xaml">
+    <Page Include="UI\Resources\CheckBoxIconTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
