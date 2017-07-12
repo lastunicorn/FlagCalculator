@@ -37,7 +37,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public Type SelectedEnumType
         {
             get { return selectedEnumType; }
-            private set
+            set
             {
                 selectedEnumType = value;
                 OnPropertyChanged();
