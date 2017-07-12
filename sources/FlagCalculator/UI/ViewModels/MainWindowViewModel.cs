@@ -90,22 +90,21 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         public MainWindowViewModel()
         {
+            // Create business services.
+
             userInterface = new UserInterface();
-
-            Assembly assembly = Assembly.GetEntryAssembly();
-            titleBase = "Flag Calculator " + assembly.GetName().Version.ToString(3);
-
-            Title = titleBase;
-            IsOpenPanelVisible = true;
-
             numericalBaseService = new NumericalBaseService();
             mainValue = new MainValue(numericalBaseService);
             flagCollection = new FlagCollection(mainValue, numericalBaseService);
             statusInfo = new StatusInfo();
 
+            // Create view models.
+
             FlagsViewModel = new FlagsViewModel(flagCollection);
             MainStatusBarViewModel = new MainStatusBarViewModel(mainValue, flagCollection, statusInfo);
             MainValueViewModel = new MainValueViewModel(mainValue, numericalBaseService, statusInfo);
+
+            // Create commands
 
             OpenAssemblyCommand = new OpenAssemblyCommand(flagCollection, statusInfo);
             EscapeCommand = new EscapeCommand(MainValue);
@@ -116,21 +115,36 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             HelpCommand = new HelpCommand(this);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
+            // Initialize everything
+
+            titleBase = BuildTitleBase();
+            Title = titleBase;
+
+            isOpenPanelVisible = true;
             isHelpPageVisible = false;
 
             flagCollection.Loaded += HandleFlagCollectionLoaded;
 
             LoadFlagCollection();
-            MainValue.Clear();
+        }
+
+        private static string BuildTitleBase()
+        {
+            Assembly assembly = Assembly.GetEntryAssembly();
+            string version = assembly.GetName().Version.ToString(3);
+            return string.Format("Flag Calculator {0}", version);
         }
 
         private void HandleFlagCollectionLoaded(object sender, EventArgs eventArgs)
         {
             FlagInfoCollection flagInfoCollection = flagCollection.FlagInfoCollection;
             MainValue.BitCount = flagInfoCollection.BitCount;
+
             Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingTypeName);
 
             IsOpenPanelVisible = false;
+
+            MainValue.Clear();
         }
 
         private void LoadFlagCollection()
