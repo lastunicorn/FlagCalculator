@@ -86,7 +86,11 @@
     <Compile Include="UI\Commands\DigitCommand.cs" />
     <Compile Include="UI\Commands\EscapeCommand.cs" />
     <Compile Include="UI\Commands\HelpCommand.cs" />
+    <Compile Include="UI\ViewModels\EnumSelectorViewModel.cs" />
     <Compile Include="UI\ViewModels\MainValueViewModel.cs" />
+    <Compile Include="UI\Views\EnumSelectorWindow.xaml.cs">
+      <DependentUpon>EnumSelectorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Views\FlagListView.xaml.cs">
       <DependentUpon>FlagListView.xaml</DependentUpon>
     </Compile>
@@ -114,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Colors\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Views\EnumSelectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

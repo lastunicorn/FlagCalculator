@@ -29,7 +29,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     d:DesignWidth="300">
 
     <UserControl.Resources>
-        <converters:SmartValueToStringConverter x:Key="CustomValueConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UI/Styles/ScrollBarStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/UI/Styles/ButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/UI/Styles/ToggleButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/UI/Styles/CheckBoxStylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:SmartValueToStringConverter x:Key="CustomValueConverter"/>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <ScrollViewer
@@ -49,10 +58,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsChecked}" Value="true">
-                                        <Setter Property="Background" Value="#ffbc83"/>
+                                        <Setter Property="Background" Value="{StaticResource ListBoxCheckedBackground}"/>
                                     </DataTrigger>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#ff9a4e"/>
+                                        <Setter Property="Background" Value="{StaticResource ListBoxOverBackground}"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>

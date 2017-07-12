@@ -106,7 +106,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Create commands
 
-            OpenAssemblyCommand = new OpenAssemblyCommand(flagCollection, statusInfo);
+            OpenAssemblyCommand = new OpenAssemblyCommand(flagCollection, statusInfo, userInterface);
             EscapeCommand = new EscapeCommand(MainValue);
             SelectAllFlagsCommand = new SelectAllFlagsCommand(mainValue, flagCollection);
             CopyCommand = new CopyCommand(MainValue);

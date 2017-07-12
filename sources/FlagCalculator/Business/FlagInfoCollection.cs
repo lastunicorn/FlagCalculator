@@ -39,7 +39,7 @@ namespace DustInTheWind.FlagCalculator.Business
             get { return underlyingType == null ? string.Empty : underlyingType.Name; }
         }
 
-        public FlagInfoCollection()
+        private FlagInfoCollection()
         {
             flags = new List<FlagInfo>();
         }
@@ -63,14 +63,44 @@ namespace DustInTheWind.FlagCalculator.Business
         private static IEnumerable<FlagInfo> BuildListOfFields(Type enumType)
         {
             FieldInfo[] fieldInfos = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
+            Type enumUnderlyingType = enumType.GetEnumUnderlyingType();
 
             return fieldInfos
                 .Select(x => new FlagInfo
                 {
-                    Value = (ulong)Convert.ChangeType(x.GetRawConstantValue(), typeof(ulong)),
+                    Value = ToUInt64Value(x.GetRawConstantValue(), enumUnderlyingType),
                     Name = x.Name
                 })
                 .ToList();
+        }
+
+        private static ulong ToUInt64Value(object rawValue, Type enumUnderlyingType)
+        {
+            if (enumUnderlyingType == typeof(ulong))
+                return (ulong)rawValue;
+
+            if (enumUnderlyingType == typeof(long))
+                return (ulong)(long)rawValue;
+
+            if (enumUnderlyingType == typeof(uint))
+                return (ulong)(uint)rawValue;
+
+            if (enumUnderlyingType == typeof(int))
+                return (ulong)(int)rawValue;
+
+            if (enumUnderlyingType == typeof(ushort))
+                return (ulong)(ushort)rawValue;
+
+            if (enumUnderlyingType == typeof(short))
+                return (ulong)(short)rawValue;
+
+            if (enumUnderlyingType == typeof(byte))
+                return (ulong)(byte)rawValue;
+
+            if (enumUnderlyingType == typeof(sbyte))
+                return (ulong)(sbyte)rawValue;
+
+            throw new Exception("The underlying type of the enum is unsupported.");
         }
 
         private static FlagInfoCollection ToFlagInfoCollection(IEnumerable<FlagInfo> flagInfos, Type enumType)

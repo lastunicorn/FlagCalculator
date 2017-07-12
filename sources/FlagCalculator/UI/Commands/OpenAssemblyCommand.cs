@@ -18,8 +18,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
+using DustInTheWind.FlagCalculator.UI.ViewModels;
+using DustInTheWind.FlagCalculator.UI.Views;
 using Microsoft.Win32;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
@@ -28,14 +31,17 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
     {
         private readonly FlagCollection flagCollection;
         private readonly StatusInfo statusInfo;
+        private readonly UserInterface userInterface;
 
-        public OpenAssemblyCommand(FlagCollection flagCollection, StatusInfo statusInfo)
+        public OpenAssemblyCommand(FlagCollection flagCollection, StatusInfo statusInfo, UserInterface userInterface)
         {
             if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
+            if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
 
             this.flagCollection = flagCollection;
             this.statusInfo = statusInfo;
+            this.userInterface = userInterface;
         }
 
         public bool CanExecute(object parameter)
@@ -47,34 +53,67 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            try
             {
-                InitialDirectory = Environment.CurrentDirectory,
-                Filter = "Dll Files|*.dll|Exe Files|*.exe|All Files|*.*"
-            };
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    InitialDirectory = Environment.CurrentDirectory,
+                    Filter = "Dll Files|*.dll|Exe Files|*.exe|All Files|*.*"
+                };
 
-            if (openFileDialog.ShowDialog() != true)
-                return;
+                if (openFileDialog.ShowDialog() != true)
+                    return;
 
-            string assemblyFileName = openFileDialog.FileName;
-            LoadAssembly(assemblyFileName);
+                string assemblyFileName = openFileDialog.FileName;
+                LoadAssembly(assemblyFileName);
+            }
+            catch (Exception ex)
+            {
+                userInterface.DisplayError(ex);
+            }
         }
 
         private void LoadAssembly(string assemblyFileName)
         {
             Assembly assembly = Assembly.LoadFrom(assemblyFileName);
+            
 
-            IEnumerable<Type> enumTypes = assembly.GetTypes()
-                .Where(x => x.IsEnum);
+            List<Type> enumTypes = assembly.GetTypes()
+                .Where(x => x.IsEnum)
+                .ToList();
 
-            // todo: must ask the user what enum to load.
-            Type enumType = enumTypes.FirstOrDefault();
+            if (enumTypes.Count == 0)
+                return;
+
+            Type enumType = enumTypes.Count == 1
+                ? enumTypes[0]
+                : ChooseEnumType(enumTypes);
 
             if (enumType != null)
             {
                 FlagInfoCollection flagInfoCollection = FlagInfoCollection.FromEnum(enumType);
                 flagCollection.Load(flagInfoCollection, statusInfo);
             }
+        }
+
+        private static Type ChooseEnumType(List<Type> enumTypes)
+        {
+            EnumSelectorViewModel enumSelectorViewModel = new EnumSelectorViewModel
+            {
+                List = enumTypes
+            };
+
+            EnumSelectorWindow enumSelectorWindow = new EnumSelectorWindow
+            {
+                DataContext = enumSelectorViewModel,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+
+            bool? response = enumSelectorWindow.ShowDialog();
+
+            return response == true
+                ? enumSelectorViewModel.SelectedEnumType
+                : null;
         }
     }
 }

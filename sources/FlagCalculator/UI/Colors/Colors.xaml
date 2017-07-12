@@ -62,5 +62,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- Icons -->
 
     <SolidColorBrush x:Key="IconNormalForeground" Color="#805400"/>
+    
+    <!-- ListBox -->
+
+    <SolidColorBrush x:Key="ListBoxOverBackground" Color="#ff9a4e"/>
+    <SolidColorBrush x:Key="ListBoxCheckedBackground" Color="#ffbc83"/>
 
 </ResourceDictionary>
