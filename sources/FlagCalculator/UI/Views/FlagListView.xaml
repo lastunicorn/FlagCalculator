@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsChecked}" Value="true">
-                                        <Setter Property="Background" Value="{StaticResource ListBoxCheckedBackground}"/>
+                                        <Setter Property="Background" Value="{StaticResource ListBoxSelectedBackground}"/>
                                     </DataTrigger>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" Value="{StaticResource ListBoxOverBackground}"/>
@@ -75,7 +75,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             FontSize="20"
                             Command="{Binding FlagCheckedCommand}"
                             CommandParameter="{Binding}"
-                            Foreground="#4a2200"
+                            Foreground="{StaticResource MainForeground}"
                             RequestBringIntoView="FrameworkElement_OnRequestBringIntoView"
                             HorizontalAlignment="Stretch">
 

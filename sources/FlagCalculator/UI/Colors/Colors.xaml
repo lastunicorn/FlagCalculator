@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- Main -->
 
     <SolidColorBrush x:Key="MainBackground" Color="#ffcb9e"/>
-    <SolidColorBrush x:Key="MainForeground" Color="#805400"/>
+    <SolidColorBrush x:Key="MainForeground" Color="#4a2200"/>
 
     <!-- Button -->
     
@@ -65,7 +65,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <!-- ListBox -->
 
-    <SolidColorBrush x:Key="ListBoxOverBackground" Color="#ff9a4e"/>
-    <SolidColorBrush x:Key="ListBoxCheckedBackground" Color="#ffbc83"/>
+    <Color x:Key="ListBoxOverBackgroundColor">#ff9a4e</Color>
+    <SolidColorBrush x:Key="ListBoxOverBackground" Color="{StaticResource ListBoxOverBackgroundColor}"/>
+    <Color x:Key="ListBoxSelectedBackgroundColor">#ffbc83</Color>
+    <SolidColorBrush x:Key="ListBoxSelectedBackground" Color="{StaticResource ListBoxSelectedBackgroundColor}"/>
 
 </ResourceDictionary>

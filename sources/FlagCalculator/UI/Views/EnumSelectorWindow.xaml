@@ -45,8 +45,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             MouseDoubleClick="Control_OnMouseDoubleClick">
 
             <ListView.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#ff9a4e" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{StaticResource ListBoxOverBackgroundColor}" />
             </ListView.Resources>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource ListBoxSelectedBackground}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -55,7 +65,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Text="{Binding Name}"
                         FontSize="20"
                         Padding="10 5"
-                        Foreground="#4a2200"
+                        Foreground="{StaticResource MainForeground}"
                         HorizontalAlignment="Stretch"/>
 
                 </DataTemplate>

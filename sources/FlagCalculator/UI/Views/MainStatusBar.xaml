@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <StatusBar
         Padding="8"
         Background="{StaticResource StatusBarBackground}"
-        Foreground="#4a2200"
+        Foreground="{StaticResource MainForeground}"
         Height="60">
 
         <StatusBar.ItemsPanel>

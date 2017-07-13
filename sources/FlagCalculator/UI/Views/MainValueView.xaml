@@ -102,7 +102,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Text="{Binding MainValue}"
                         HorizontalAlignment="Stretch"
                         TextAlignment="Right"
-                        Foreground="#4a2200"/>
+                        Foreground="{StaticResource MainForeground}"/>
 
                     <TextBlock
                         Grid.Column="1"
