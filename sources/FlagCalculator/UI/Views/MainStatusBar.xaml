@@ -45,20 +45,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <StatusBar.ItemsPanel>
             <ItemsPanelTemplate>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                </Grid>
+                <DockPanel/>
             </ItemsPanelTemplate>
 
         </StatusBar.ItemsPanel>
 
-        <StatusBarItem Grid.Column="0">
+        <!-- Left -->
+
+        <StatusBarItem DockPanel.Dock="Left">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Select:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
@@ -103,23 +97,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </StackPanel>
         </StatusBarItem>
 
-        <Separator Grid.Column="1" Background="#c35a00" Margin="8"/>
+        <Separator DockPanel.Dock="Left" Background="#c35a00" Margin="8"/>
 
-        <StatusBarItem Grid.Column="2">
-            <TextBlock
-                Text="{Binding StatusText}"
-                TextWrapping="Wrap"
-                TextTrimming="WordEllipsis"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Left"
-                Margin="10 0"
-                FontSize="14"
-                TextAlignment="Justify"/>
+        <!-- Right -->
+
+        <StatusBarItem DockPanel.Dock="Right">
+            <Button>
+
+                <ContentControl
+                        Template="{StaticResource CheckBoxCheckedIconTemplate}"
+                        Width="16"
+                        Height="16"
+                        Foreground="Blue"/>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseEnter">
+                        <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Close the currently edited enum."/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeave">
+                        <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+            </Button>
         </StatusBarItem>
 
-        <Separator Grid.Column="3" Background="#c35a00" Margin="8"/>
+        <Separator DockPanel.Dock="Right" Background="#c35a00" Margin="8"/>
 
-        <StatusBarItem Grid.Column="4">
+        <StatusBarItem DockPanel.Dock="Right">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Display:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
@@ -166,6 +171,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </ToggleButton>
 
             </StackPanel>
+        </StatusBarItem>
+
+        <Separator DockPanel.Dock="Right" Background="#c35a00" Margin="8"/>
+
+        <!-- Center -->
+
+        <StatusBarItem>
+            <TextBlock
+                Text="{Binding StatusText}"
+                TextWrapping="Wrap"
+                TextTrimming="WordEllipsis"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Margin="10 0"
+                FontSize="14"
+                TextAlignment="Justify"/>
         </StatusBarItem>
 
     </StatusBar>
