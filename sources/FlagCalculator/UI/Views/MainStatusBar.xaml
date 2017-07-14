@@ -104,15 +104,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <StatusBarItem DockPanel.Dock="Right">
             <Button>
 
-                <ContentControl
-                        Template="{StaticResource CheckBoxCheckedIconTemplate}"
-                        Width="16"
-                        Height="16"
-                        Foreground="Blue"/>
+                <TextBlock
+                    Foreground="{StaticResource MainForeground}"
+                    FontSize="16"
+                    Text="Close"
+                    FontWeight="DemiBold"/>
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseEnter">
-                        <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Close the currently edited enum."/>
+                        <i:InvokeCommandAction Command="{Binding StatusInfoCommand}" CommandParameter="Close the current project."/>
                     </i:EventTrigger>
                     <i:EventTrigger EventName="MouseLeave">
                         <i:InvokeCommandAction Command="{Binding StatusInfoCommand}"/>
