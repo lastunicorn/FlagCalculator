@@ -23,18 +23,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="clr-namespace:DustInTheWind.FlagCalculator.UI"
+    xmlns:converters="clr-namespace:DustInTheWind.FlagCalculator.UI.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300">
 
     <UserControl.Resources>
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/UI/Resources/CheckBoxIconTemplates.xaml"/>
                 <ResourceDictionary Source="/UI/Resources/CopyPasteIconTemplates.xaml"/>
                 <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:NegativeValueConverter x:Key="NegativeValueConverter"/>
+
         </ResourceDictionary>
+
     </UserControl.Resources>
 
     <StatusBar
@@ -101,7 +109,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <!-- Right -->
 
-        <StatusBarItem DockPanel.Dock="Right">
+        <!--<StatusBarItem DockPanel.Dock="Right">
             <Button>
 
                 <TextBlock
@@ -122,7 +130,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </Button>
         </StatusBarItem>
 
-        <Separator DockPanel.Dock="Right" Background="#c35a00" Margin="8"/>
+        <Separator DockPanel.Dock="Right" Background="#c35a00" Margin="8"/>-->
 
         <StatusBarItem DockPanel.Dock="Right">
             <StackPanel Orientation="Horizontal">
