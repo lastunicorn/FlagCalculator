@@ -43,14 +43,15 @@ namespace DustInTheWind.FlagCalculator.UI.Converters
             if (smartValue.NumericalBase != NumericalBase.Binary)
                 return xamlContent;
 
-            xamlContent = xamlContent.Replace("1", @"<Run Foreground = ""Red"">1</Run>");
+            xamlContent = xamlContent.Replace("1", @"<Run Foreground = ""Black"">1</Run>");
 
             string xamlTextBlock = @"
 <TextBlock
     xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
     Padding = ""5""
     VerticalAlignment = ""Center""
-    HorizontalAlignment = ""Stretch"">
+    HorizontalAlignment = ""Stretch""
+    Foreground = ""Gray"">
 
     {0}
 
