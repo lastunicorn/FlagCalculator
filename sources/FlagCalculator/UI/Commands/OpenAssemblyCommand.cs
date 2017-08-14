@@ -91,7 +91,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
             if (enumType != null)
             {
-                FlagInfoCollection flagInfoCollection = FlagInfoCollection.FromEnum(enumType);
+                FlagInfoCollection flagInfoCollection = new FlagInfoCollection(enumType);
                 flagCollection.Load(flagInfoCollection, statusInfo);
             }
         }

@@ -24,12 +24,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:converters="clr-namespace:DustInTheWind.FlagCalculator.UI.Converters"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:views="clr-namespace:DustInTheWind.FlagCalculator.UI.Views"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300">
 
     <UserControl.Resources>
+
         <ResourceDictionary>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/UI/Styles/ScrollBarStylesDictionary.xaml"/>
                 <ResourceDictionary Source="/UI/Styles/ButtonStylesDictionary.xaml"/>
@@ -38,7 +41,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </ResourceDictionary.MergedDictionaries>
 
             <converters:SmartValueToStringConverter x:Key="CustomValueConverter"/>
+
         </ResourceDictionary>
+
     </UserControl.Resources>
 
     <ScrollViewer
@@ -89,8 +94,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     Padding="5"
                                     VerticalAlignment="Center"
                                     MinWidth="250"/>
-                                
-                                <ContentControl
+
+                                <views:SmartValueView
                                     Content="{Binding FlagValue, Converter={StaticResource CustomValueConverter}}"
                                     Padding="5"
                                     VerticalAlignment="Center"

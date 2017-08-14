@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="Business\NumericalBase.cs" />
     <Compile Include="Business\NumericalBaseService.cs" />
+    <Compile Include="Business\ProjectContext.cs" />
     <Compile Include="Business\SmartValue.cs" />
     <Compile Include="Business\StatusInfo.cs" />
     <Compile Include="UI\Commands\OpenAssemblyCommand.cs" />
@@ -111,6 +112,9 @@
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\Converters\SmartValueToStringConverter.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
+    <Compile Include="UI\Views\SmartValueView.xaml.cs">
+      <DependentUpon>SmartValueView.xaml</DependentUpon>
+    </Compile>
     <Page Include="UI\Resources\CopyPasteIconTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -164,6 +168,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\Styles\ToggleButtonStylesDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Views\SmartValueView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

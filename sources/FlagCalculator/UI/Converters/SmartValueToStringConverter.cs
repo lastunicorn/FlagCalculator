@@ -16,10 +16,7 @@
 
 using System;
 using System.Globalization;
-using System.IO;
 using System.Windows.Data;
-using System.Windows.Markup;
-using System.Xml;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Converters
@@ -38,30 +35,48 @@ namespace DustInTheWind.FlagCalculator.UI.Converters
         {
             SmartValue smartValue = (SmartValue)value;
 
-            string xamlContent = smartValue.ToString();
+            //string xamlContent = smartValue.ToString();
 
-            if (smartValue.NumericalBase != NumericalBase.Binary)
-                return xamlContent;
+            switch (smartValue.NumericalBase)
+            {
+                case NumericalBase.None:
+                    return string.Empty;
 
-            xamlContent = xamlContent.Replace("1", @"<Run Foreground = ""Black"">1</Run>");
+                case NumericalBase.Decimal:
+                    return smartValue.Value;
 
-            string xamlTextBlock = @"
-<TextBlock
-    xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
-    Padding = ""5""
-    VerticalAlignment = ""Center""
-    HorizontalAlignment = ""Stretch""
-    Foreground = ""Gray"">
+                case NumericalBase.Hexadecimal:
+                    return smartValue.ToString();
 
-    {0}
+                case NumericalBase.Binary:
+                    return smartValue.ToString().ToCharArray();
 
-</TextBlock>";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
-            xamlTextBlock = string.Format(xamlTextBlock, xamlContent);
+            //if (smartValue.NumericalBase != NumericalBase.Binary)
+            //    return smartValue.Value;
 
-            using (StringReader stringReader = new StringReader(xamlTextBlock))
-            using (XmlReader xmlReader = XmlReader.Create(stringReader))
-                return XamlReader.Load(xmlReader);
+            //            xamlContent = xamlContent.Replace("1", @"<Run Foreground = ""Black"">1</Run>");
+
+            //            string xamlTextBlock = @"
+            //<TextBlock
+            //    xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
+            //    Padding = ""5""
+            //    VerticalAlignment = ""Center""
+            //    HorizontalAlignment = ""Stretch""
+            //    Foreground = ""Gray"">
+
+            //    {0}
+
+            //</TextBlock>";
+
+            //            xamlTextBlock = string.Format(xamlTextBlock, xamlContent);
+
+            //            using (StringReader stringReader = new StringReader(xamlTextBlock))
+            //            using (XmlReader xmlReader = XmlReader.Create(stringReader))
+            //                return XamlReader.Load(xmlReader);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

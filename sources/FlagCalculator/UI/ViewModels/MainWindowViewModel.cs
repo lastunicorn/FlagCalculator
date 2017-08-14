@@ -29,10 +29,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private string title;
 
         private bool isHelpPageVisible;
-        private MainValue mainValue;
-        private readonly FlagCollection flagCollection;
+        private readonly ProjectContext projectContext;
         private readonly StatusInfo statusInfo;
-        private NumericalBaseService numericalBaseService;
         private bool isOpenPanelVisible;
 
         public string Title
@@ -47,12 +45,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         public MainValue MainValue
         {
-            get { return mainValue; }
-            private set
-            {
-                mainValue = value;
-                OnPropertyChanged();
-            }
+            get { return projectContext.MainValue; }
         }
 
         public bool IsOpenPanelVisible
@@ -93,22 +86,20 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             // Create business services.
 
             userInterface = new UserInterface();
-            numericalBaseService = new NumericalBaseService();
-            mainValue = new MainValue(numericalBaseService);
-            flagCollection = new FlagCollection(mainValue, numericalBaseService);
             statusInfo = new StatusInfo();
+            projectContext = new ProjectContext(userInterface, statusInfo);
 
             // Create view models.
 
-            FlagsViewModel = new FlagsViewModel(flagCollection);
-            MainStatusBarViewModel = new MainStatusBarViewModel(mainValue, flagCollection, statusInfo);
-            MainValueViewModel = new MainValueViewModel(mainValue, numericalBaseService, statusInfo);
+            FlagsViewModel = new FlagsViewModel(projectContext.FlagCollection);
+            MainStatusBarViewModel = new MainStatusBarViewModel(projectContext.MainValue, projectContext.FlagCollection, statusInfo);
+            MainValueViewModel = new MainValueViewModel(projectContext.MainValue, projectContext.NumericalBaseService, statusInfo);
 
             // Create commands
 
-            OpenAssemblyCommand = new OpenAssemblyCommand(flagCollection, statusInfo, userInterface);
+            OpenAssemblyCommand = new OpenAssemblyCommand(projectContext.FlagCollection, statusInfo, userInterface);
             EscapeCommand = new EscapeCommand(MainValue);
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(mainValue, flagCollection);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext.MainValue, projectContext.FlagCollection);
             CopyCommand = new CopyCommand(MainValue);
             PasteCommand = new PasteCommand(MainValue);
             DigitCommand = new DigitCommand(MainValue);
@@ -123,9 +114,9 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             isOpenPanelVisible = true;
             isHelpPageVisible = false;
 
-            flagCollection.Loaded += HandleFlagCollectionLoaded;
+            projectContext.FlagCollection.Loaded += HandleFlagCollectionLoaded;
 
-            LoadFlagCollection();
+            projectContext.LoadFlagCollection();
         }
 
         private static string BuildTitleBase()
@@ -137,34 +128,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void HandleFlagCollectionLoaded(object sender, EventArgs eventArgs)
         {
-            FlagInfoCollection flagInfoCollection = flagCollection.FlagInfoCollection;
-            MainValue.BitCount = flagInfoCollection.BitCount;
+            FlagInfoCollection flagInfoCollection = projectContext.FlagCollection.FlagInfoCollection;
 
             Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingTypeName);
-
             IsOpenPanelVisible = false;
-
-            MainValue.Clear();
-        }
-
-        private void LoadFlagCollection()
-        {
-            try
-            {
-                MainValue.Clear();
-
-                FlagInfoCollectionProvider flagInfoCollectionProvider = new FlagInfoCollectionProvider();
-                FlagInfoCollection flagInfoCollection = flagInfoCollectionProvider.LoadFlagCollection();
-                
-                if (flagInfoCollection == null)
-                    return;
-
-                flagCollection.Load(flagInfoCollection, statusInfo);
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace DustInTheWind.FlagCalculator.Business
 
             Type enumType = GetEnumType(enumTypeFullName);
 
-            return FlagInfoCollection.FromEnum(enumType);
+            return new FlagInfoCollection(enumType);
         }
 
         private Type GetEnumType(string enumTypeFullName)

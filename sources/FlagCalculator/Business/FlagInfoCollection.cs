@@ -26,22 +26,21 @@ namespace DustInTheWind.FlagCalculator.Business
     internal class FlagInfoCollection : IEnumerable<FlagInfo>
     {
         private readonly List<FlagInfo> flags;
-        private Type underlyingType;
-        public string Name { get; private set; }
 
-        public int BitCount
-        {
-            get { return underlyingType == null ? 0 : Marshal.SizeOf(underlyingType) * 8; }
-        }
+        public string Name { get; }
+        public int BitCount { get; }
+        public string UnderlyingTypeName { get; }
 
-        public string UnderlyingTypeName
+        public FlagInfoCollection(Type enumType)
         {
-            get { return underlyingType == null ? string.Empty : underlyingType.Name; }
-        }
+            Name = enumType.Name;
 
-        private FlagInfoCollection()
-        {
-            flags = new List<FlagInfo>();
+            Type underlyingType = enumType.GetEnumUnderlyingType();
+            BitCount = Marshal.SizeOf(underlyingType) * 8;
+            UnderlyingTypeName = underlyingType.Name;
+
+            IEnumerable<FlagInfo> list = BuildListOfFields(enumType);
+            flags = new List<FlagInfo>(list);
         }
 
         public IEnumerator<FlagInfo> GetEnumerator()
@@ -52,12 +51,6 @@ namespace DustInTheWind.FlagCalculator.Business
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-
-        public static FlagInfoCollection FromEnum(Type enumType)
-        {
-            IEnumerable<FlagInfo> list = BuildListOfFields(enumType);
-            return ToFlagInfoCollection(list, enumType);
         }
 
         private static IEnumerable<FlagInfo> BuildListOfFields(Type enumType)
@@ -101,20 +94,6 @@ namespace DustInTheWind.FlagCalculator.Business
                 return (ulong)(sbyte)rawValue;
 
             throw new Exception("The underlying type of the enum is unsupported.");
-        }
-
-        private static FlagInfoCollection ToFlagInfoCollection(IEnumerable<FlagInfo> flagInfos, Type enumType)
-        {
-            FlagInfoCollection flagInfoCollection = new FlagInfoCollection
-            {
-                Name = enumType.Name,
-                underlyingType = enumType.GetEnumUnderlyingType()
-            };
-
-            foreach (FlagInfo flagInfo in flagInfos)
-                flagInfoCollection.flags.Add(flagInfo);
-
-            return flagInfoCollection;
         }
     }
 }

@@ -26,6 +26,58 @@ namespace DustInTheWind.FlagCalculator.Business
         public NumericalBase NumericalBase { get; set; }
         public int BitCount { get; set; }
 
+        public int[] ToDigits()
+        {
+            switch (NumericalBase)
+            {
+                case NumericalBase.None:
+                    return new int[0];
+
+                case NumericalBase.Decimal:
+                case NumericalBase.Hexadecimal:
+                    return ToDigits((int)NumericalBase);
+
+                case NumericalBase.Binary:
+                    return ToDigits((int)NumericalBase, BitCount);
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private int[] ToDigits(int numericalBase, int padding = 0)
+        {
+            IEnumerable<int> digits = ToDigitsInternal(numericalBase);
+            List<int> allDigits = new List<int>(digits);
+
+            while (padding > allDigits.Count)
+                allDigits.Add(0);
+
+            allDigits.Reverse();
+
+            return allDigits.ToArray();
+        }
+
+        private IEnumerable<int> ToDigitsInternal(int numericalBase)
+        {
+            if (Value == 0)
+            {
+                yield return 0;
+            }
+            else
+            {
+                ulong v = Value;
+
+                while (v != 0)
+                {
+                    int digit = (int)(v % (ulong)numericalBase);
+                    v /= (ulong)numericalBase;
+
+                    yield return digit;
+                }
+            }
+        }
+
         public override string ToString()
         {
             return CalculateValueAsString();
@@ -59,7 +111,38 @@ namespace DustInTheWind.FlagCalculator.Business
 
         private string ToStringHexa()
         {
-            return Value.ToString("X", CultureInfo.CurrentCulture);
+            IEnumerable<int> digits = ToDigitsInternal(16);
+
+            List<char> allChars = new List<char>();
+            int digitCount = 0;
+
+            foreach (int digit in digits)
+            {
+                if (digitCount > 0 && digitCount % 2 == 0)
+                    allChars.Add(' ');
+
+                if (digit < 10)
+                    allChars.Add((char)('0' + digit));
+
+                if (digit >= 10)
+                    allChars.Add((char)('A' + digit - 10));
+
+                digitCount++;
+            }
+
+            while (digitCount < BitCount / 4)
+            {
+                if (digitCount > 0 && digitCount % 2 == 0)
+                    allChars.Add(' ');
+
+                allChars.Add('0');
+
+                digitCount++;
+            }
+            
+            allChars.Reverse();
+
+            return string.Join(string.Empty, allChars);
         }
 
         private string ToStringBinary()
