@@ -101,6 +101,18 @@ namespace DustInTheWind.FlagCalculator.Business
             };
         }
 
+        public string ToSimpleString()
+        {
+            SmartValue smartValue = new SmartValue
+            {
+                Value = value,
+                NumericalBase = numericalBaseService.NumericalBase,
+                BitCount = BitCount
+            };
+
+            return smartValue.ToSimpleString();
+        }
+
         public override string ToString()
         {
             SmartValue smartValue = new SmartValue

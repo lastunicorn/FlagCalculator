@@ -78,12 +78,77 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
-        public override string ToString()
+        public string ToSimpleString()
         {
-            return CalculateValueAsString();
+            switch (NumericalBase)
+            {
+                case NumericalBase.None:
+                    return string.Empty;
+
+                case NumericalBase.Decimal:
+                    return ToSimpleStringDecimal();
+
+                case NumericalBase.Hexadecimal:
+                    return ToSimpleStringHexa();
+
+                case NumericalBase.Binary:
+                    return ToSimpleStringBinary();
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
-        private string CalculateValueAsString()
+        private string ToSimpleStringDecimal()
+        {
+            return Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private string ToSimpleStringHexa()
+        {
+            IEnumerable<int> digitsReversed = ToDigitsInternal(16);
+
+            List<char> allChars = new List<char>();
+
+            foreach (int digit in digitsReversed)
+            {
+                if (digit < 10)
+                    allChars.Add((char)('0' + digit));
+
+                if (digit >= 10)
+                    allChars.Add((char)('A' + digit - 10));
+            }
+
+            allChars.Reverse();
+
+            return string.Join(string.Empty, allChars);
+        }
+
+        private string ToSimpleStringBinary()
+        {
+            IEnumerable<int> digitsReversed = ToDigitsInternal(2);
+
+            List<char> allChars = new List<char>();
+            int digitCount = 0;
+
+            foreach (int digit in digitsReversed)
+            {
+                allChars.Add(digit == 0 ? '0' : '1');
+                digitCount++;
+            }
+
+            while (digitCount < BitCount)
+            {
+                allChars.Add('0');
+                digitCount++;
+            }
+
+            allChars.Reverse();
+
+            return string.Join(string.Empty, allChars);
+        }
+
+        public override string ToString()
         {
             switch (NumericalBase)
             {
@@ -111,12 +176,12 @@ namespace DustInTheWind.FlagCalculator.Business
 
         private string ToStringHexa()
         {
-            IEnumerable<int> digits = ToDigitsInternal(16);
+            IEnumerable<int> digitsReversed = ToDigitsInternal(16);
 
             List<char> allChars = new List<char>();
             int digitCount = 0;
 
-            foreach (int digit in digits)
+            foreach (int digit in digitsReversed)
             {
                 if (digitCount > 0 && digitCount % 2 == 0)
                     allChars.Add(' ');
@@ -139,7 +204,7 @@ namespace DustInTheWind.FlagCalculator.Business
 
                 digitCount++;
             }
-            
+
             allChars.Reverse();
 
             return string.Join(string.Empty, allChars);

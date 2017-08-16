@@ -40,7 +40,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            Clipboard.SetText(mainValue.ToString());
+            Clipboard.SetText(mainValue.ToSimpleString());
         }
     }
 }
