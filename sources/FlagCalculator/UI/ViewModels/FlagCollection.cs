@@ -20,10 +20,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
+using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
-using DustInTheWind.FlagCalculator.UI.ViewModels;
 
-namespace DustInTheWind.FlagCalculator.Business
+namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal sealed class FlagCollection
     {

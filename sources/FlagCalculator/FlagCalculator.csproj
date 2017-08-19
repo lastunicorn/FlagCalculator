@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="Business\NumericalBase.cs" />
     <Compile Include="Business\NumericalBaseService.cs" />
+    <Compile Include="Business\ObjectExtensions.cs" />
     <Compile Include="Business\ProjectContext.cs" />
     <Compile Include="Business\SmartValue.cs" />
     <Compile Include="Business\StatusInfo.cs" />
@@ -97,7 +98,7 @@
     <Compile Include="UI\Views\FlagListView.xaml.cs">
       <DependentUpon>FlagListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Business\FlagCollection.cs" />
+    <Compile Include="UI\ViewModels\FlagCollection.cs" />
     <Compile Include="UI\ViewModels\FlagsViewModel.cs" />
     <Compile Include="UI\Views\MainStatusBar.xaml.cs">
       <DependentUpon>MainStatusBar.xaml</DependentUpon>

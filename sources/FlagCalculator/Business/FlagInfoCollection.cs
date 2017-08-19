@@ -43,44 +43,14 @@ namespace DustInTheWind.FlagCalculator.Business
         private static List<FlagInfo> BuildListOfFields(Type enumType)
         {
             FieldInfo[] fieldInfos = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
-            Type enumUnderlyingType = enumType.GetEnumUnderlyingType();
 
             return fieldInfos
                 .Select(x => new FlagInfo
                 {
-                    Value = ToUInt64Value(x.GetRawConstantValue(), enumUnderlyingType),
+                    Value = x.GetRawConstantValue().ToUInt64Value(),
                     Name = x.Name
                 })
                 .ToList();
-        }
-
-        private static ulong ToUInt64Value(object rawValue, Type enumUnderlyingType)
-        {
-            if (enumUnderlyingType == typeof(ulong))
-                return (ulong)rawValue;
-
-            if (enumUnderlyingType == typeof(long))
-                return (ulong)(long)rawValue;
-
-            if (enumUnderlyingType == typeof(uint))
-                return (ulong)(uint)rawValue;
-
-            if (enumUnderlyingType == typeof(int))
-                return (ulong)(int)rawValue;
-
-            if (enumUnderlyingType == typeof(ushort))
-                return (ulong)(ushort)rawValue;
-
-            if (enumUnderlyingType == typeof(short))
-                return (ulong)(short)rawValue;
-
-            if (enumUnderlyingType == typeof(byte))
-                return (ulong)(byte)rawValue;
-
-            if (enumUnderlyingType == typeof(sbyte))
-                return (ulong)(sbyte)rawValue;
-
-            throw new Exception("The underlying type of the enum is unsupported.");
         }
 
         public IEnumerator<FlagInfo> GetEnumerator()

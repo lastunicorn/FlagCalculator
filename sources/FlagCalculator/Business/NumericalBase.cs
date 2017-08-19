@@ -19,8 +19,8 @@ namespace DustInTheWind.FlagCalculator.Business
     internal enum NumericalBase : uint
     {
         None = 0,
+        Binary = 2,
         Decimal = 10,
-        Hexadecimal = 16,
-        Binary = 2
+        Hexadecimal = 16
     }
 }
