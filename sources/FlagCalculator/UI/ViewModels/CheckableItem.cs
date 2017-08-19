@@ -16,10 +16,10 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.FlagCalculator.UI;
+using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
-namespace DustInTheWind.FlagCalculator.Business
+namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal class CheckableItem : ViewModelBase
     {

@@ -24,13 +24,13 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
     internal sealed class MainWindowViewModel : ViewModelBase
     {
         private readonly UserInterface userInterface;
+        private readonly StatusInfo statusInfo;
 
         private readonly string titleBase;
         private string title;
 
-        private bool isHelpPageVisible;
         private readonly ProjectContext projectContext;
-        private readonly StatusInfo statusInfo;
+        private bool isHelpPageVisible;
         private bool isOpenPanelVisible;
 
         public string Title
@@ -60,7 +60,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         public FlagsViewModel FlagsViewModel { get; }
         public MainStatusBarViewModel MainStatusBarViewModel { get; }
-        public MainValueViewModel MainValueViewModel { get; }
+        public MainHeaderViewModel MainHeaderViewModel { get; }
 
         public OpenAssemblyCommand OpenAssemblyCommand { get; }
         public EscapeCommand EscapeCommand { get; }
@@ -92,8 +92,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             // Create view models.
 
             FlagsViewModel = new FlagsViewModel(projectContext.FlagCollection);
-            MainStatusBarViewModel = new MainStatusBarViewModel(projectContext.MainValue, projectContext.FlagCollection, statusInfo);
-            MainValueViewModel = new MainValueViewModel(projectContext.MainValue, projectContext.NumericalBaseService, statusInfo);
+            MainStatusBarViewModel = new MainStatusBarViewModel(projectContext, statusInfo);
+            MainHeaderViewModel = new MainHeaderViewModel(projectContext, statusInfo);
 
             // Create commands
 
@@ -130,7 +130,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         {
             FlagInfoCollection flagInfoCollection = projectContext.FlagCollection.FlagInfoCollection;
 
-            Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingTypeName);
+            Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);
             IsOpenPanelVisible = false;
         }
     }

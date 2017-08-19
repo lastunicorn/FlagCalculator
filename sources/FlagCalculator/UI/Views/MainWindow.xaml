@@ -89,7 +89,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <DockPanel Background="{StaticResource MainBackground}">
 
-            <views:MainValueView DockPanel.Dock="Top" DataContext="{Binding MainValueViewModel}"/>
+            <views:MainHeader DockPanel.Dock="Top" DataContext="{Binding MainHeaderViewModel}"/>
             <views:MainStatusBar DockPanel.Dock="Bottom" DataContext="{Binding MainStatusBarViewModel}"/>
 
             <Grid>

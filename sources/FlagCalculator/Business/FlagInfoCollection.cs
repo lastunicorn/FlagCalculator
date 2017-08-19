@@ -28,32 +28,19 @@ namespace DustInTheWind.FlagCalculator.Business
         private readonly List<FlagInfo> flags;
 
         public string Name { get; }
+        public Type UnderlyingType { get; }
         public int BitCount { get; }
-        public string UnderlyingTypeName { get; }
 
         public FlagInfoCollection(Type enumType)
         {
             Name = enumType.Name;
+            UnderlyingType = enumType.GetEnumUnderlyingType();
+            BitCount = Marshal.SizeOf(UnderlyingType) * 8;
 
-            Type underlyingType = enumType.GetEnumUnderlyingType();
-            BitCount = Marshal.SizeOf(underlyingType) * 8;
-            UnderlyingTypeName = underlyingType.Name;
-
-            IEnumerable<FlagInfo> list = BuildListOfFields(enumType);
-            flags = new List<FlagInfo>(list);
+            flags = BuildListOfFields(enumType);
         }
 
-        public IEnumerator<FlagInfo> GetEnumerator()
-        {
-            return flags.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        private static IEnumerable<FlagInfo> BuildListOfFields(Type enumType)
+        private static List<FlagInfo> BuildListOfFields(Type enumType)
         {
             FieldInfo[] fieldInfos = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
             Type enumUnderlyingType = enumType.GetEnumUnderlyingType();
@@ -94,6 +81,16 @@ namespace DustInTheWind.FlagCalculator.Business
                 return (ulong)(sbyte)rawValue;
 
             throw new Exception("The underlying type of the enum is unsupported.");
+        }
+
+        public IEnumerator<FlagInfo> GetEnumerator()
+        {
+            return flags.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

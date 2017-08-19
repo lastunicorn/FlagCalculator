@@ -21,10 +21,9 @@ using DustInTheWind.FlagCalculator.UI.Commands;
 
 namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
-    internal class MainValueViewModel : ViewModelBase
+    internal class MainHeaderViewModel : ViewModelBase
     {
-        private readonly MainValue mainValue;
-        private readonly NumericalBaseService numericalBaseService;
+        private readonly ProjectContext projectContext;
 
         private SmartValue smartValue;
         private string numericalBase;
@@ -54,40 +53,38 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public NumericalBaseRollCommand NumericalBaseRollCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
 
-        public MainValueViewModel(MainValue mainValue, NumericalBaseService numericalBaseService, StatusInfo statusInfo)
+        public MainHeaderViewModel(ProjectContext projectContext, StatusInfo statusInfo)
         {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
-            if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
+            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
-            this.mainValue = mainValue;
-            this.numericalBaseService = numericalBaseService;
+            this.projectContext = projectContext;
 
-            CopyCommand = new CopyCommand(mainValue);
-            PasteCommand = new PasteCommand(mainValue);
-            NumericalBaseRollCommand = new NumericalBaseRollCommand(numericalBaseService);
+            CopyCommand = new CopyCommand(projectContext.MainValue);
+            PasteCommand = new PasteCommand(projectContext.MainValue);
+            NumericalBaseRollCommand = new NumericalBaseRollCommand(projectContext.NumericalBaseService);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
-            mainValue.ValueChanged += HandleMainValueChanged;
-            numericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
+            projectContext.MainValue.ValueChanged += HandleMainValueChanged;
+            projectContext.NumericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
 
             UpdateNumericalBaseText();
         }
 
         private void HandleMainValueChanged(object sender, EventArgs e)
         {
-            MainValue = mainValue.ToSmartValue();
+            MainValue = projectContext.MainValue.ToSmartValue();
         }
 
         private void HandleNumericalBaseChanged(object sender, EventArgs e)
         {
             UpdateNumericalBaseText();
-            MainValue = mainValue.ToSmartValue();
+            MainValue = projectContext.MainValue.ToSmartValue();
         }
 
         private void UpdateNumericalBaseText()
         {
-            NumericalBase = ((int)numericalBaseService.NumericalBase).ToString(CultureInfo.CurrentCulture);
+            NumericalBase = ((int)projectContext.NumericalBaseService.NumericalBase).ToString(CultureInfo.CurrentCulture);
         }
     }
 }

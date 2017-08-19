@@ -21,6 +21,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using DustInTheWind.FlagCalculator.UI.Commands;
+using DustInTheWind.FlagCalculator.UI.ViewModels;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
