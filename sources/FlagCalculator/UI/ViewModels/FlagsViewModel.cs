@@ -15,20 +15,94 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Windows.Data;
+using DustInTheWind.FlagCalculator.Business;
+using DustInTheWind.FlagCalculator.UI.Commands;
 
 namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal class FlagsViewModel : ViewModelBase
     {
-        private readonly FlagCollection flagCollection;
-        public ICollectionView ItemsView => flagCollection.View;
+        private readonly ProjectContext projectContext;
+        private readonly StatusInfo statusInfo;
 
-        public FlagsViewModel(FlagCollection flagCollection)
+        private readonly ObservableCollection<CheckableItem> flags;
+        private readonly CollectionViewSource itemsViewSource;
+
+        private bool displaySelected;
+        private bool displayUnselected;
+
+        public ICollectionView ItemsView => itemsViewSource.View;
+
+        public FlagsViewModel(ProjectContext projectContext, StatusInfo statusInfo)
         {
-            if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
+            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
+            if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
-            this.flagCollection = flagCollection;
+            this.projectContext = projectContext;
+            this.statusInfo = statusInfo;
+
+            flags = new ObservableCollection<CheckableItem>();
+
+            itemsViewSource = new CollectionViewSource { Source = flags };
+            itemsViewSource.Filter += HandleCollectionViewSourceFilter;
+
+            displaySelected = projectContext.DisplaySelected;
+            displayUnselected = projectContext.DisplayUnselected;
+            itemsViewSource.View.Refresh();
+
+            projectContext.FlagsNumberChanged += HandleProjectContextFlagsNumberChanged;
+            projectContext.DisplaySelectedChanged += HandleProjectContextDisplaySelectedChanged;
+        }
+
+        private void HandleCollectionViewSourceFilter(object sender, FilterEventArgs e)
+        {
+            CheckableItem checkableItem = e.Item as CheckableItem;
+
+            bool allOptionsAreUnselected = !displaySelected && !displayUnselected;
+
+            e.Accepted = allOptionsAreUnselected || checkableItem != null && ((checkableItem.IsChecked && displaySelected) || (!checkableItem.IsChecked && displayUnselected));
+        }
+
+        private void HandleProjectContextFlagsNumberChanged(object sender, FlagsNumberChangedEventArgs e)
+        {
+            if (e.OldValue != null)
+                e.OldValue.ValueChanged -= HandleMainValueChanged;
+
+            if (e.NewValue != null)
+            {
+                UpdateFlagsList(e.NewValue);
+                e.NewValue.ValueChanged += HandleMainValueChanged;
+            }
+        }
+
+        private void UpdateFlagsList(FlagsNumber flagsNumber)
+        {
+            flags.Clear();
+
+            StatusInfoCommand statusInfoCommand = new StatusInfoCommand(statusInfo);
+
+            IEnumerable<CheckableItem> checkableItems = flagsNumber
+                .Select(x => new CheckableItem(projectContext.NumericalBaseService, x, flagsNumber.BitCount, statusInfoCommand));
+
+            foreach (CheckableItem item in checkableItems)
+                flags.Add(item);
+        }
+
+        private void HandleMainValueChanged(object sender, EventArgs e)
+        {
+            itemsViewSource.View.Refresh();
+        }
+
+        private void HandleProjectContextDisplaySelectedChanged(object sender, EventArgs eventArgs)
+        {
+            displaySelected = projectContext.DisplaySelected;
+            displayUnselected = projectContext.DisplayUnselected;
+            itemsViewSource.View.Refresh();
         }
     }
 }

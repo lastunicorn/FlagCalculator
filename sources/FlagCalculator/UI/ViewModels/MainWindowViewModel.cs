@@ -82,11 +82,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             userInterface = new UserInterface();
             statusInfo = new StatusInfo();
-            projectContext = new ProjectContext(userInterface, statusInfo);
+            projectContext = new ProjectContext(userInterface);
 
             // Create view models.
 
-            FlagsViewModel = new FlagsViewModel(projectContext.FlagCollection);
+            FlagsViewModel = new FlagsViewModel(projectContext, statusInfo);
             MainStatusBarViewModel = new MainStatusBarViewModel(projectContext, statusInfo);
             MainHeaderViewModel = new MainHeaderViewModel(projectContext, statusInfo);
 

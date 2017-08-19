@@ -39,7 +39,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 displaySelected = value;
                 OnPropertyChanged();
 
-                projectContext.FlagCollection.DisplaySelected = value;
+                projectContext.DisplaySelected = value;
             }
         }
 
@@ -54,7 +54,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 displayUnselected = value;
                 OnPropertyChanged();
 
-                projectContext.FlagCollection.DisplayUnselected = value;
+                projectContext.DisplayUnselected = value;
             }
         }
 
@@ -84,11 +84,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
-            DisplaySelected = projectContext.FlagCollection.DisplaySelected;
-            DisplayUnselected = projectContext.FlagCollection.DisplayUnselected;
+            DisplaySelected = projectContext.DisplaySelected;
+            DisplayUnselected = projectContext.DisplayUnselected;
 
             statusInfo.StatusTextChanged += HandleStatusTextChanged;
-            projectContext.FlagCollection.SelectionChanged += HandleFlagsSelectionChanged;
+            projectContext.DisplaySelectedChanged += HandleFlagsDisplaySelectedChanged;
         }
 
         private void HandleStatusTextChanged(object sender, EventArgs eventArgs)
@@ -96,10 +96,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             StatusText = statusInfo.StatusText;
         }
 
-        private void HandleFlagsSelectionChanged(object sender, EventArgs eventArgs)
+        private void HandleFlagsDisplaySelectedChanged(object sender, EventArgs eventArgs)
         {
-            DisplaySelected = projectContext.FlagCollection.DisplaySelected;
-            DisplayUnselected = projectContext.FlagCollection.DisplayUnselected;
+            DisplaySelected = projectContext.DisplaySelected;
+            DisplayUnselected = projectContext.DisplayUnselected;
         }
     }
 }

@@ -16,15 +16,15 @@
 
 using System;
 using DustInTheWind.FlagCalculator.UI;
-using DustInTheWind.FlagCalculator.UI.ViewModels;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
     internal class ProjectContext
     {
         private readonly UserInterface userInterface;
-        private readonly StatusInfo statusInfo;
         private FlagsNumber flagsNumber;
+        private bool displaySelected;
+        private bool displayUnselected;
 
         public NumericalBaseService NumericalBaseService { get; }
 
@@ -41,30 +41,57 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
-        public FlagCollection FlagCollection { get; }
+        public bool DisplaySelected
+        {
+            get { return displaySelected; }
+            set
+            {
+                if (value == displaySelected)
+                    return;
+
+                displaySelected = value;
+                displayUnselected = false;
+
+                OnDisplaySelectedChanged();
+            }
+        }
+
+        public bool DisplayUnselected
+        {
+            get { return displayUnselected; }
+            set
+            {
+                if (value == displayUnselected)
+                    return;
+
+                displayUnselected = value;
+                displaySelected = false;
+
+                OnDisplaySelectedChanged();
+            }
+        }
 
         public event EventHandler Loaded;
         public event EventHandler<FlagsNumberChangedEventArgs> FlagsNumberChanged;
+        public event EventHandler DisplaySelectedChanged;
 
-        public ProjectContext(UserInterface userInterface, StatusInfo statusInfo)
+        public ProjectContext(UserInterface userInterface)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
-            if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
             this.userInterface = userInterface;
-            this.statusInfo = statusInfo;
+
+            DisplaySelected = false;
+            DisplayUnselected = false;
 
             NumericalBaseService = new NumericalBaseService();
             FlagsNumber = new FlagsNumber();
-            FlagCollection = new FlagCollection(NumericalBaseService);
         }
 
         public void LoadFlagCollection()
         {
             try
             {
-                FlagsNumber.Clear();
-
                 EnumProvider enumProvider = new EnumProvider();
                 Type enumType = enumProvider.LoadEnum();
 
@@ -72,9 +99,7 @@ namespace DustInTheWind.FlagCalculator.Business
                     return;
 
                 FlagsNumber = new FlagsNumber(enumType);
-                FlagCollection.Load(FlagsNumber, statusInfo);
 
-                FlagsNumber.Clear();
                 OnLoaded();
             }
             catch (Exception ex)
@@ -86,7 +111,6 @@ namespace DustInTheWind.FlagCalculator.Business
         public void LoadFlagCollection(Type enumType)
         {
             FlagsNumber = new FlagsNumber(enumType);
-            FlagCollection.Load(FlagsNumber, statusInfo);
 
             OnLoaded();
         }
@@ -99,6 +123,11 @@ namespace DustInTheWind.FlagCalculator.Business
         protected virtual void OnFlagsNumberChanged(FlagsNumberChangedEventArgs e)
         {
             FlagsNumberChanged?.Invoke(this, e);
+        }
+
+        protected virtual void OnDisplaySelectedChanged()
+        {
+            DisplaySelectedChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
