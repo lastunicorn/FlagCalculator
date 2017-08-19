@@ -67,8 +67,8 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
-    <Compile Include="Business\FlagInfo.cs" />
     <Compile Include="Business\FlagsNumber.cs" />
+    <Compile Include="Business\FlagsNumberChangedEventArgs.cs" />
     <Compile Include="Business\NumericalBase.cs" />
     <Compile Include="Business\NumericalBaseService.cs" />
     <Compile Include="Business\ObjectExtensions.cs" />
@@ -82,9 +82,7 @@
     <Compile Include="UI\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="UI\Commands\NumericalBaseRollCommand.cs" />
     <Compile Include="UI\ViewModels\CheckableItem.cs" />
-    <Compile Include="UI\Commands\FlagCheckedCommand.cs" />
-    <Compile Include="Business\FlagInfoCollection.cs" />
-    <Compile Include="Business\FlagInfoCollectionProvider.cs" />
+    <Compile Include="Business\EnumProvider.cs" />
     <Compile Include="Business\FlagItem.cs" />
     <Compile Include="UI\Commands\CopyCommand.cs" />
     <Compile Include="UI\Commands\DigitCommand.cs" />
@@ -111,7 +109,6 @@
     </Compile>
     <Compile Include="UI\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="UI\Commands\PasteCommand.cs" />
-    <Compile Include="Business\MainValue.cs" />
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\Converters\SmartValueToStringConverter.cs" />
     <Compile Include="UI\ViewModelBase.cs" />

@@ -29,18 +29,15 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class OpenAssemblyCommand : ICommand
     {
-        private readonly FlagCollection flagCollection;
-        private readonly StatusInfo statusInfo;
+        private readonly ProjectContext projectContext;
         private readonly UserInterface userInterface;
 
-        public OpenAssemblyCommand(FlagCollection flagCollection, StatusInfo statusInfo, UserInterface userInterface)
+        public OpenAssemblyCommand(ProjectContext projectContext, UserInterface userInterface)
         {
-            if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
-            if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
+            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
 
-            this.flagCollection = flagCollection;
-            this.statusInfo = statusInfo;
+            this.projectContext = projectContext;
             this.userInterface = userInterface;
         }
 
@@ -76,7 +73,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
         private void LoadAssembly(string assemblyFileName)
         {
             Assembly assembly = Assembly.LoadFrom(assemblyFileName);
-            
+
 
             List<Type> enumTypes = assembly.GetTypes()
                 .Where(x => x.IsEnum)
@@ -91,8 +88,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
             if (enumType != null)
             {
-                FlagInfoCollection flagInfoCollection = new FlagInfoCollection(enumType);
-                flagCollection.Load(flagInfoCollection, statusInfo);
+                projectContext.LoadFlagCollection(enumType);
             }
         }
 

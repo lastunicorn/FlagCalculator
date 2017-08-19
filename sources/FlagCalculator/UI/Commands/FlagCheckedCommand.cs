@@ -23,13 +23,13 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class FlagCheckedCommand : ICommand
     {
-        private readonly MainValue mainValue;
+        //private readonly MainValue mainValue;
 
-        public FlagCheckedCommand(MainValue mainValue)
-        {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
-            this.mainValue = mainValue;
-        }
+        //public FlagCheckedCommand(MainValue mainValue)
+        //{
+        //    if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
+        //    this.mainValue = mainValue;
+        //}
         
         public bool CanExecute(object parameter)
         {
@@ -40,24 +40,24 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            CheckableItem checkableItem = parameter as CheckableItem;
+            //CheckableItem checkableItem = parameter as CheckableItem;
 
-            if (checkableItem == null)
-                return;
+            //if (checkableItem == null)
+            //    return;
 
-            ulong value = checkableItem.FlagValue.Value;
+            //ulong value = checkableItem.FlagValue.Value;
 
-            if (checkableItem.IsChecked)
-            {
-                if (value == 0)
-                    mainValue.Clear();
-                else
-                    mainValue.AddFlags(value);
-            }
-            else
-            {
-                mainValue.RemoveFlags(value);
-            }
+            //if (checkableItem.IsChecked)
+            //{
+            //    if (value == 0)
+            //        mainValue.Clear();
+            //    else
+            //        mainValue.AddFlags(value);
+            //}
+            //else
+            //{
+            //    mainValue.RemoveFlags(value);
+            //}
         }
     }
 }

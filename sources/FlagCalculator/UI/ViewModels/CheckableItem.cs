@@ -24,19 +24,22 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
     internal class CheckableItem : ViewModelBase
     {
         private readonly NumericalBaseService numericalBaseService;
-        private readonly FlagInfo flagInfo;
+        private readonly FlagItem flagItem;
         private readonly int enumBitCount;
-        private bool isChecked;
         private string text;
         private string toolTip;
         private SmartValue flagValue;
 
         public bool IsChecked
         {
-            get { return isChecked; }
+            get { return flagItem.IsSet; }
             set
             {
-                isChecked = value;
+                if (value)
+                    flagItem.Set();
+                else
+                    flagItem.Reset();
+
                 OnPropertyChanged();
             }
         }
@@ -71,32 +74,31 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public FlagCheckedCommand FlagCheckedCommand { get; }
+        public bool IsFlagSet => flagItem.IsSet;
+        
         public StatusInfoCommand StatusInfoCommand { get; }
 
-        public CheckableItem(NumericalBaseService numericalBaseService, FlagInfo flagInfo, int enumBitCount, FlagCheckedCommand flagCheckedCommand, StatusInfoCommand statusInfoCommand)
+        public CheckableItem(NumericalBaseService numericalBaseService, FlagItem flagItem, int enumBitCount, StatusInfoCommand statusInfoCommand)
         {
             if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
-            if (flagInfo == null) throw new ArgumentNullException(nameof(flagInfo));
-            if (flagCheckedCommand == null) throw new ArgumentNullException(nameof(flagCheckedCommand));
+            if (flagItem == null) throw new ArgumentNullException(nameof(flagItem));
             if (statusInfoCommand == null) throw new ArgumentNullException(nameof(statusInfoCommand));
 
             this.numericalBaseService = numericalBaseService;
-            this.flagInfo = flagInfo;
+            this.flagItem = flagItem;
             this.enumBitCount = enumBitCount;
-
-            FlagCheckedCommand = flagCheckedCommand;
+            
             StatusInfoCommand = statusInfoCommand;
 
             numericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
 
             IsChecked = false;
-            FlagName = flagInfo.Name;
+            FlagName = flagItem.Name;
             ToolTip = CalculateToolTip();
 
             FlagValue = new SmartValue
             {
-                Value = flagInfo.Value,
+                Value = flagItem.Value,
                 NumericalBase = numericalBaseService.NumericalBase,
                 BitCount = enumBitCount
             };
@@ -106,7 +108,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         {
             FlagValue = new SmartValue
             {
-                Value = flagInfo.Value,
+                Value = flagItem.Value,
                 NumericalBase = numericalBaseService.NumericalBase,
                 BitCount = enumBitCount
             };
@@ -126,7 +128,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private IEnumerable<int> GetSelectedIndexes()
         {
-            ulong v = flagInfo.Value;
+            ulong v = flagItem.Value;
             int index = -1;
 
             while (v != 0)

@@ -23,12 +23,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class CopyCommand : ICommand
     {
-        private readonly MainValue mainValue;
+        private readonly ProjectContext projectContext;
 
-        public CopyCommand(MainValue mainValue)
+        public CopyCommand(ProjectContext projectContext)
         {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
-            this.mainValue = mainValue;
+            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
+            this.projectContext = projectContext;
         }
 
         public bool CanExecute(object parameter)
@@ -40,7 +40,16 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            Clipboard.SetText(mainValue.ToSimpleString());
+            SmartValue smartValue = new SmartValue
+            {
+                Value = projectContext.FlagsNumber.Value,
+                NumericalBase = projectContext.NumericalBaseService.NumericalBase,
+                BitCount = projectContext.FlagsNumber.BitCount
+            };
+
+            string text = smartValue.ToSimpleString();
+
+            Clipboard.SetText(text);
         }
     }
 }

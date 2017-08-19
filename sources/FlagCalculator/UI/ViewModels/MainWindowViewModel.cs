@@ -43,11 +43,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public MainValue MainValue
-        {
-            get { return projectContext.MainValue; }
-        }
-
         public bool IsOpenPanelVisible
         {
             get { return isOpenPanelVisible; }
@@ -97,12 +92,12 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Create commands
 
-            OpenAssemblyCommand = new OpenAssemblyCommand(projectContext.FlagCollection, statusInfo, userInterface);
-            EscapeCommand = new EscapeCommand(MainValue);
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext.MainValue, projectContext.FlagCollection);
-            CopyCommand = new CopyCommand(MainValue);
-            PasteCommand = new PasteCommand(MainValue);
-            DigitCommand = new DigitCommand(MainValue);
+            OpenAssemblyCommand = new OpenAssemblyCommand(projectContext, userInterface);
+            EscapeCommand = new EscapeCommand(projectContext);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext);
+            CopyCommand = new CopyCommand(projectContext);
+            PasteCommand = new PasteCommand(projectContext);
+            DigitCommand = new DigitCommand(projectContext);
             HelpCommand = new HelpCommand(this);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
@@ -114,7 +109,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             isOpenPanelVisible = true;
             isHelpPageVisible = false;
 
-            projectContext.FlagCollection.Loaded += HandleFlagCollectionLoaded;
+            projectContext.Loaded += HandleProjectLoaded;
 
             projectContext.LoadFlagCollection();
         }
@@ -126,11 +121,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             return string.Format("Flag Calculator {0}", version);
         }
 
-        private void HandleFlagCollectionLoaded(object sender, EventArgs eventArgs)
+        private void HandleProjectLoaded(object sender, EventArgs eventArgs)
         {
-            FlagInfoCollection flagInfoCollection = projectContext.FlagCollection.FlagInfoCollection;
+            FlagsNumber flagNumber = projectContext.FlagsNumber;
 
-            Title = string.Format("{1} ({2}) - {0}", titleBase, flagInfoCollection.Name, flagInfoCollection.UnderlyingType.Name);
+            Title = string.Format("{1} ({2}) - {0}", titleBase, flagNumber.Name, flagNumber.UnderlyingType.Name);
             IsOpenPanelVisible = false;
         }
     }

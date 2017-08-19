@@ -27,7 +27,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal sealed class FlagCollection
     {
-        private readonly MainValue mainValue;
+        private FlagsNumber flagsNumber;
         private readonly NumericalBaseService numericalBaseService;
         private bool displaySelected;
         private bool displayUnselected;
@@ -63,20 +63,15 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 View.Refresh();
             }
         }
-
-        public FlagInfoCollection FlagInfoCollection { get; private set; }
-
+        
         public ICollectionView View => itemsViewSource.View;
 
-        public event EventHandler Loaded;
         public event EventHandler SelectionChanged;
 
-        public FlagCollection(MainValue mainValue, NumericalBaseService numericalBaseService)
+        public FlagCollection(NumericalBaseService numericalBaseService)
         {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
             if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
 
-            this.mainValue = mainValue;
             this.numericalBaseService = numericalBaseService;
 
             flags = new ObservableCollection<CheckableItem>();
@@ -86,8 +81,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             itemsViewSource = new CollectionViewSource { Source = flags };
             itemsViewSource.Filter += HandleCollectionViewSourceFilter;
-
-            mainValue.ValueChanged += HandleMainValueChanged;
         }
 
         private void HandleCollectionViewSourceFilter(object sender, FilterEventArgs e)
@@ -101,44 +94,28 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void HandleMainValueChanged(object sender, EventArgs e)
         {
-            foreach (CheckableItem checkableItem in flags)
-                checkableItem.IsChecked = mainValue.IsFlagSet(checkableItem.FlagValue.Value);
-
             View.Refresh();
         }
 
-        public void Load(FlagInfoCollection flagInfoCollection, StatusInfo statusInfo)
+        public void Load(FlagsNumber flagsNumber, StatusInfo statusInfo)
         {
+            if (flagsNumber == null) throw new ArgumentNullException(nameof(flagsNumber));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
-            FlagCheckedCommand flagCheckedCommand = new FlagCheckedCommand(mainValue);
+            if (this.flagsNumber != null)
+                this.flagsNumber.ValueChanged -= HandleMainValueChanged;
+
             StatusInfoCommand statusInfoCommand = new StatusInfoCommand(statusInfo);
 
-            List<CheckableItem> checkableItems = flagInfoCollection
-                .Select(x => new CheckableItem(numericalBaseService, x, flagInfoCollection.BitCount, flagCheckedCommand, statusInfoCommand))
+            List<CheckableItem> checkableItems = flagsNumber
+                .Select(x => new CheckableItem(numericalBaseService, x, flagsNumber.BitCount, statusInfoCommand))
                 .ToList();
 
             foreach (CheckableItem item in checkableItems)
                 flags.Add(item);
 
-            FlagInfoCollection = flagInfoCollection;
-
-            OnLoaded();
-        }
-
-        public ulong GetAllFlagsCumulated()
-        {
-            ulong value = 0;
-
-            foreach (CheckableItem item in flags)
-                value |= item.FlagValue.Value;
-
-            return value;
-        }
-
-        private void OnLoaded()
-        {
-            Loaded?.Invoke(this, EventArgs.Empty);
+            this.flagsNumber = flagsNumber;
+            this.flagsNumber.ValueChanged += HandleMainValueChanged;
         }
 
         private void OnSelectionChanged()

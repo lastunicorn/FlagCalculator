@@ -62,6 +62,18 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.FlagsNumberTests
         }
 
         [Test]
+        public void set_Value_with_same_value__does_not_raise_ValueChanged_event()
+        {
+            bool eventWasRaised = false;
+            flagsNumber.Value = 20;
+            flagsNumber.ValueChanged += (s, e) => eventWasRaised = true;
+
+            flagsNumber.Value = 20;
+
+            Assert.That(eventWasRaised, Is.False);
+        }
+
+        [Test]
         public void setting_Value_to_13_only_flags_3_2_and_0_are_set()
         {
             flagsNumber.Value = 13;

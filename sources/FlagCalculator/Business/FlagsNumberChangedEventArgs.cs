@@ -1,4 +1,4 @@
-// FlagCalculator
+﻿// FlagCalculator
 // Copyright (C) 2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,31 +15,18 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
-using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator.UI.Commands
+namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class SelectNoFlagsCommand : ICommand
+    internal class FlagsNumberChangedEventArgs : EventArgs
     {
-        private readonly ProjectContext projectContext;
+        public FlagsNumber OldValue { get; }
+        public FlagsNumber NewValue { get; }
 
-        public SelectNoFlagsCommand(ProjectContext projectContext)
+        public FlagsNumberChangedEventArgs(FlagsNumber oldValue, FlagsNumber newValue)
         {
-            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-            this.projectContext = projectContext;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            projectContext.FlagsNumber.Clear();
+            OldValue = oldValue;
+            NewValue = newValue;
         }
     }
 }

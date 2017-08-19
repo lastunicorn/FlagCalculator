@@ -37,6 +37,9 @@ namespace DustInTheWind.FlagCalculator.Business
             get { return value; }
             set
             {
+                if (this.value == value)
+                    return;
+
                 this.value = value;
                 OnValueChanged();
             }
@@ -71,6 +74,26 @@ namespace DustInTheWind.FlagCalculator.Business
                     return new FlagItem(this, name, value);
                 })
                 .ToList();
+        }
+
+        public void SelectAllFlags()
+        {
+            Value = GetAllFlagsCumulated();
+        }
+
+        private ulong GetAllFlagsCumulated()
+        {
+            ulong value = 0;
+
+            foreach (FlagItem item in flags)
+                value |= item.Value;
+
+            return value;
+        }
+
+        public void Clear()
+        {
+            Value = 0;
         }
 
         public IEnumerator<FlagItem> GetEnumerator()

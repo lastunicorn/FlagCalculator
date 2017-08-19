@@ -80,8 +80,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             this.projectContext = projectContext;
             this.statusInfo = statusInfo;
 
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext.MainValue, projectContext.FlagCollection);
-            SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext.MainValue);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext);
+            SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
             DisplaySelected = projectContext.FlagCollection.DisplaySelected;

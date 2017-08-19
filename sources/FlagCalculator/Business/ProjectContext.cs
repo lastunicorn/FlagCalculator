@@ -24,11 +24,28 @@ namespace DustInTheWind.FlagCalculator.Business
     {
         private readonly UserInterface userInterface;
         private readonly StatusInfo statusInfo;
+        private FlagsNumber flagsNumber;
 
         public NumericalBaseService NumericalBaseService { get; }
-        public MainValue MainValue { get; }
+
+        public FlagsNumber FlagsNumber
+        {
+            get { return flagsNumber; }
+            private set
+            {
+                FlagsNumber oldValue = flagsNumber;
+                flagsNumber = value;
+
+                FlagsNumberChangedEventArgs args = new FlagsNumberChangedEventArgs(oldValue, value);
+                OnFlagsNumberChanged(args);
+            }
+        }
+
         public FlagCollection FlagCollection { get; }
-        
+
+        public event EventHandler Loaded;
+        public event EventHandler<FlagsNumberChangedEventArgs> FlagsNumberChanged;
+
         public ProjectContext(UserInterface userInterface, StatusInfo statusInfo)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
@@ -38,25 +55,27 @@ namespace DustInTheWind.FlagCalculator.Business
             this.statusInfo = statusInfo;
 
             NumericalBaseService = new NumericalBaseService();
-            MainValue = new MainValue(NumericalBaseService);
-            FlagCollection = new FlagCollection(MainValue, NumericalBaseService);
-
-            FlagCollection.Loaded += HandleFlagCollectionLoaded;
+            FlagsNumber = new FlagsNumber();
+            FlagCollection = new FlagCollection(NumericalBaseService);
         }
 
         public void LoadFlagCollection()
         {
             try
             {
-                MainValue.Clear();
+                FlagsNumber.Clear();
 
-                FlagInfoCollectionProvider flagInfoCollectionProvider = new FlagInfoCollectionProvider();
-                FlagInfoCollection flagInfoCollection = flagInfoCollectionProvider.LoadFlagCollection();
+                EnumProvider enumProvider = new EnumProvider();
+                Type enumType = enumProvider.LoadEnum();
 
-                if (flagInfoCollection == null)
+                if (enumType == null)
                     return;
 
-                FlagCollection.Load(flagInfoCollection, statusInfo);
+                FlagsNumber = new FlagsNumber(enumType);
+                FlagCollection.Load(FlagsNumber, statusInfo);
+
+                FlagsNumber.Clear();
+                OnLoaded();
             }
             catch (Exception ex)
             {
@@ -64,11 +83,22 @@ namespace DustInTheWind.FlagCalculator.Business
             }
         }
 
-        private void HandleFlagCollectionLoaded(object sender, EventArgs eventArgs)
+        public void LoadFlagCollection(Type enumType)
         {
-            FlagInfoCollection flagInfoCollection = FlagCollection.FlagInfoCollection;
-            MainValue.BitCount = flagInfoCollection.BitCount;
-            MainValue.Clear();
+            FlagsNumber = new FlagsNumber(enumType);
+            FlagCollection.Load(FlagsNumber, statusInfo);
+
+            OnLoaded();
+        }
+
+        protected virtual void OnLoaded()
+        {
+            Loaded?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnFlagsNumberChanged(FlagsNumberChangedEventArgs e)
+        {
+            FlagsNumberChanged?.Invoke(this, e);
         }
     }
 }

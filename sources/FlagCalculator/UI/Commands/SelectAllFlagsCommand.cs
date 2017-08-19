@@ -17,22 +17,18 @@
 using System;
 using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
-using DustInTheWind.FlagCalculator.UI.ViewModels;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class SelectAllFlagsCommand : ICommand
     {
-        private readonly MainValue mainValue;
-        private readonly FlagCollection flagCollection;
+        private readonly ProjectContext projectContext;
 
-        public SelectAllFlagsCommand(MainValue mainValue, FlagCollection flagCollection)
+        public SelectAllFlagsCommand(ProjectContext projectContext)
         {
-            if (mainValue == null) throw new ArgumentNullException(nameof(mainValue));
-            if (flagCollection == null) throw new ArgumentNullException(nameof(flagCollection));
+            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
 
-            this.mainValue = mainValue;
-            this.flagCollection = flagCollection;
+            this.projectContext = projectContext;
         }
 
         public bool CanExecute(object parameter)
@@ -44,8 +40,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
-            ulong value = flagCollection.GetAllFlagsCumulated();
-            mainValue.SetValue(value);
+            projectContext.FlagsNumber.SelectAllFlags();
         }
     }
 }

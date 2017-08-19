@@ -23,16 +23,10 @@ namespace DustInTheWind.FlagCalculator.Business
         public FlagsNumber Parent { get; }
         public ulong Value { get; }
         public string Name { get; }
-        
-        public bool IsSet
-        {
-            get
-            {
-                return Value == 0
-                    ? Parent.Value == 0
-                    : (Parent.Value & Value) == Value;
-            }
-        }
+
+        public bool IsSet => Value == 0
+            ? Parent.Value == 0
+            : (Parent.Value & Value) == Value;
 
         public FlagItem(FlagsNumber parent, string name, ulong value)
         {
@@ -46,7 +40,9 @@ namespace DustInTheWind.FlagCalculator.Business
 
         public void Set()
         {
-            Parent.Value = Parent.Value | Value;
+            Parent.Value = Value == 0
+                ? 0
+                : Parent.Value | Value;
         }
 
         public void Reset()

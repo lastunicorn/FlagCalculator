@@ -36,7 +36,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.FlagItemTests
         [TestCase(0UL, 0UL, 0UL)] // bit <none> - bit <none> - bit <none>
         [TestCase(0UL, 2UL, 2UL)] // bit <none> - bit 1 - bit 1
         [TestCase(2UL, 2UL, 2UL)] // bit 1 - bit 1 - bit 1
-        [TestCase(2UL, 0UL, 2UL)] // bit 1 - bit <none> - bit 1
+        [TestCase(2UL, 0UL, 0UL)] // bit 1 - bit <none> - bit <none>
         [TestCase(2UL, 8UL, 10UL)] // bit 1 - bit 3 - bit 1,3
         [TestCase(2UL, 10UL, 10UL)] // bit 1 - bit 1,3 - bit 1,3
         [TestCase(2UL, 12UL, 14UL)] // bit 1 - bit 2,3 - bit 1,2,3

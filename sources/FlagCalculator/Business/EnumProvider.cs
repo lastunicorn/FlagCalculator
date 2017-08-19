@@ -19,20 +19,18 @@ using System.Configuration;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class FlagInfoCollectionProvider
+    internal class EnumProvider
     {
         public Func<Type, bool> OnEnumIsNotFlags { get; set; }
-
-        public FlagInfoCollection LoadFlagCollection()
+        
+        public Type LoadEnum()
         {
             string enumTypeFullName = ConfigurationManager.AppSettings["enumTypeName"];
 
             if (enumTypeFullName == null)
                 return null;
 
-            Type enumType = GetEnumType(enumTypeFullName);
-
-            return new FlagInfoCollection(enumType);
+            return GetEnumType(enumTypeFullName);
         }
 
         private Type GetEnumType(string enumTypeFullName)

@@ -60,26 +60,46 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             this.projectContext = projectContext;
 
-            CopyCommand = new CopyCommand(projectContext.MainValue);
-            PasteCommand = new PasteCommand(projectContext.MainValue);
+            CopyCommand = new CopyCommand(projectContext);
+            PasteCommand = new PasteCommand(projectContext);
             NumericalBaseRollCommand = new NumericalBaseRollCommand(projectContext.NumericalBaseService);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
-            projectContext.MainValue.ValueChanged += HandleMainValueChanged;
+            projectContext.FlagsNumberChanged += HandleFlagsNumberChanged;
+            projectContext.FlagsNumber.ValueChanged += HandleMainValueChanged;
             projectContext.NumericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
 
             UpdateNumericalBaseText();
         }
 
+        private void HandleFlagsNumberChanged(object sender, FlagsNumberChangedEventArgs e)
+        {
+            if (e.OldValue != null)
+                e.OldValue.ValueChanged -= HandleMainValueChanged;
+
+            if (e.NewValue != null)
+                e.NewValue.ValueChanged += HandleMainValueChanged;
+        }
+
         private void HandleMainValueChanged(object sender, EventArgs e)
         {
-            MainValue = projectContext.MainValue.ToSmartValue();
+            MainValue = new SmartValue
+            {
+                Value = projectContext.FlagsNumber.Value,
+                NumericalBase = projectContext.NumericalBaseService.NumericalBase,
+                BitCount = projectContext.FlagsNumber.BitCount
+            };
         }
 
         private void HandleNumericalBaseChanged(object sender, EventArgs e)
         {
             UpdateNumericalBaseText();
-            MainValue = projectContext.MainValue.ToSmartValue();
+            MainValue = new SmartValue
+            {
+                Value = projectContext.FlagsNumber.Value,
+                NumericalBase = projectContext.NumericalBaseService.NumericalBase,
+                BitCount = projectContext.FlagsNumber.BitCount
+            };
         }
 
         private void UpdateNumericalBaseText()
