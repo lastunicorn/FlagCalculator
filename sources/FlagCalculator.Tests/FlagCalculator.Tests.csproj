@@ -45,6 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\FlagItemTests\IsSetTests.cs" />
+    <Compile Include="Business\FlagItemTests\ResetTests.cs" />
+    <Compile Include="Business\FlagItemTests\SetTests.cs" />
+    <Compile Include="Business\FlagsNumberTests\ConstructorWithDifferentTypesOfEnumTests.cs" />
+    <Compile Include="Business\FlagsNumberTests\ConstructorWithFlagsEnumTests.cs" />
+    <Compile Include="Business\FlagsNumberTests\ConstructorWithNormalEnumTests.cs" />
+    <Compile Include="Business\FlagsNumberTests\ConstructorTests.cs" />
+    <Compile Include="Business\FlagItemTests\ContstructorTests.cs" />
+    <Compile Include="Business\FlagsNumberTests\ValuePropertyTests.cs" />
     <Compile Include="Business\ObjectExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

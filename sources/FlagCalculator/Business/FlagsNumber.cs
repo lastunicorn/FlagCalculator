@@ -1,4 +1,4 @@
-// FlagCalculator
+﻿// FlagCalculator
 // Copyright (C) 2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -23,37 +23,57 @@ using System.Runtime.InteropServices;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class FlagInfoCollection : IEnumerable<FlagInfo>
+    internal class FlagsNumber : IEnumerable<FlagItem>
     {
-        private readonly List<FlagInfo> flags;
+        private ulong value;
+        private readonly List<FlagItem> flags;
 
         public string Name { get; }
-        public Type UnderlyingType { get; }
         public int BitCount { get; }
+        public Type UnderlyingType { get; }
 
-        public FlagInfoCollection(Type enumType)
+        public ulong Value
+        {
+            get { return value; }
+            set
+            {
+                this.value = value;
+                OnValueChanged();
+            }
+        }
+
+        public event EventHandler ValueChanged;
+
+        public FlagsNumber()
+        {
+            flags = new List<FlagItem>();
+            Name = string.Empty;
+        }
+
+        public FlagsNumber(Type enumType)
         {
             Name = enumType.Name;
             UnderlyingType = enumType.GetEnumUnderlyingType();
             BitCount = Marshal.SizeOf(UnderlyingType) * 8;
-
-            flags = BuildListOfFields(enumType);
+            flags = BuildListOfFlags(enumType);
         }
 
-        private static List<FlagInfo> BuildListOfFields(Type enumType)
+        private List<FlagItem> BuildListOfFlags(Type enumType)
         {
             FieldInfo[] fieldInfos = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
 
             return fieldInfos
-                .Select(x => new FlagInfo
+                .Select(x =>
                 {
-                    Name = x.Name,
-                    Value = x.GetRawConstantValue().ToUInt64Value()
+                    string name = x.Name;
+                    ulong value = x.GetRawConstantValue().ToUInt64Value();
+
+                    return new FlagItem(this, name, value);
                 })
                 .ToList();
         }
 
-        public IEnumerator<FlagInfo> GetEnumerator()
+        public IEnumerator<FlagItem> GetEnumerator()
         {
             return flags.GetEnumerator();
         }
@@ -61,6 +81,11 @@ namespace DustInTheWind.FlagCalculator.Business
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        protected virtual void OnValueChanged()
+        {
+            ValueChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
