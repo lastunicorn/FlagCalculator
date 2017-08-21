@@ -31,30 +31,20 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public bool DisplaySelected
         {
             get { return displaySelected; }
-            set
+            private set
             {
-                if (value == displaySelected)
-                    return;
-
                 displaySelected = value;
                 OnPropertyChanged();
-
-                projectContext.DisplaySelected = value;
             }
         }
 
         public bool DisplayUnselected
         {
             get { return displayUnselected; }
-            set
+            private set
             {
-                if (value == displayUnselected)
-                    return;
-
                 displayUnselected = value;
                 OnPropertyChanged();
-
-                projectContext.DisplayUnselected = value;
             }
         }
 
@@ -71,6 +61,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
+        public ToggleDisplaySelectedCommand ToggleDisplaySelectedCommand { get; }
+        public ToggleDisplayUnselectedCommand ToggleDisplayUnselectedCommand { get; }
 
         public MainStatusBarViewModel(ProjectContext projectContext, StatusInfo statusInfo)
         {
@@ -83,6 +75,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext);
             SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext);
             StatusInfoCommand = new StatusInfoCommand(statusInfo);
+            ToggleDisplaySelectedCommand = new ToggleDisplaySelectedCommand(projectContext);
+            ToggleDisplayUnselectedCommand = new ToggleDisplayUnselectedCommand(projectContext);
 
             DisplaySelected = projectContext.DisplaySelected;
             DisplayUnselected = projectContext.DisplayUnselected;

@@ -137,7 +137,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <TextBlock Text="Display:" VerticalAlignment="Center" Margin="0 0 8 0"/>
 
                 <ToggleButton
-                    IsChecked="{Binding DisplaySelected}"
+                    IsChecked="{Binding DisplaySelected, Mode=OneWay}"
+                    Command="{Binding ToggleDisplaySelectedCommand}"
                     Margin="0 0 8 0">
 
                     <ContentControl
@@ -158,7 +159,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </ToggleButton>
 
                 <ToggleButton
-                    IsChecked="{Binding DisplayUnselected}"
+                    IsChecked="{Binding DisplayUnselected, Mode=OneWay}"
+                    Command="{Binding ToggleDisplayUnselectedCommand}"
                     Margin="0 0 8 0">
 
                     <ContentControl
