@@ -25,8 +25,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
     {
         private readonly NumericalBaseService numericalBaseService;
         private readonly FlagItem flagItem;
-        private readonly int enumBitCount;
-        private string text;
+        private string flagName;
         private string toolTip;
         private SmartValue flagValue;
 
@@ -35,6 +34,9 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             get { return flagItem.IsSet; }
             set
             {
+                if (flagItem.IsSet == value)
+                    return;
+
                 if (value)
                     flagItem.Set();
                 else
@@ -46,10 +48,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         public string FlagName
         {
-            get { return text; }
+            get { return flagName; }
             set
             {
-                text = value;
+                flagName = value;
                 OnPropertyChanged();
             }
         }
@@ -73,8 +75,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public bool IsFlagSet => flagItem.IsSet;
         
         public StatusInfoCommand StatusInfoCommand { get; }
 
@@ -86,8 +86,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             this.numericalBaseService = numericalBaseService;
             this.flagItem = flagItem;
-            this.enumBitCount = enumBitCount;
-            
+
             StatusInfoCommand = statusInfoCommand;
 
             numericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
@@ -110,7 +109,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             {
                 Value = flagItem.Value,
                 NumericalBase = numericalBaseService.NumericalBase,
-                BitCount = enumBitCount
+                BitCount = flagItem.Parent?.BitCount ?? 0
             };
         }
 

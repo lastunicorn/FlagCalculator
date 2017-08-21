@@ -55,6 +55,8 @@
     <Compile Include="Business\FlagItemTests\ContstructorTests.cs" />
     <Compile Include="Business\FlagsNumberTests\ValuePropertyTests.cs" />
     <Compile Include="Business\ObjectExtensionsTests.cs" />
+    <Compile Include="Business\SmartValueTests\ToSimpleStringTests.cs" />
+    <Compile Include="Business\SmartValueTests\ToStringTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,7 @@ using NUnit.Framework;
 namespace DustInTheWind.FlagCalculator.Tests.Business.FlagItemTests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.Self)]
     public class IsSetTests
     {
         private FlagItem flagItem;

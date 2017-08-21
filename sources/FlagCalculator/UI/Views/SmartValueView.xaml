@@ -23,7 +23,6 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <TextBlock
-                            x:Name="TextBlock1"
                             Text="{Binding}"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Stretch">

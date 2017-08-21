@@ -25,40 +25,133 @@ namespace DustInTheWind.FlagCalculator.Business
         public ulong Value { get; set; }
         public NumericalBase NumericalBase { get; set; }
         public int BitCount { get; set; }
+        public bool PadLeft { get; set; }
 
-        public int[] ToDigits()
+        public SmartValue()
+        {
+            PadLeft = true;
+        }
+
+        public string ToSimpleString()
         {
             switch (NumericalBase)
             {
                 case NumericalBase.None:
-                    return new int[0];
+                    return string.Empty;
 
                 case NumericalBase.Decimal:
+                    return ToSimpleStringDecimal();
+
                 case NumericalBase.Hexadecimal:
-                    return ToDigits((int)NumericalBase);
+                    return ToStringHexa();
 
                 case NumericalBase.Binary:
-                    return ToDigits((int)NumericalBase, BitCount);
+                    return ToStringBinary();
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private int[] ToDigits(int numericalBase, int padding = 0)
+        private string ToSimpleStringDecimal()
         {
-            IEnumerable<int> digits = ToDigitsInternal(numericalBase);
-            List<int> allDigits = new List<int>(digits);
-
-            while (padding > allDigits.Count)
-                allDigits.Add(0);
-
-            allDigits.Reverse();
-
-            return allDigits.ToArray();
+            return Value.ToString(CultureInfo.InvariantCulture);
         }
 
-        private IEnumerable<int> ToDigitsInternal(int numericalBase)
+        public override string ToString()
+        {
+            switch (NumericalBase)
+            {
+                case NumericalBase.None:
+                    return string.Empty;
+
+                case NumericalBase.Decimal:
+                    return ToStringDecimal();
+
+                case NumericalBase.Hexadecimal:
+                    return ToStringHexa(2);
+
+                case NumericalBase.Binary:
+                    return ToStringBinary(4);
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private string ToStringDecimal()
+        {
+            return Value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        private string ToStringHexa(int groupLength = 0)
+        {
+            IEnumerable<int> digitsReversed = ToDigitsReversed(16);
+
+            List<char> allChars = new List<char>();
+            int digitCount = 0;
+
+            foreach (int digit in digitsReversed)
+            {
+                if (groupLength > 0 && digitCount > 0 && digitCount % groupLength == 0)
+                    allChars.Add(' ');
+
+                if (digit < 10)
+                    allChars.Add((char)('0' + digit));
+
+                if (digit >= 10)
+                    allChars.Add((char)('A' + digit - 10));
+
+                digitCount++;
+            }
+
+            if (PadLeft)
+                while (digitCount < BitCount / 4)
+                {
+                    if (groupLength > 0 && digitCount > 0 && digitCount % groupLength == 0)
+                        allChars.Add(' ');
+
+                    allChars.Add('0');
+                    digitCount++;
+                }
+
+            allChars.Reverse();
+
+            return string.Join(string.Empty, allChars);
+        }
+
+        private string ToStringBinary(int groupLength = 0)
+        {
+            IEnumerable<int> digitsReversed = ToDigitsReversed(2);
+
+            List<char> allChars = new List<char>();
+            int digitCount = 0;
+
+            foreach (int digit in digitsReversed)
+            {
+                if (groupLength > 0 && digitCount > 0 && digitCount % groupLength == 0)
+                    allChars.Add(' ');
+
+                allChars.Add(digit == 0 ? '0' : '1');
+                digitCount++;
+            }
+
+            if (PadLeft)
+                while (digitCount < BitCount)
+                {
+                    if (groupLength > 0 && digitCount > 0 && digitCount % groupLength == 0)
+                        allChars.Add(' ');
+
+                    allChars.Add('0');
+                    digitCount++;
+                }
+
+            allChars.Reverse();
+
+            return string.Join(string.Empty, allChars);
+        }
+
+        private IEnumerable<int> ToDigitsReversed(int numericalBase)
         {
             if (Value == 0)
             {
@@ -76,164 +169,6 @@ namespace DustInTheWind.FlagCalculator.Business
                     yield return digit;
                 }
             }
-        }
-
-        public string ToSimpleString()
-        {
-            switch (NumericalBase)
-            {
-                case NumericalBase.None:
-                    return string.Empty;
-
-                case NumericalBase.Decimal:
-                    return ToSimpleStringDecimal();
-
-                case NumericalBase.Hexadecimal:
-                    return ToSimpleStringHexa();
-
-                case NumericalBase.Binary:
-                    return ToSimpleStringBinary();
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private string ToSimpleStringDecimal()
-        {
-            return Value.ToString(CultureInfo.InvariantCulture);
-        }
-
-        private string ToSimpleStringHexa()
-        {
-            IEnumerable<int> digitsReversed = ToDigitsInternal(16);
-
-            List<char> allChars = new List<char>();
-
-            foreach (int digit in digitsReversed)
-            {
-                if (digit < 10)
-                    allChars.Add((char)('0' + digit));
-
-                if (digit >= 10)
-                    allChars.Add((char)('A' + digit - 10));
-            }
-
-            allChars.Reverse();
-
-            return string.Join(string.Empty, allChars);
-        }
-
-        private string ToSimpleStringBinary()
-        {
-            IEnumerable<int> digitsReversed = ToDigitsInternal(2);
-
-            List<char> allChars = new List<char>();
-            int digitCount = 0;
-
-            foreach (int digit in digitsReversed)
-            {
-                allChars.Add(digit == 0 ? '0' : '1');
-                digitCount++;
-            }
-
-            while (digitCount < BitCount)
-            {
-                allChars.Add('0');
-                digitCount++;
-            }
-
-            allChars.Reverse();
-
-            return string.Join(string.Empty, allChars);
-        }
-
-        public override string ToString()
-        {
-            switch (NumericalBase)
-            {
-                case NumericalBase.None:
-                    return string.Empty;
-
-                case NumericalBase.Decimal:
-                    return ToStringDecimal();
-
-                case NumericalBase.Hexadecimal:
-                    return ToStringHexa();
-
-                case NumericalBase.Binary:
-                    return ToStringBinary();
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private string ToStringDecimal()
-        {
-            return Value.ToString(CultureInfo.CurrentCulture);
-        }
-
-        private string ToStringHexa()
-        {
-            IEnumerable<int> digitsReversed = ToDigitsInternal(16);
-
-            List<char> allChars = new List<char>();
-            int digitCount = 0;
-
-            foreach (int digit in digitsReversed)
-            {
-                if (digitCount > 0 && digitCount % 2 == 0)
-                    allChars.Add(' ');
-
-                if (digit < 10)
-                    allChars.Add((char)('0' + digit));
-
-                if (digit >= 10)
-                    allChars.Add((char)('A' + digit - 10));
-
-                digitCount++;
-            }
-
-            while (digitCount < BitCount / 4)
-            {
-                if (digitCount > 0 && digitCount % 2 == 0)
-                    allChars.Add(' ');
-
-                allChars.Add('0');
-
-                digitCount++;
-            }
-
-            allChars.Reverse();
-
-            return string.Join(string.Empty, allChars);
-        }
-
-        private string ToStringBinary()
-        {
-            ulong v = Value;
-            int bitCount = BitCount;
-
-            if (bitCount == 0)
-                return "0";
-
-            List<char> chars = new List<char>(bitCount + (bitCount / 4 - 1));
-
-            for (int i = 0; i < bitCount; i++)
-            {
-                if (i != 0 && i % 4 == 0)
-                    chars.Add(' ');
-
-                bool bit = (v & 1) == 1;
-                chars.Add(bit ? '1' : '0');
-
-                v = v >> 1;
-            }
-
-            chars.Reverse();
-
-            return string.Join(string.Empty, chars);
         }
     }
 }

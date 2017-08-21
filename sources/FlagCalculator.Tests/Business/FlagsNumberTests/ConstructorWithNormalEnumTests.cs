@@ -21,6 +21,7 @@ using NUnit.Framework;
 namespace DustInTheWind.FlagCalculator.Tests.Business.FlagsNumberTests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.Self)]
     public class ConstructorWithNormalEnumTests
     {
         private FlagsNumber flagsNumber;

@@ -40,11 +40,14 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public void Execute(object parameter)
         {
+            NumericalBase numericalBase = projectContext.NumericalBaseService.NumericalBase;
+
             SmartValue smartValue = new SmartValue
             {
                 Value = projectContext.FlagsNumber.Value,
-                NumericalBase = projectContext.NumericalBaseService.NumericalBase,
-                BitCount = projectContext.FlagsNumber.BitCount
+                NumericalBase = numericalBase,
+                BitCount = projectContext.FlagsNumber.BitCount,
+                PadLeft = numericalBase == NumericalBase.Binary
             };
 
             string text = smartValue.ToSimpleString();

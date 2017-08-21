@@ -20,6 +20,7 @@ using NUnit.Framework;
 namespace DustInTheWind.FlagCalculator.Tests.Business.FlagItemTests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     public class ResetTests
     {
         [TestCase(0UL, 0UL, 0UL)] // bit <none> - bit <none> - bit <none>
