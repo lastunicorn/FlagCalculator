@@ -32,10 +32,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private readonly ObservableCollection<CheckableItem> flags;
         private readonly CollectionViewSource itemsViewSource;
-
-        private bool displaySelected;
-        private bool displayUnselected;
-
+        
         public ICollectionView ItemsView => itemsViewSource.View;
 
         public FlagsViewModel(ProjectContext projectContext, StatusInfo statusInfo)
@@ -50,9 +47,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             itemsViewSource = new CollectionViewSource { Source = flags };
             itemsViewSource.Filter += HandleCollectionViewSourceFilter;
-
-            displaySelected = projectContext.DisplaySelected;
-            displayUnselected = projectContext.DisplayUnselected;
+            
             itemsViewSource.View.Refresh();
 
             projectContext.FlagsNumberChanged += HandleProjectContextFlagsNumberChanged;
@@ -62,6 +57,9 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private void HandleCollectionViewSourceFilter(object sender, FilterEventArgs e)
         {
             CheckableItem checkableItem = e.Item as CheckableItem;
+
+            bool displaySelected = projectContext.DisplaySelected;
+            bool displayUnselected = projectContext.DisplayUnselected;
 
             bool allOptionsAreUnselected = !displaySelected && !displayUnselected;
 
@@ -100,8 +98,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void HandleProjectContextDisplaySelectedChanged(object sender, EventArgs eventArgs)
         {
-            displaySelected = projectContext.DisplaySelected;
-            displayUnselected = projectContext.DisplayUnselected;
             itemsViewSource.View.Refresh();
         }
     }
