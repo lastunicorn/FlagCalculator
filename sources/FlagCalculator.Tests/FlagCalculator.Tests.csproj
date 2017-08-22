@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Shared.cs">
+      <Link>Properties\AssemblyInfo.Shared.cs</Link>
+    </Compile>
     <Compile Include="Business\FlagItemTests\IsSetTests.cs" />
     <Compile Include="Business\FlagItemTests\ResetTests.cs" />
     <Compile Include="Business\FlagItemTests\SetTests.cs" />

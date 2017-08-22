@@ -110,9 +110,16 @@ namespace DustInTheWind.FlagCalculator.Business
 
         public void LoadFlagCollection(Type enumType)
         {
-            FlagsNumber = new FlagsNumber(enumType);
+            try
+            {
+                FlagsNumber = new FlagsNumber(enumType);
 
-            OnLoaded();
+                OnLoaded();
+            }
+            catch (Exception ex)
+            {
+                userInterface.DisplayError(ex);
+            }
         }
 
         protected virtual void OnLoaded()
