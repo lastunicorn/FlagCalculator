@@ -19,11 +19,11 @@ using System.Windows.Controls;
 namespace DustInTheWind.FlagCalculator.UI.Views
 {
     /// <summary>
-    /// Interaction logic for HelpPage.xaml
+    /// Interaction logic for MainStatusBar.xaml
     /// </summary>
-    public partial class HelpPage : UserControl
+    public partial class MainFooter : UserControl
     {
-        public HelpPage()
+        public MainFooter()
         {
             InitializeComponent();
         }

@@ -94,7 +94,7 @@
     <Compile Include="UI\DropDownButtonBehavior.cs" />
     <Compile Include="UI\ViewModels\EnumSelectorViewModel.cs" />
     <Compile Include="UI\ViewModels\MainHeaderViewModel.cs" />
-    <Compile Include="UI\ViewModels\MainStatusBarViewModel.cs" />
+    <Compile Include="UI\ViewModels\MainFooterViewModel.cs" />
     <Compile Include="UI\Views\EnumSelectorWindow.xaml.cs">
       <DependentUpon>EnumSelectorWindow.xaml</DependentUpon>
     </Compile>
@@ -102,8 +102,8 @@
       <DependentUpon>FlagListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\ViewModels\FlagsViewModel.cs" />
-    <Compile Include="UI\Views\MainStatusBar.xaml.cs">
-      <DependentUpon>MainStatusBar.xaml</DependentUpon>
+    <Compile Include="UI\Views\MainFooter.xaml.cs">
+      <DependentUpon>MainFooter.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Views\MainHeader.xaml.cs">
       <DependentUpon>MainHeader.xaml</DependentUpon>
@@ -152,7 +152,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Views\MainStatusBar.xaml">
+    <Page Include="UI\Views\MainFooter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

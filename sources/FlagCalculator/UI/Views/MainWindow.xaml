@@ -90,7 +90,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <DockPanel Background="{StaticResource MainBackground}">
 
             <views:MainHeader DockPanel.Dock="Top" DataContext="{Binding MainHeaderViewModel}"/>
-            <views:MainStatusBar DockPanel.Dock="Bottom" DataContext="{Binding MainStatusBarViewModel}"/>
+            <views:MainFooter DockPanel.Dock="Bottom" DataContext="{Binding MainFooterViewModel}"/>
 
             <Grid>
                 <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
@@ -109,12 +109,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </Grid>
 
         </DockPanel>
-
-        <!--<views:HelpPage
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            Visibility="{Binding IsHelpPageVisible, Converter={StaticResource BoolToVisibilityConverter}}"
-            Focusable="True"/>-->
 
     </Grid>
 
