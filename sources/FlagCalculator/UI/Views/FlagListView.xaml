@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         VerticalScrollBarVisibility="Auto">
 
         <ItemsControl
-            ItemsSource="{Binding ItemsView}"
+            ItemsSource="{Binding ItemsView, Mode=OneWay}"
             HorizontalAlignment="Stretch">
 
             <ItemsControl.ItemTemplate>
@@ -62,7 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecked}" Value="true">
+                                    <DataTrigger Binding="{Binding IsChecked, Mode=OneWay}" Value="true">
                                         <Setter Property="Background" Value="{StaticResource ListBoxSelectedBackground}"/>
                                     </DataTrigger>
                                     <Trigger Property="IsMouseOver" Value="True">
@@ -87,14 +87,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 HorizontalAlignment="Stretch">
 
                                 <TextBlock
-                                    Text="{Binding FlagName}"
+                                    Text="{Binding FlagName, Mode=OneWay}"
                                     FontWeight="DemiBold"
                                     Padding="5"
                                     VerticalAlignment="Center"
                                     MinWidth="250"/>
 
                                 <views:SmartValueView
-                                    Content="{Binding FlagValue, Converter={StaticResource CustomValueConverter}}"
+                                    Content="{Binding FlagValue, Converter={StaticResource CustomValueConverter}, Mode=OneWay}"
                                     Padding="5"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Stretch"/>

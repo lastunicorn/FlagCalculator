@@ -78,7 +78,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         
         public StatusInfoCommand StatusInfoCommand { get; }
 
-        public CheckableItem(NumericalBaseService numericalBaseService, FlagItem flagItem, int enumBitCount, StatusInfoCommand statusInfoCommand)
+        public CheckableItem(NumericalBaseService numericalBaseService, FlagItem flagItem, StatusInfoCommand statusInfoCommand)
         {
             if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
             if (flagItem == null) throw new ArgumentNullException(nameof(flagItem));
@@ -89,21 +89,21 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             StatusInfoCommand = statusInfoCommand;
 
-            numericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
-
             IsChecked = false;
             FlagName = flagItem.Name;
             ToolTip = CalculateToolTip();
 
-            FlagValue = new SmartValue
-            {
-                Value = flagItem.Value,
-                NumericalBase = numericalBaseService.NumericalBase,
-                BitCount = enumBitCount
-            };
+            UpdateFlagValue();
+
+            numericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
         }
 
         private void HandleNumericalBaseChanged(object sender, EventArgs eventArgs)
+        {
+            UpdateFlagValue();
+        }
+
+        private void UpdateFlagValue()
         {
             FlagValue = new SmartValue
             {

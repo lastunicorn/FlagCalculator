@@ -85,7 +85,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             StatusInfoCommand statusInfoCommand = new StatusInfoCommand(statusInfo);
 
             IEnumerable<CheckableItem> checkableItems = flagsNumber
-                .Select(x => new CheckableItem(projectContext.NumericalBaseService, x, flagsNumber.BitCount, statusInfoCommand));
+                .Select(x => new CheckableItem(projectContext.NumericalBaseService, x, statusInfoCommand));
 
             foreach (CheckableItem item in checkableItems)
                 flags.Add(item);
