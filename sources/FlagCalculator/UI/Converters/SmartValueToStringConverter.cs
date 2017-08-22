@@ -16,7 +16,10 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Windows.Data;
+using System.Windows.Markup;
+using System.Xml;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Converters
@@ -25,18 +28,37 @@ namespace DustInTheWind.FlagCalculator.UI.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is SmartValue)
-                return ConvertFromSmartNumber(value);
+            SmartValue smartValue = value as SmartValue;
+
+            if (smartValue != null)
+                return ConvertFromSmartNumber(smartValue);
 
             return null;
         }
 
-        private static object ConvertFromSmartNumber(object value)
+        //private static object ConvertFromSmartNumber(SmartValue smartValue)
+        //{
+        //    switch (smartValue.NumericalBase)
+        //    {
+        //        case NumericalBase.None:
+        //            return string.Empty;
+
+        //        case NumericalBase.Decimal:
+        //            return smartValue.Value;
+
+        //        case NumericalBase.Hexadecimal:
+        //            return smartValue.ToString();
+
+        //        case NumericalBase.Binary:
+        //            return smartValue.ToString().ToCharArray();
+
+        //        default:
+        //            throw new ArgumentOutOfRangeException();
+        //    }
+        //}
+
+        private static object ConvertFromSmartNumber(SmartValue smartValue)
         {
-            SmartValue smartValue = (SmartValue)value;
-
-            //string xamlContent = smartValue.ToString();
-
             switch (smartValue.NumericalBase)
             {
                 case NumericalBase.None:
@@ -49,34 +71,33 @@ namespace DustInTheWind.FlagCalculator.UI.Converters
                     return smartValue.ToString();
 
                 case NumericalBase.Binary:
-                    return smartValue.ToString().ToCharArray();
+                    {
+                        string xamlContent = smartValue.ToString();
+
+                        xamlContent = xamlContent.Replace("1", @"<Run Foreground = ""Black"">1</Run>");
+
+                        string xamlTextBlock = @"
+            <TextBlock
+                xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
+                Padding = ""5""
+                VerticalAlignment = ""Center""
+                HorizontalAlignment = ""Stretch""
+                Foreground = ""Gray"">
+
+                {0}
+
+            </TextBlock>";
+
+                        xamlTextBlock = string.Format(xamlTextBlock, xamlContent);
+
+                        using (StringReader stringReader = new StringReader(xamlTextBlock))
+                        using (XmlReader xmlReader = XmlReader.Create(stringReader))
+                            return XamlReader.Load(xmlReader);
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            //if (smartValue.NumericalBase != NumericalBase.Binary)
-            //    return smartValue.Value;
-
-            //            xamlContent = xamlContent.Replace("1", @"<Run Foreground = ""Black"">1</Run>");
-
-            //            string xamlTextBlock = @"
-            //<TextBlock
-            //    xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
-            //    Padding = ""5""
-            //    VerticalAlignment = ""Center""
-            //    HorizontalAlignment = ""Stretch""
-            //    Foreground = ""Gray"">
-
-            //    {0}
-
-            //</TextBlock>";
-
-            //            xamlTextBlock = string.Format(xamlTextBlock, xamlContent);
-
-            //            using (StringReader stringReader = new StringReader(xamlTextBlock))
-            //            using (XmlReader xmlReader = XmlReader.Create(stringReader))
-            //                return XamlReader.Load(xmlReader);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

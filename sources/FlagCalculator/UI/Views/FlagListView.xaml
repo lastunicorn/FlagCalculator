@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <ResourceDictionary Source="/UI/Styles/CheckBoxStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <converters:SmartValueToStringConverter x:Key="CustomValueConverter"/>
+            <converters:SmartValueToStringConverter x:Key="SmartValueToStringConverter"/>
 
         </ResourceDictionary>
 
@@ -93,11 +93,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     VerticalAlignment="Center"
                                     MinWidth="250"/>
 
-                                <views:SmartValueView
-                                    Content="{Binding FlagValue, Converter={StaticResource CustomValueConverter}, Mode=OneWay}"
+                                <!--<views:SmartValueView
+                                    Content="{Binding FlagValue, Converter={StaticResource SmartValueToStringConverter}, Mode=OneWay}"
                                     Padding="5"
                                     VerticalAlignment="Center"
-                                    HorizontalAlignment="Stretch"/>
+                                    HorizontalAlignment="Stretch"/>-->
+                                
+                                <ContentControl
+                                    Content="{Binding FlagValue, Converter={StaticResource SmartValueToStringConverter}, Mode=OneWay}"/>
 
                             </StackPanel>
 

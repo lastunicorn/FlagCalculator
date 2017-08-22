@@ -12,7 +12,7 @@
     <UserControl.Resources>
 
         <DataTemplate DataType="{x:Type system:Array}">
-            <ItemsControl ItemsSource="{Binding Mode=OneWay}">
+            <ItemsControl ItemsSource="{Binding Mode=OneTime}">
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -23,15 +23,14 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <TextBlock
-                            Text="{Binding Mode=OneWay}"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Stretch">
+                            Text="{Binding Mode=OneTime}"
+                            VerticalAlignment="Center">
 
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Mode=OneWay}" Value="0">
-                                            <Setter Property="Foreground" Value="Gray"></Setter>
+                                        <DataTrigger Binding="{Binding Mode=OneTime}" Value="0">
+                                            <Setter Property="Foreground" Value="Gray"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

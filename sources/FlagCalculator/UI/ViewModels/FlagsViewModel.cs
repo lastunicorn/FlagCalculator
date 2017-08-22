@@ -31,9 +31,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private readonly StatusInfo statusInfo;
 
         private readonly ObservableCollection<CheckableItem> flags;
-        private readonly CollectionViewSource itemsViewSource;
-        
-        public ICollectionView ItemsView => itemsViewSource.View;
+
+        public ICollectionView ItemsView { get; }
 
         public FlagsViewModel(ProjectContext projectContext, StatusInfo statusInfo)
         {
@@ -45,27 +44,27 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             flags = new ObservableCollection<CheckableItem>();
 
-            itemsViewSource = new CollectionViewSource { Source = flags };
-            itemsViewSource.Filter += HandleCollectionViewSourceFilter;
-            
-            itemsViewSource.View.Refresh();
+            ItemsView = CollectionViewSource.GetDefaultView(flags);
+
+            ItemsView.Filter = Filter;
+            ItemsView.Refresh();
 
             projectContext.FlagsNumberChanged += HandleProjectContextFlagsNumberChanged;
             projectContext.DisplaySelectedChanged += HandleProjectContextDisplaySelectedChanged;
         }
 
-        private void HandleCollectionViewSourceFilter(object sender, FilterEventArgs e)
+        private bool Filter(object o)
         {
-            CheckableItem checkableItem = e.Item as CheckableItem;
+            CheckableItem checkableItem = o as CheckableItem;
 
             bool displaySelected = projectContext.DisplaySelected;
             bool displayUnselected = projectContext.DisplayUnselected;
 
             bool allOptionsAreUnselected = !displaySelected && !displayUnselected;
 
-            e.Accepted = allOptionsAreUnselected || checkableItem != null && ((checkableItem.IsChecked && displaySelected) || (!checkableItem.IsChecked && displayUnselected));
+            return allOptionsAreUnselected || checkableItem != null && ((checkableItem.IsChecked && displaySelected) || (!checkableItem.IsChecked && displayUnselected));
         }
-
+        
         private void HandleProjectContextFlagsNumberChanged(object sender, FlagsNumberChangedEventArgs e)
         {
             if (e.OldValue != null)
@@ -93,12 +92,12 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void HandleMainValueChanged(object sender, EventArgs e)
         {
-            itemsViewSource.View.Refresh();
+            ItemsView.Refresh();
         }
 
         private void HandleProjectContextDisplaySelectedChanged(object sender, EventArgs eventArgs)
         {
-            itemsViewSource.View.Refresh();
+            ItemsView.Refresh();
         }
     }
 }
