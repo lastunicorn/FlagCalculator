@@ -59,14 +59,14 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public DigitCommand DigitCommand { get; }
-        
+
         public MainWindowViewModel()
         {
             // Create business services.
 
             UserInterface userInterface = new UserInterface();
             StatusInfo statusInfo = new StatusInfo();
-            projectContext = new ProjectContext(userInterface);
+            projectContext = new ProjectContext();
 
             // Create view models.
 
@@ -85,14 +85,22 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Initialize everything
 
-            titleBase = BuildTitleBase();
-            Title = titleBase;
+            try
+            {
+                titleBase = BuildTitleBase();
+                Title = titleBase;
 
-            isOpenPanelVisible = true;
+                isOpenPanelVisible = true;
 
-            projectContext.Loaded += HandleProjectLoaded;
+                projectContext.Loaded += HandleProjectLoaded;
 
-            projectContext.LoadFlagCollection();
+                ConfigurationEnumProvider enumProvider = new ConfigurationEnumProvider();
+                projectContext.LoadFlagCollection(enumProvider);
+            }
+            catch (Exception ex)
+            {
+                userInterface.DisplayError(ex);
+            }
         }
 
         private static string BuildTitleBase()

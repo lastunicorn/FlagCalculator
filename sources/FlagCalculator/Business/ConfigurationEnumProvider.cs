@@ -19,7 +19,7 @@ using System.Configuration;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class EnumProvider
+    internal class ConfigurationEnumProvider : IEnumProvider
     {
         public Func<Type, bool> OnEnumIsNotFlags { get; set; }
         

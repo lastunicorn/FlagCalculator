@@ -15,15 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
 using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
-using DustInTheWind.FlagCalculator.UI.ViewModels;
-using DustInTheWind.FlagCalculator.UI.Views;
-using Microsoft.Win32;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
@@ -52,64 +45,13 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog
-                {
-                    InitialDirectory = Environment.CurrentDirectory,
-                    Filter = "Dll Files|*.dll|Exe Files|*.exe|All Files|*.*"
-                };
-
-                if (openFileDialog.ShowDialog() != true)
-                    return;
-
-                string assemblyFileName = openFileDialog.FileName;
-                LoadAssembly(assemblyFileName);
+                GuiEnumProvider enumProvider = new GuiEnumProvider();
+                projectContext.LoadFlagCollection(enumProvider);
             }
             catch (Exception ex)
             {
                 userInterface.DisplayError(ex);
             }
-        }
-
-        private void LoadAssembly(string assemblyFileName)
-        {
-            Assembly assembly = Assembly.LoadFrom(assemblyFileName);
-
-
-            List<Type> enumTypes = assembly.GetTypes()
-                .Where(x => x.IsEnum)
-                .ToList();
-
-            if (enumTypes.Count == 0)
-                return;
-
-            Type enumType = enumTypes.Count == 1
-                ? enumTypes[0]
-                : ChooseEnumType(enumTypes);
-
-            if (enumType != null)
-            {
-                projectContext.LoadFlagCollection(enumType);
-            }
-        }
-
-        private static Type ChooseEnumType(List<Type> enumTypes)
-        {
-            EnumSelectorViewModel enumSelectorViewModel = new EnumSelectorViewModel
-            {
-                List = enumTypes
-            };
-
-            EnumSelectorWindow enumSelectorWindow = new EnumSelectorWindow
-            {
-                DataContext = enumSelectorViewModel,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-
-            bool? response = enumSelectorWindow.ShowDialog();
-
-            return response == true
-                ? enumSelectorViewModel.SelectedEnumType
-                : null;
         }
     }
 }

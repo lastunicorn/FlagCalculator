@@ -15,13 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.FlagCalculator.UI;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
     internal class ProjectContext
     {
-        private readonly UserInterface userInterface;
         private FlagsNumber flagsNumber;
         private bool displaySelected;
         private bool displayUnselected;
@@ -75,51 +73,25 @@ namespace DustInTheWind.FlagCalculator.Business
         public event EventHandler<FlagsNumberChangedEventArgs> FlagsNumberChanged;
         public event EventHandler DisplaySelectedChanged;
 
-        public ProjectContext(UserInterface userInterface)
+        public ProjectContext()
         {
-            if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
-
-            this.userInterface = userInterface;
-
             DisplaySelected = false;
             DisplayUnselected = false;
 
             NumericalBaseService = new NumericalBaseService();
             FlagsNumber = new FlagsNumber();
         }
-
-        public void LoadFlagCollection()
+        
+        public void LoadFlagCollection(IEnumProvider enumProvider)
         {
-            try
-            {
-                EnumProvider enumProvider = new EnumProvider();
-                Type enumType = enumProvider.LoadEnum();
+            Type enumType = enumProvider.LoadEnum();
 
-                if (enumType == null)
-                    return;
+            if(enumType == null)
+                return;
 
-                FlagsNumber = new FlagsNumber(enumType);
+            FlagsNumber = new FlagsNumber(enumType);
 
-                OnLoaded();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        public void LoadFlagCollection(Type enumType)
-        {
-            try
-            {
-                FlagsNumber = new FlagsNumber(enumType);
-
-                OnLoaded();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
+            OnLoaded();
         }
 
         protected virtual void OnLoaded()
