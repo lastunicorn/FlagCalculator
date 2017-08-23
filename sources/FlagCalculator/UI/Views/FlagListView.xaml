@@ -24,10 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:converters="clr-namespace:DustInTheWind.FlagCalculator.UI.Converters"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:views="clr-namespace:DustInTheWind.FlagCalculator.UI.Views"
+    xmlns:viewModels="clr-namespace:DustInTheWind.FlagCalculator.UI.ViewModels"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="300">
+    d:DesignWidth="300"
+    d:DataContext="{d:DesignInstance viewModels:FlagsViewModel}">
 
     <UserControl.Resources>
 
@@ -57,7 +58,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
 
-                    <StackPanel HorizontalAlignment="Stretch">
+                    <StackPanel
+                        HorizontalAlignment="Stretch"
+                        d:DataContext="{d:DesignInstance viewModels:CheckableItem}">
 
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
@@ -98,7 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     Padding="5"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Stretch"/>-->
-                                
+
                                 <ContentControl
                                     Content="{Binding FlagValue, Converter={StaticResource SmartValueToStringConverter}, Mode=OneWay}"/>
 

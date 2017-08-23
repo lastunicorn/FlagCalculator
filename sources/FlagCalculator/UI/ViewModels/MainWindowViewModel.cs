@@ -23,14 +23,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal sealed class MainWindowViewModel : ViewModelBase
     {
-        private readonly UserInterface userInterface;
-        private readonly StatusInfo statusInfo;
-
         private readonly string titleBase;
         private string title;
 
         private readonly ProjectContext projectContext;
-        private bool isHelpPageVisible;
         private bool isOpenPanelVisible;
 
         public string Title
@@ -63,25 +59,13 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public DigitCommand DigitCommand { get; }
-        public HelpCommand HelpCommand { get; }
-        public StatusInfoCommand StatusInfoCommand { get; }
-
-        public bool IsHelpPageVisible
-        {
-            get { return isHelpPageVisible; }
-            set
-            {
-                isHelpPageVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
+        
         public MainWindowViewModel()
         {
             // Create business services.
 
-            userInterface = new UserInterface();
-            statusInfo = new StatusInfo();
+            UserInterface userInterface = new UserInterface();
+            StatusInfo statusInfo = new StatusInfo();
             projectContext = new ProjectContext(userInterface);
 
             // Create view models.
@@ -98,8 +82,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             CopyCommand = new CopyCommand(projectContext);
             PasteCommand = new PasteCommand(projectContext);
             DigitCommand = new DigitCommand(projectContext);
-            HelpCommand = new HelpCommand(this);
-            StatusInfoCommand = new StatusInfoCommand(statusInfo);
 
             // Initialize everything
 
@@ -107,7 +89,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             Title = titleBase;
 
             isOpenPanelVisible = true;
-            isHelpPageVisible = false;
 
             projectContext.Loaded += HandleProjectLoaded;
 
