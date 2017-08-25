@@ -60,6 +60,9 @@
     <Compile Include="Business\FlagItemTests\ContstructorTests.cs" />
     <Compile Include="Business\FlagsNumberTests\ValuePropertyTests.cs" />
     <Compile Include="Business\ObjectExtensionsTests.cs" />
+    <Compile Include="Business\ProjectContextTests\ConstructorTests.cs" />
+    <Compile Include="Business\ProjectContextTests\DisplayUnselectedTests.cs" />
+    <Compile Include="Business\ProjectContextTests\DisplaySelectedTests.cs" />
     <Compile Include="Business\ProjectContextTests\LoadFlagCollectionTests.cs" />
     <Compile Include="Business\SmartValueTests\ToSimpleStringTests.cs" />
     <Compile Include="Business\SmartValueTests\ToStringTests.cs" />
