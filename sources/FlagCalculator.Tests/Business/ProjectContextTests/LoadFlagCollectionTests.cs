@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
 {
     [TestFixture]
-    [Parallelizable(ParallelScope.Self)]
+    [Parallelizable]
     public class LoadFlagCollectionTests
     {
         private ProjectContext projectContext;
@@ -57,10 +57,10 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
             enumProvider.VerifyAll();
         }
 
-        #region Enum Type null
+        #region EnumProvider return null Enum Type
 
         [Test]
-        public void if_enum_Type_null_FlagsNumber_is_not_changed()
+        public void EnumProvider_returns_null_enum_Type_FlagsNumber_is_not_changed()
         {
             FlagsNumber initialFlagsNumber = projectContext.FlagsNumber;
             enumProvider
@@ -73,7 +73,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         }
 
         [Test]
-        public void if_enum_Type_null_FlagsNumberChanged_event_is_not_raised()
+        public void EnumProvider_returns_null_enum_Type_FlagsNumberChanged_event_is_not_raised()
         {
             bool eventWasRaised = false;
             projectContext.FlagsNumberChanged += (o, e) => eventWasRaised = true;
@@ -87,7 +87,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         }
 
         [Test]
-        public void if_enum_Type_null_Loaded_event_is_not_raised()
+        public void EnumProvider_returns_null_enum_Type_Loaded_event_is_not_raised()
         {
             bool eventWasRaised = false;
             projectContext.Loaded += (o, e) => eventWasRaised = true;
@@ -102,10 +102,10 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
 
         #endregion
 
-        #region Enum Type NOT null
+        #region EnumProvider returns valid Enum Type
 
         [Test]
-        public void if_enum_Type_not_null_create_new_FlagsNumber()
+        public void creates_new_FlagsNumber()
         {
             FlagsNumber initialFlagsNumber = projectContext.FlagsNumber;
             enumProvider
@@ -118,7 +118,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         }
 
         [Test]
-        public void if_enum_Type_not_null_FlagsNumberChanged_event_is_raised()
+        public void FlagsNumberChanged_event_is_raised()
         {
             bool eventWasRaised = false;
             projectContext.FlagsNumberChanged += (o, e) => eventWasRaised = true;
@@ -132,7 +132,36 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         }
 
         [Test]
-        public void if_enum_Type_not_null_Loaded_event_is_raised()
+        public void FlagsNumberChanged_event_contains_old_FlagsNumber()
+        {
+            FlagsNumberChangedEventArgs args = null;
+            FlagsNumber oldFlagsNumber = projectContext.FlagsNumber;
+            projectContext.FlagsNumberChanged += (o, e) => args = e;
+            enumProvider
+                .Setup(x => x.LoadEnum())
+                .Returns(() => typeof(FlagsEnum));
+
+            projectContext.LoadFlagCollection(enumProvider.Object);
+
+            Assert.That(args.OldValue, Is.SameAs(oldFlagsNumber));
+        }
+
+        [Test]
+        public void FlagsNumberChanged_event_contains_new_FlagsNumber()
+        {
+            FlagsNumberChangedEventArgs args = null;
+            projectContext.FlagsNumberChanged += (o, e) => args = e;
+            enumProvider
+                .Setup(x => x.LoadEnum())
+                .Returns(() => typeof(FlagsEnum));
+
+            projectContext.LoadFlagCollection(enumProvider.Object);
+
+            Assert.That(args.NewValue, Is.SameAs(projectContext.FlagsNumber));
+        }
+
+        [Test]
+        public void Loaded_event_is_raised()
         {
             bool eventWasRaised = false;
             projectContext.Loaded += (o, e) => eventWasRaised = true;

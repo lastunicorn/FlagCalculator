@@ -20,7 +20,7 @@ using NUnit.Framework;
 namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
 {
     [TestFixture]
-    [Parallelizable(ParallelScope.Self)]
+    [Parallelizable]
     public class DisplayUnselectedTests
     {
         private ProjectContext projectContext;

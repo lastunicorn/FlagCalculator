@@ -35,6 +35,10 @@
       <HintPath>..\packages\Castle.Core.4.1.1\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="dotMemory.Unit, Version=103.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.dotMemoryUnit.2.3.20160517.113140\lib\dotMemory.Unit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Moq, Version=4.7.99.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.7.99\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
@@ -58,12 +62,23 @@
     <Compile Include="Business\FlagsNumberTests\ConstructorWithNormalEnumTests.cs" />
     <Compile Include="Business\FlagsNumberTests\ConstructorTests.cs" />
     <Compile Include="Business\FlagItemTests\ContstructorTests.cs" />
+    <Compile Include="Business\FlagsNumberTests\ClearTests.cs" />
+    <Compile Include="Business\FlagsNumberTests\SelectAllFlagsTests.cs" />
     <Compile Include="Business\FlagsNumberTests\ValuePropertyTests.cs" />
+    <Compile Include="Business\NumericalBaseServiceTests\NumericalBaseTests.cs" />
+    <Compile Include="Business\NumericalBaseServiceTests\ConstructorTests.cs" />
+    <Compile Include="Business\NumericalBaseServiceTests\RollTests.cs" />
     <Compile Include="Business\ObjectExtensionsTests.cs" />
     <Compile Include="Business\ProjectContextTests\ConstructorTests.cs" />
     <Compile Include="Business\ProjectContextTests\DisplayUnselectedTests.cs" />
     <Compile Include="Business\ProjectContextTests\DisplaySelectedTests.cs" />
     <Compile Include="Business\ProjectContextTests\LoadFlagCollectionTests.cs" />
+    <Compile Include="Business\SmartValueTests\ToSimpleStringBase10Tests.cs" />
+    <Compile Include="Business\SmartValueTests\ToSimpleStringBase16Tests.cs" />
+    <Compile Include="Business\SmartValueTests\ToSimpleStringBase2Tests.cs" />
+    <Compile Include="Business\SmartValueTests\ToStringBase16Tests.cs" />
+    <Compile Include="Business\SmartValueTests\ToStringBase10Tests.cs" />
+    <Compile Include="Business\SmartValueTests\ToStringBase2Tests.cs" />
     <Compile Include="Business\SmartValueTests\ToSimpleStringTests.cs" />
     <Compile Include="Business\SmartValueTests\ToStringTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

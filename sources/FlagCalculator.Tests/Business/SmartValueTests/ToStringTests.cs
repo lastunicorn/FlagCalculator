@@ -1,4 +1,21 @@
-﻿using DustInTheWind.FlagCalculator.Business;
+﻿// FlagCalculator
+// Copyright (C) 2017 Dust in the Wind
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+using System;
+using DustInTheWind.FlagCalculator.Business;
 using NUnit.Framework;
 
 namespace DustInTheWind.FlagCalculator.Tests.Business.SmartValueTests
@@ -7,199 +24,36 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.SmartValueTests
     [Parallelizable(ParallelScope.All)]
     public class ToStringTests
     {
-        #region Base 2
-
         [Test]
-        public void render_in_base2_with_BitCount_0()
+        public void throws_if_NumericalBase_has_invalid_value()
         {
             SmartValue smartValue = new SmartValue
             {
                 Value = 13,
-                NumericalBase = NumericalBase.Binary,
-                BitCount = 0
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("1101"));
-        }
-
-        [Test]
-        public void render_in_base2_with_BitCount_less_then_real_digit_count()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Binary,
-                BitCount = 2
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("1101"));
-        }
-
-        [Test]
-        public void render_in_base2_with_BitCount_more_then_real_digit_count()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Binary,
-                BitCount = 8
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("0000 1101"));
-        }
-
-        [Test]
-        public void render_in_base2_with_BitCount_more_then_real_digit_count_no_left_padding()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Binary,
-                BitCount = 8,
+                NumericalBase = (NumericalBase)1000,
+                BitCount = 16,
                 PadLeft = false
             };
 
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("1101"));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                smartValue.ToString();
+            });
         }
 
-        #endregion
-
-        #region Base 10
-
         [Test]
-        public void render_in_base10_with_BitCount_0()
+        public void returns_string_empty_if_numerical_base_is_None()
         {
             SmartValue smartValue = new SmartValue
             {
                 Value = 13,
-                NumericalBase = NumericalBase.Decimal,
-                BitCount = 0
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("13"));
-        }
-
-        [Test]
-        public void render_in_base10_with_BitCount_less_then_real_digit_count()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Decimal,
-                BitCount = 2
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("13"));
-        }
-
-        [Test]
-        public void render_in_base10_with_BitCount_more_then_real_digit_count()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Decimal,
+                NumericalBase = NumericalBase.None,
                 BitCount = 16
             };
 
             string actual = smartValue.ToString();
 
-            Assert.That(actual, Is.EqualTo("13"));
+            Assert.That(actual, Is.Empty);
         }
-
-        [Test]
-        public void render_in_base10_with_BitCount_more_then_real_digit_count_no_left_padding()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Decimal,
-                BitCount = 16,
-                PadLeft = false
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("13"));
-        }
-
-        #endregion
-
-        #region Base 16
-
-        [Test]
-        public void render_in_base16_with_BitCount_0()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Hexadecimal,
-                BitCount = 0
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("D"));
-        }
-
-        [Test]
-        public void render_in_base16_with_BitCount_less_then_real_digit_count()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Hexadecimal,
-                BitCount = 2
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("D"));
-        }
-
-        [Test]
-        public void render_in_base16_with_BitCount_more_then_real_digit_count()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Hexadecimal,
-                BitCount = 16
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("00 0D"));
-        }
-
-        [Test]
-        public void render_in_base16_with_BitCount_more_then_real_digit_count_no_left_padding()
-        {
-            SmartValue smartValue = new SmartValue
-            {
-                Value = 13,
-                NumericalBase = NumericalBase.Hexadecimal,
-                BitCount = 16,
-                PadLeft = false
-            };
-
-            string actual = smartValue.ToString();
-
-            Assert.That(actual, Is.EqualTo("D"));
-        }
-
-        #endregion
     }
 }

@@ -51,12 +51,11 @@ namespace DustInTheWind.FlagCalculator.Business
                     NumericalBase = NumericalBase.Binary;
                     break;
 
+                default:
                 case NumericalBase.Binary:
+                case NumericalBase.None:
                     NumericalBase = NumericalBase.Decimal;
                     break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 

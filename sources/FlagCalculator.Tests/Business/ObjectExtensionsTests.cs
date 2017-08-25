@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using DustInTheWind.FlagCalculator.Business;
 using NUnit.Framework;
 
@@ -101,6 +102,28 @@ namespace DustInTheWind.FlagCalculator.Tests.Business
             ulong actual = o.ToUInt64Value();
 
             Assert.That(actual, Is.EqualTo((ulong)10));
+        }
+
+        [Test]
+        public void throws_if_object_is_not_an_integer_number()
+        {
+            object o = (float)1.5;
+
+            Assert.Throws<Exception>(() =>
+            {
+                o.ToUInt64Value();
+            });
+        }
+
+        [Test]
+        public void throws_if_object_is_not_a_number()
+        {
+            object o = new object();
+
+            Assert.Throws<Exception>(() =>
+            {
+                o.ToUInt64Value();
+            });
         }
     }
 }
