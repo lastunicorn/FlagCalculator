@@ -81,6 +81,9 @@
     <Compile Include="Business\SmartValueTests\ToStringBase2Tests.cs" />
     <Compile Include="Business\SmartValueTests\ToSimpleStringTests.cs" />
     <Compile Include="Business\SmartValueTests\ToStringTests.cs" />
+    <Compile Include="Business\StatusInfoTests\DefaultStatusTextTests.cs" />
+    <Compile Include="Business\StatusInfoTests\StatusTextTests.cs" />
+    <Compile Include="Business\StatusInfoTests\ConstructorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -45,6 +45,9 @@ namespace DustInTheWind.FlagCalculator.Business
             get { return defaultStatusText; }
             set
             {
+                if (value == defaultStatusText)
+                    return;
+
                 defaultStatusText = value;
 
                 statusText = value;
