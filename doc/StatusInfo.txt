@@ -1,0 +1,24 @@
+StatusInfo
+====================================================================
+
+Status Text
+- Provides a status text.
+- Allows to set any status text.
+
+Default Status Text
+- Can set a default status text.
+
+ResetTimeout
+- Allow to set the reset time.
+- After status text is set, it waits ResetTimeout seconds and then reverts back to the default status text.
+
+StatusTextChanged event
+- When status text is set, StatusTextChanged event is raised.
+- If status text is set with the same value, the StatusTextChanged event is not raised.
+
+Permanent Status Text
+- Allows to set a permanent status text that will never revert back to the default status text.
+
+Reset status text
+- Allow to reset the status text to the default status text.
+- When reseting the status text, the StatusTextChanged event is not raised.
