@@ -23,7 +23,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal sealed class MainWindowViewModel : ViewModelBase
     {
-        private readonly string titleBase;
         private string title;
 
         private readonly ProjectContext projectContext;
@@ -60,47 +59,35 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public PasteCommand PasteCommand { get; }
         public DigitCommand DigitCommand { get; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(UserInterface userInterface, StatusInfo statusInfo, ProjectContext projectContext)
         {
-            // Create business services.
+            if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
+            if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
+            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
 
-            UserInterface userInterface = new UserInterface();
-            StatusInfo statusInfo = new StatusInfo();
-            projectContext = new ProjectContext();
+            this.projectContext = projectContext;
 
             // Create view models.
 
-            FlagsViewModel = new FlagsViewModel(projectContext, statusInfo);
-            MainFooterViewModel = new MainFooterViewModel(projectContext, statusInfo);
-            MainHeaderViewModel = new MainHeaderViewModel(projectContext, statusInfo);
+            FlagsViewModel = new FlagsViewModel(this.projectContext, statusInfo);
+            MainFooterViewModel = new MainFooterViewModel(this.projectContext, statusInfo);
+            MainHeaderViewModel = new MainHeaderViewModel(this.projectContext, statusInfo);
 
             // Create commands
 
-            OpenAssemblyCommand = new OpenAssemblyCommand(projectContext, userInterface);
-            EscapeCommand = new EscapeCommand(projectContext);
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext);
-            CopyCommand = new CopyCommand(projectContext);
-            PasteCommand = new PasteCommand(projectContext);
-            DigitCommand = new DigitCommand(projectContext);
+            OpenAssemblyCommand = new OpenAssemblyCommand(this.projectContext, userInterface);
+            EscapeCommand = new EscapeCommand(this.projectContext);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(this.projectContext);
+            CopyCommand = new CopyCommand(this.projectContext);
+            PasteCommand = new PasteCommand(this.projectContext);
+            DigitCommand = new DigitCommand(this.projectContext);
 
             // Initialize everything
 
-            try
-            {
-                titleBase = BuildTitleBase();
-                Title = titleBase;
+            UpdateTitle();
+            isOpenPanelVisible = !projectContext.IsLoaded;
 
-                isOpenPanelVisible = true;
-
-                projectContext.Loaded += HandleProjectLoaded;
-
-                ConfigurationEnumProvider enumProvider = new ConfigurationEnumProvider();
-                projectContext.LoadFlagCollection(enumProvider);
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
+            this.projectContext.Loaded += HandleProjectLoaded;
         }
 
         private static string BuildTitleBase()
@@ -110,12 +97,28 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             return string.Format("Flag Calculator {0}", version);
         }
 
-        private void HandleProjectLoaded(object sender, EventArgs eventArgs)
+        private void HandleProjectLoaded(object sender, EventArgs e)
         {
-            FlagsNumber flagNumber = projectContext.FlagsNumber;
+            UpdateTitle();
+            IsOpenPanelVisible = !projectContext.IsLoaded;
+        }
 
-            Title = string.Format("{1} ({2}) - {0}", titleBase, flagNumber.Name, flagNumber.UnderlyingType.Name);
-            IsOpenPanelVisible = false;
+        private void UpdateTitle()
+        {
+            if (projectContext.IsLoaded)
+            {
+                FlagsNumber flagNumber = projectContext.FlagsNumber;
+
+                string titleBase = BuildTitleBase();
+                string flagsName = flagNumber.Name;
+                string enumTypeName = flagNumber.UnderlyingType.Name;
+
+                Title = string.Format("{1} ({2}) - {0}", titleBase, flagsName, enumTypeName);
+            }
+            else
+            {
+                Title = BuildTitleBase();
+            }
         }
     }
 }

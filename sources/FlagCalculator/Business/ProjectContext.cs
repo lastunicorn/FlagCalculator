@@ -26,6 +26,8 @@ namespace DustInTheWind.FlagCalculator.Business
 
         public NumericalBaseService NumericalBaseService { get; }
 
+        public bool IsLoaded { get; private set; }
+
         public FlagsNumber FlagsNumber
         {
             get { return flagsNumber; }
@@ -91,6 +93,7 @@ namespace DustInTheWind.FlagCalculator.Business
 
             FlagsNumber = new FlagsNumber(enumType);
 
+            IsLoaded = true;
             OnLoaded();
         }
 

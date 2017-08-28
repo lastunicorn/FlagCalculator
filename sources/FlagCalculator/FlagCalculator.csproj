@@ -77,6 +77,7 @@
     <Compile Include="Business\ProjectContext.cs" />
     <Compile Include="Business\SmartValue.cs" />
     <Compile Include="Business\StatusInfo.cs" />
+    <Compile Include="UI\Bootstrapper.cs" />
     <Compile Include="UI\GuiEnumProvider.cs" />
     <Compile Include="UI\Commands\OpenAssemblyCommand.cs" />
     <Compile Include="UI\Commands\SelectAllFlagsCommand.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="UI\Commands\ToggleDisplayUnselectedCommand.cs" />
     <Compile Include="UI\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="UI\Commands\NumericalBaseRollCommand.cs" />
+    <Compile Include="UI\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="UI\ViewModels\CheckableItem.cs" />
     <Compile Include="Business\ConfigurationEnumProvider.cs" />
     <Compile Include="Business\FlagItem.cs" />
@@ -110,7 +112,6 @@
     <Compile Include="UI\Views\MainHeader.xaml.cs">
       <DependentUpon>MainHeader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="UI\Commands\PasteCommand.cs" />
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\Converters\SmartValueToStringConverter.cs" />
