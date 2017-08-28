@@ -69,18 +69,18 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Create view models.
 
-            FlagsViewModel = new FlagsViewModel(this.projectContext, statusInfo);
-            MainFooterViewModel = new MainFooterViewModel(this.projectContext, statusInfo);
-            MainHeaderViewModel = new MainHeaderViewModel(this.projectContext, statusInfo);
+            FlagsViewModel = new FlagsViewModel(projectContext, statusInfo);
+            MainFooterViewModel = new MainFooterViewModel(projectContext, statusInfo);
+            MainHeaderViewModel = new MainHeaderViewModel(projectContext, statusInfo);
 
             // Create commands
 
-            OpenAssemblyCommand = new OpenAssemblyCommand(this.projectContext, userInterface);
-            EscapeCommand = new EscapeCommand(this.projectContext);
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(this.projectContext);
-            CopyCommand = new CopyCommand(this.projectContext);
-            PasteCommand = new PasteCommand(this.projectContext);
-            DigitCommand = new DigitCommand(this.projectContext);
+            OpenAssemblyCommand = new OpenAssemblyCommand(projectContext, userInterface);
+            EscapeCommand = new EscapeCommand(projectContext);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext);
+            CopyCommand = new CopyCommand(projectContext);
+            PasteCommand = new PasteCommand(projectContext);
+            DigitCommand = new DigitCommand(projectContext);
 
             // Initialize everything
 
