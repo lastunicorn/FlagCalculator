@@ -33,13 +33,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
         protected override void DoExecute(object parameter)
         {
             uint digit = uint.Parse((string)parameter);
+            uint numericalBase = projectContext.NumericalBaseService;
 
-            NumericalBase numericalBase = projectContext.NumericalBaseService.NumericalBase;
-
-            if (digit >= (uint)numericalBase)
+            if (digit >= numericalBase)
                 return;
 
-            projectContext.FlagsNumber.Value = projectContext.FlagsNumber.Value * (uint)numericalBase + digit;
+            projectContext.FlagsNumber.Value = projectContext.FlagsNumber.Value * numericalBase + digit;
         }
     }
 }

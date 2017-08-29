@@ -29,18 +29,21 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
     {
         private readonly ProjectContext projectContext;
         private readonly StatusInfo statusInfo;
+        private readonly UserInterface userInterface;
 
         private readonly ObservableCollection<CheckableItem> flags;
 
         public ICollectionView ItemsView { get; }
 
-        public FlagsViewModel(ProjectContext projectContext, StatusInfo statusInfo)
+        public FlagsViewModel(ProjectContext projectContext, StatusInfo statusInfo, UserInterface userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
+            if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
 
             this.projectContext = projectContext;
             this.statusInfo = statusInfo;
+            this.userInterface = userInterface;
 
             flags = new ObservableCollection<CheckableItem>();
 
@@ -81,7 +84,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         {
             flags.Clear();
 
-            StatusInfoCommand statusInfoCommand = new StatusInfoCommand(statusInfo);
+            StatusInfoCommand statusInfoCommand = new StatusInfoCommand(statusInfo, userInterface);
 
             IEnumerable<CheckableItem> checkableItems = flagsNumber
                 .Select(x => new CheckableItem(projectContext.NumericalBaseService, x, statusInfoCommand));

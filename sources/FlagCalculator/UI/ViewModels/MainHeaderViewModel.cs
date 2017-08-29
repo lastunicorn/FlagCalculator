@@ -53,17 +53,17 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public NumericalBaseRollCommand NumericalBaseRollCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
 
-        public MainHeaderViewModel(ProjectContext projectContext, StatusInfo statusInfo)
+        public MainHeaderViewModel(ProjectContext projectContext, StatusInfo statusInfo, UserInterface userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
 
             this.projectContext = projectContext;
 
-            CopyCommand = new CopyCommand(projectContext);
-            PasteCommand = new PasteCommand(projectContext);
-            NumericalBaseRollCommand = new NumericalBaseRollCommand(projectContext.NumericalBaseService);
-            StatusInfoCommand = new StatusInfoCommand(statusInfo);
+            CopyCommand = new CopyCommand(projectContext, userInterface);
+            PasteCommand = new PasteCommand(projectContext, userInterface);
+            NumericalBaseRollCommand = new NumericalBaseRollCommand(projectContext.NumericalBaseService, userInterface);
+            StatusInfoCommand = new StatusInfoCommand(statusInfo, userInterface);
 
             projectContext.FlagsNumberChanged += HandleFlagsNumberChanged;
             projectContext.FlagsNumber.ValueChanged += HandleMainValueChanged;

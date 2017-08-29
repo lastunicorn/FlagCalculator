@@ -39,6 +39,11 @@ namespace DustInTheWind.FlagCalculator.Business
             numericalBase = NumericalBase.Decimal;
         }
 
+        private NumericalBaseService(NumericalBase numericalBase)
+        {
+            this.numericalBase = numericalBase;
+        }
+
         public void Roll()
         {
             switch (numericalBase)
@@ -62,6 +67,26 @@ namespace DustInTheWind.FlagCalculator.Business
         private void OnNumericalBaseChanged()
         {
             NumericalBaseChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public static implicit operator uint(NumericalBaseService numericalBase)
+        {
+            return (uint)numericalBase.numericalBase;
+        }
+
+        public static implicit operator NumericalBaseService(uint numericalBase)
+        {
+            return new NumericalBaseService((NumericalBase)numericalBase);
+        }
+
+        public static implicit operator NumericalBase(NumericalBaseService numericalBase)
+        {
+            return numericalBase.numericalBase;
+        }
+
+        public static implicit operator NumericalBaseService(NumericalBase numericalBase)
+        {
+            return new NumericalBaseService(numericalBase);
         }
     }
 }

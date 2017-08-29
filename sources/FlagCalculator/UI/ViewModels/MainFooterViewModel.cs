@@ -64,7 +64,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public ToggleDisplaySelectedCommand ToggleDisplaySelectedCommand { get; }
         public ToggleDisplayUnselectedCommand ToggleDisplayUnselectedCommand { get; }
 
-        public MainFooterViewModel(ProjectContext projectContext, StatusInfo statusInfo)
+        public MainFooterViewModel(ProjectContext projectContext, StatusInfo statusInfo, UserInterface userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
@@ -72,11 +72,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             this.projectContext = projectContext;
             this.statusInfo = statusInfo;
 
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext);
-            SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext);
-            StatusInfoCommand = new StatusInfoCommand(statusInfo);
-            ToggleDisplaySelectedCommand = new ToggleDisplaySelectedCommand(projectContext);
-            ToggleDisplayUnselectedCommand = new ToggleDisplayUnselectedCommand(projectContext);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext, userInterface);
+            SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext, userInterface);
+            StatusInfoCommand = new StatusInfoCommand(statusInfo, userInterface);
+            ToggleDisplaySelectedCommand = new ToggleDisplaySelectedCommand(projectContext, userInterface);
+            ToggleDisplayUnselectedCommand = new ToggleDisplayUnselectedCommand(projectContext, userInterface);
 
             DisplaySelected = projectContext.DisplaySelected;
             DisplayUnselected = projectContext.DisplayUnselected;
