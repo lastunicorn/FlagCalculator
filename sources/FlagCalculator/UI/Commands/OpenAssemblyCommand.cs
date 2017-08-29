@@ -15,43 +15,26 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class OpenAssemblyCommand : ICommand
+    internal class OpenAssemblyCommand : CommandBase
     {
         private readonly ProjectContext projectContext;
-        private readonly UserInterface userInterface;
 
         public OpenAssemblyCommand(ProjectContext projectContext, UserInterface userInterface)
+            : base(userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-            if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
 
             this.projectContext = projectContext;
-            this.userInterface = userInterface;
         }
 
-        public bool CanExecute(object parameter)
+        protected override void DoExecute(object parameter)
         {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            try
-            {
-                GuiEnumProvider enumProvider = new GuiEnumProvider();
-                projectContext.LoadFlagCollection(enumProvider);
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
+            GuiEnumProvider enumProvider = new GuiEnumProvider();
+            projectContext.LoadFlagCollection(enumProvider);
         }
     }
 }

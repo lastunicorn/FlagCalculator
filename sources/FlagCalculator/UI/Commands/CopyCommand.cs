@@ -16,29 +16,22 @@
 
 using System;
 using System.Windows;
-using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class CopyCommand : ICommand
+    internal class CopyCommand : CommandBase
     {
         private readonly ProjectContext projectContext;
 
-        public CopyCommand(ProjectContext projectContext)
+        public CopyCommand(ProjectContext projectContext, UserInterface userInterface)
+            : base(userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
             this.projectContext = projectContext;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
+        protected override void DoExecute(object parameter)
         {
             NumericalBase numericalBase = projectContext.NumericalBaseService.NumericalBase;
 

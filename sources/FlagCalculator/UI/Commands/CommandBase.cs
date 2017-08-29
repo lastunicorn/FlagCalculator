@@ -15,33 +15,44 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows;
-using DustInTheWind.FlagCalculator.Business;
+using System.Windows.Input;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class PasteCommand : CommandBase
+    internal abstract class CommandBase : ICommand
     {
-        private readonly ProjectContext projectContext;
+        protected UserInterface UserInterface { get; }
 
-        public PasteCommand(ProjectContext projectContext, UserInterface userInterface)
-            : base(userInterface)
+        public event EventHandler CanExecuteChanged;
+
+        protected CommandBase(UserInterface userInterface)
         {
-            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-            this.projectContext = projectContext;
+            if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
+            UserInterface = userInterface;
         }
 
-        protected override void DoExecute(object parameter)
+        public virtual bool CanExecute(object parameter)
         {
-            string newValue = Clipboard.GetText();
+            return true;
+        }
 
+        public void Execute(object parameter)
+        {
             try
             {
-                int numericalBase = (int)projectContext.NumericalBaseService.NumericalBase;
-                ulong uInt64 = Convert.ToUInt64(newValue.Replace(" ", string.Empty), numericalBase);
-                projectContext.FlagsNumber.Value = uInt64;
+                DoExecute(parameter);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                UserInterface.DisplayError(ex);
+            }
+        }
+
+        protected abstract void DoExecute(object parameter);
+
+        protected virtual void OnCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

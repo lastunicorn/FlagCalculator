@@ -15,30 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class ToggleDisplaySelectedCommand : ICommand
+    internal class ToggleDisplaySelectedCommand : CommandBase
     {
         private readonly ProjectContext projectContext;
 
-        public ToggleDisplaySelectedCommand(ProjectContext projectContext)
+        public ToggleDisplaySelectedCommand(ProjectContext projectContext, UserInterface userInterface)
+            : base(userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-
             this.projectContext = projectContext;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
+        protected override void DoExecute(object parameter)
         {
             projectContext.DisplaySelected = !projectContext.DisplaySelected;
         }

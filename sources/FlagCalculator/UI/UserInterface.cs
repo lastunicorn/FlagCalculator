@@ -23,7 +23,8 @@ namespace DustInTheWind.FlagCalculator.UI
     {
         public void DisplayError(Exception ex)
         {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            Window mainWindow = Application.Current.MainWindow;
+            MessageBox.Show(mainWindow, ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
     }
 }

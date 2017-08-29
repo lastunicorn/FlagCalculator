@@ -15,29 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class NumericalBaseRollCommand : ICommand
+    internal class NumericalBaseRollCommand : CommandBase
     {
         private readonly NumericalBaseService numericalBaseService;
 
-        public NumericalBaseRollCommand(NumericalBaseService numericalBaseService)
+        public NumericalBaseRollCommand(NumericalBaseService numericalBaseService, UserInterface userInterface)
+            : base(userInterface)
         {
             if (numericalBaseService == null) throw new ArgumentNullException(nameof(numericalBaseService));
             this.numericalBaseService = numericalBaseService;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
+        protected override void DoExecute(object parameter)
         {
             numericalBaseService.Roll();
         }

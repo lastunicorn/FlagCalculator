@@ -15,29 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class StatusInfoCommand : ICommand
+    internal class StatusInfoCommand : CommandBase
     {
         private readonly StatusInfo statusInfo;
 
-        public StatusInfoCommand(StatusInfo statusInfo)
+        public StatusInfoCommand(StatusInfo statusInfo, UserInterface userInterface)
+            : base(userInterface)
         {
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
             this.statusInfo = statusInfo;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
+        protected override void DoExecute(object parameter)
         {
             string statusText = parameter as string;
 
