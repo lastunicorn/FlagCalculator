@@ -83,12 +83,12 @@ namespace DustInTheWind.FlagCalculator.Business
 
         private ulong GetAllFlagsCumulated()
         {
-            ulong value = 0;
+            ulong result = 0;
 
             foreach (FlagItem item in flags)
-                value |= item.Value;
+                result |= item.Value;
 
-            return value;
+            return result;
         }
 
         public void Clear()
