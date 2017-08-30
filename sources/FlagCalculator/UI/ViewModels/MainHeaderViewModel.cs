@@ -68,7 +68,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             projectContext.FlagsNumberChanged += HandleFlagsNumberChanged;
             projectContext.FlagsNumber.ValueChanged += HandleMainValueChanged;
             projectContext.NumericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
-            
+
             UpdateMainValue();
             UpdateNumericalBaseText();
         }
@@ -96,7 +96,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             MainValue = new SmartValue
             {
                 Value = projectContext.FlagsNumber.Value,
-                NumericalBase = projectContext.NumericalBaseService.NumericalBase,
+                NumericalBase = projectContext.NumericalBaseService,
                 BitCount = projectContext.FlagsNumber.BitCount
             };
         }
@@ -106,14 +106,15 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             MainValue = new SmartValue
             {
                 Value = projectContext.FlagsNumber.Value,
-                NumericalBase = projectContext.NumericalBaseService.NumericalBase,
+                NumericalBase = projectContext.NumericalBaseService,
                 BitCount = projectContext.FlagsNumber.BitCount
             };
         }
 
         private void UpdateNumericalBaseText()
         {
-            NumericalBase = ((int)projectContext.NumericalBaseService.NumericalBase).ToString(CultureInfo.CurrentCulture);
+            uint newValue = projectContext.NumericalBaseService;
+            NumericalBase = newValue.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

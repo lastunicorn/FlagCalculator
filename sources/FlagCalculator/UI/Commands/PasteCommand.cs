@@ -34,11 +34,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
         protected override void DoExecute(object parameter)
         {
             string newValue = Clipboard.GetText();
+            newValue = newValue.Replace(" ", string.Empty);
 
             try
             {
-                int numericalBase = (int)projectContext.NumericalBaseService.NumericalBase;
-                ulong uInt64 = Convert.ToUInt64(newValue.Replace(" ", string.Empty), numericalBase);
+                uint numericalBase = projectContext.NumericalBaseService;
+                ulong uInt64 = Convert.ToUInt64(newValue, (int)numericalBase);
                 projectContext.FlagsNumber.Value = uInt64;
             }
             catch { }

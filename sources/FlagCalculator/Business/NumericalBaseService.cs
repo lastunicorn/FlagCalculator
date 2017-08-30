@@ -25,7 +25,7 @@ namespace DustInTheWind.FlagCalculator.Business
         public NumericalBase NumericalBase
         {
             get { return numericalBase; }
-            set
+            private set
             {
                 numericalBase = value;
                 OnNumericalBaseChanged();

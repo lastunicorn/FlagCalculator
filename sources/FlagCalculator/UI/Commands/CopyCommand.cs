@@ -33,7 +33,7 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         protected override void DoExecute(object parameter)
         {
-            NumericalBase numericalBase = projectContext.NumericalBaseService.NumericalBase;
+            NumericalBase numericalBase = projectContext.NumericalBaseService;
 
             SmartValue smartValue = new SmartValue
             {

@@ -108,7 +108,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             FlagValue = new SmartValue
             {
                 Value = flagItem.Value,
-                NumericalBase = numericalBaseService.NumericalBase,
+                NumericalBase = numericalBaseService,
                 BitCount = flagItem.Parent?.BitCount ?? 0
             };
         }
