@@ -93,12 +93,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private void HandleNumericalBaseChanged(object sender, EventArgs e)
         {
             UpdateNumericalBaseText();
-            MainValue = new SmartNumber
-            {
-                Value = projectContext.FlagsNumber.Value,
-                NumericalBase = projectContext.NumericalBaseService,
-                BitCount = projectContext.FlagsNumber.BitCount
-            };
+            UpdateMainValue();
         }
 
         private void UpdateMainValue()

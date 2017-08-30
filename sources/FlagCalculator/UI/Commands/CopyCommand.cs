@@ -35,23 +35,11 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
         {
             NumericalBase numericalBase = projectContext.NumericalBaseService;
 
-            //SmartValue smartValue = new SmartValue
-            //{
-            //    Value = projectContext.FlagsNumber.Value,
-            //    NumericalBase = numericalBase,
-            //    BitCount = projectContext.FlagsNumber.BitCount,
-            //    PadLeft = numericalBase == NumericalBase.Binary
-            //};
-
-            //string text = smartValue.ToSimpleString();
-
-            int bitCount = projectContext.FlagsNumber.BitCount;
-
             SmartNumber numberSerializer = new SmartNumber
             {
                 Value = projectContext.FlagsNumber.Value,
                 NumericalBase = numericalBase,
-                BitCount = bitCount,
+                BitCount = projectContext.FlagsNumber.BitCount,
                 GroupLength = 0,
                 PadLeft = numericalBase == NumericalBase.Binary
             };

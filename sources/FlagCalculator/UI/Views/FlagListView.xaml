@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <ResourceDictionary Source="/UI/Styles/CheckBoxStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <converters:SmartValueToStringConverter x:Key="SmartValueToStringConverter"/>
+            <converters:SmartNumberToStringConverter x:Key="SmartNumberToStringConverter"/>
 
         </ResourceDictionary>
 
@@ -103,7 +103,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     HorizontalAlignment="Stretch"/>-->
 
                                 <ContentControl
-                                    Content="{Binding FlagValue, Converter={StaticResource SmartValueToStringConverter}, Mode=OneWay}"/>
+                                    Content="{Binding FlagValue, Converter={StaticResource SmartNumberToStringConverter}, Mode=OneWay}"/>
 
                             </StackPanel>
 

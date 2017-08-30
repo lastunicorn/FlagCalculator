@@ -24,7 +24,7 @@ using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Converters
 {
-    public class SmartValueToStringConverter : IValueConverter
+    public class SmartNumberToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -35,27 +35,6 @@ namespace DustInTheWind.FlagCalculator.UI.Converters
 
             return null;
         }
-
-        //private static object ConvertFromSmartNumber(SmartValue smartNumber)
-        //{
-        //    switch (smartNumber.NumericalBase)
-        //    {
-        //        case NumericalBase.None:
-        //            return string.Empty;
-
-        //        case NumericalBase.Decimal:
-        //            return smartNumber.Value;
-
-        //        case NumericalBase.Hexadecimal:
-        //            return smartNumber.ToString();
-
-        //        case NumericalBase.Binary:
-        //            return smartNumber.ToString().ToCharArray();
-
-        //        default:
-        //            throw new ArgumentOutOfRangeException();
-        //    }
-        //}
 
         private static object ConvertFromSmartNumber(SmartNumber smartNumber)
         {

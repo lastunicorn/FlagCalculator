@@ -115,7 +115,7 @@
     </Compile>
     <Compile Include="UI\Commands\PasteCommand.cs" />
     <Compile Include="UI\UserInterface.cs" />
-    <Compile Include="UI\Converters\SmartValueToStringConverter.cs" />
+    <Compile Include="UI\Converters\SmartNumberToStringConverter.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
     <Compile Include="UI\Views\SmartValueView.xaml.cs">
       <DependentUpon>SmartValueView.xaml</DependentUpon>
