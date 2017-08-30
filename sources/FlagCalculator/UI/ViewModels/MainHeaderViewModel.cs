@@ -25,15 +25,15 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
     {
         private readonly ProjectContext projectContext;
 
-        private SmartValue smartValue;
+        private SmartNumber mainValue;
         private string numericalBase;
 
-        public SmartValue MainValue
+        public SmartNumber MainValue
         {
-            get { return smartValue; }
+            get { return mainValue; }
             private set
             {
-                smartValue = value;
+                mainValue = value;
                 OnPropertyChanged();
             }
         }
@@ -93,7 +93,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private void HandleNumericalBaseChanged(object sender, EventArgs e)
         {
             UpdateNumericalBaseText();
-            MainValue = new SmartValue
+            MainValue = new SmartNumber
             {
                 Value = projectContext.FlagsNumber.Value,
                 NumericalBase = projectContext.NumericalBaseService,
@@ -103,7 +103,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void UpdateMainValue()
         {
-            MainValue = new SmartValue
+            MainValue = new SmartNumber
             {
                 Value = projectContext.FlagsNumber.Value,
                 NumericalBase = projectContext.NumericalBaseService,

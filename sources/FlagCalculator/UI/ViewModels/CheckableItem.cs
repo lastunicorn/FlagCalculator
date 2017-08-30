@@ -27,7 +27,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private readonly FlagItem flagItem;
         private string flagName;
         private string toolTip;
-        private SmartValue flagValue;
+        private SmartNumber flagValue;
 
         public bool IsChecked
         {
@@ -56,7 +56,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public SmartValue FlagValue
+        public SmartNumber FlagValue
         {
             get { return flagValue; }
             private set
@@ -105,7 +105,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void UpdateFlagValue()
         {
-            FlagValue = new SmartValue
+            FlagValue = new SmartNumber
             {
                 Value = flagItem.Value,
                 NumericalBase = numericalBaseService,

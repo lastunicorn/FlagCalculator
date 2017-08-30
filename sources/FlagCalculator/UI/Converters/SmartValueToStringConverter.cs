@@ -28,51 +28,47 @@ namespace DustInTheWind.FlagCalculator.UI.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            SmartValue smartValue = value as SmartValue;
+            SmartNumber smartNumber = value as SmartNumber;
 
-            if (smartValue != null)
-                return ConvertFromSmartNumber(smartValue);
+            if (smartNumber != null)
+                return ConvertFromSmartNumber(smartNumber);
 
             return null;
         }
 
-        //private static object ConvertFromSmartNumber(SmartValue smartValue)
+        //private static object ConvertFromSmartNumber(SmartValue smartNumber)
         //{
-        //    switch (smartValue.NumericalBase)
+        //    switch (smartNumber.NumericalBase)
         //    {
         //        case NumericalBase.None:
         //            return string.Empty;
 
         //        case NumericalBase.Decimal:
-        //            return smartValue.Value;
+        //            return smartNumber.Value;
 
         //        case NumericalBase.Hexadecimal:
-        //            return smartValue.ToString();
+        //            return smartNumber.ToString();
 
         //        case NumericalBase.Binary:
-        //            return smartValue.ToString().ToCharArray();
+        //            return smartNumber.ToString().ToCharArray();
 
         //        default:
         //            throw new ArgumentOutOfRangeException();
         //    }
         //}
 
-        private static object ConvertFromSmartNumber(SmartValue smartValue)
+        private static object ConvertFromSmartNumber(SmartNumber smartNumber)
         {
-            switch (smartValue.NumericalBase)
+            switch (smartNumber.NumericalBase)
             {
                 case NumericalBase.None:
-                    return string.Empty;
-
                 case NumericalBase.Decimal:
-                    return smartValue.Value;
-
                 case NumericalBase.Hexadecimal:
-                    return smartValue.ToString();
+                    return smartNumber.ToString();
 
                 case NumericalBase.Binary:
                     {
-                        string xamlContent = smartValue.ToString();
+                        string xamlContent = smartNumber.ToString();
 
                         xamlContent = xamlContent.Replace("1", @"<Run Foreground = ""Black"">1</Run>");
 

@@ -26,7 +26,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.SmartValueTests
         [Test]
         public void does_not_add_zeroes_to_the_left_if_BitCount_0()
         {
-            SmartValue smartValue = new SmartValue
+            SmartNumber smartValue = new SmartNumber
             {
                 Value = 13,
                 NumericalBase = NumericalBase.Decimal,
@@ -41,7 +41,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.SmartValueTests
         [Test]
         public void does_not_add_zeroes_to_the_left_if_BitCount_less_then_real_digit_count()
         {
-            SmartValue smartValue = new SmartValue
+            SmartNumber smartValue = new SmartNumber
             {
                 Value = 13,
                 NumericalBase = NumericalBase.Decimal,
@@ -56,7 +56,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.SmartValueTests
         [Test]
         public void does_not_add_zeroes_to_the_left_if_BitCount_is_more_then_real_digit_count()
         {
-            SmartValue smartValue = new SmartValue
+            SmartNumber smartValue = new SmartNumber
             {
                 Value = 13,
                 NumericalBase = NumericalBase.Decimal,
@@ -71,7 +71,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.SmartValueTests
         [Test]
         public void does_not_add_zeroes_to_the_left_if_PadLeft_is_false()
         {
-            SmartValue smartValue = new SmartValue
+            SmartNumber smartValue = new SmartNumber
             {
                 Value = 13,
                 NumericalBase = NumericalBase.Decimal,

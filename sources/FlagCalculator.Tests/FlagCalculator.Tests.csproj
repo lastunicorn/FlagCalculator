@@ -73,13 +73,9 @@
     <Compile Include="Business\ProjectContextTests\DisplayUnselectedTests.cs" />
     <Compile Include="Business\ProjectContextTests\DisplaySelectedTests.cs" />
     <Compile Include="Business\ProjectContextTests\LoadFlagCollectionTests.cs" />
-    <Compile Include="Business\SmartValueTests\ToSimpleStringBase10Tests.cs" />
-    <Compile Include="Business\SmartValueTests\ToSimpleStringBase16Tests.cs" />
-    <Compile Include="Business\SmartValueTests\ToSimpleStringBase2Tests.cs" />
     <Compile Include="Business\SmartValueTests\ToStringBase16Tests.cs" />
     <Compile Include="Business\SmartValueTests\ToStringBase10Tests.cs" />
     <Compile Include="Business\SmartValueTests\ToStringBase2Tests.cs" />
-    <Compile Include="Business\SmartValueTests\ToSimpleStringTests.cs" />
     <Compile Include="Business\SmartValueTests\ToStringTests.cs" />
     <Compile Include="Business\StatusInfoTests\DefaultStatusTextTests.cs" />
     <Compile Include="Business\StatusInfoTests\StatusTextTests.cs" />

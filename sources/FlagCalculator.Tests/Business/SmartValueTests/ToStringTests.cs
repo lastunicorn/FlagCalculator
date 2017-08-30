@@ -27,7 +27,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.SmartValueTests
         [Test]
         public void throws_if_NumericalBase_has_invalid_value()
         {
-            SmartValue smartValue = new SmartValue
+            SmartNumber smartValue = new SmartNumber
             {
                 Value = 13,
                 NumericalBase = (NumericalBase)1000,
@@ -44,7 +44,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.SmartValueTests
         [Test]
         public void returns_string_empty_if_numerical_base_is_None()
         {
-            SmartValue smartValue = new SmartValue
+            SmartNumber smartValue = new SmartNumber
             {
                 Value = 13,
                 NumericalBase = NumericalBase.None,

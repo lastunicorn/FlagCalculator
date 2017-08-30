@@ -75,7 +75,7 @@
     <Compile Include="Business\NumericalBaseService.cs" />
     <Compile Include="Business\ObjectExtensions.cs" />
     <Compile Include="Business\ProjectContext.cs" />
-    <Compile Include="Business\SmartValue.cs" />
+    <Compile Include="Business\SmartNumber.cs" />
     <Compile Include="Business\StatusInfo.cs" />
     <Compile Include="UI\Bootstrapper.cs" />
     <Compile Include="UI\Commands\CommandBase.cs" />
