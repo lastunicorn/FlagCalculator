@@ -94,7 +94,6 @@
     <Compile Include="Business\FlagItem.cs" />
     <Compile Include="UI\Commands\CopyCommand.cs" />
     <Compile Include="UI\Commands\DigitCommand.cs" />
-    <Compile Include="UI\Commands\EscapeCommand.cs" />
     <Compile Include="UI\Converters\NegativeValueConverter.cs" />
     <Compile Include="UI\DropDownButtonBehavior.cs" />
     <Compile Include="UI\ViewModels\EnumSelectorViewModel.cs" />

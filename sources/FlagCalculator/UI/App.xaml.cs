@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Windows;
-using DustInTheWind.FlagCalculator.UI.Views;
 
 namespace DustInTheWind.FlagCalculator.UI
 {
@@ -24,17 +23,10 @@ namespace DustInTheWind.FlagCalculator.UI
     /// </summary>
     public partial class App : Application
     {
-        private void HandeStartup(object sender, StartupEventArgs e)
+        private void HandleStartup(object sender, StartupEventArgs e)
         {
             Bootstrapper bootstrapper = new Bootstrapper();
-            bootstrapper.Initialize();
-
-            MainWindow mainWindow = new MainWindow
-            {
-                DataContext = bootstrapper.MainWindowViewModel
-            };
-
-            mainWindow.Show();
+            bootstrapper.Run();
         }
     }
 }

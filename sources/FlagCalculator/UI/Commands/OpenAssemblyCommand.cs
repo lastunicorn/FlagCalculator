@@ -27,7 +27,6 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
             : base(userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-
             this.projectContext = projectContext;
         }
 

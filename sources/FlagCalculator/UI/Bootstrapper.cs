@@ -17,14 +17,13 @@
 using System;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.ViewModels;
+using DustInTheWind.FlagCalculator.UI.Views;
 
 namespace DustInTheWind.FlagCalculator.UI
 {
     internal class Bootstrapper
     {
-        public MainWindowViewModel MainWindowViewModel { get; private set; }
-
-        public void Initialize()
+        public void Run()
         {
             UserInterface userInterface = new UserInterface();
 
@@ -33,7 +32,12 @@ namespace DustInTheWind.FlagCalculator.UI
                 StatusInfo statusInfo = new StatusInfo();
                 ProjectContext projectContext = new ProjectContext();
 
-                MainWindowViewModel = new MainWindowViewModel(userInterface, statusInfo, projectContext);
+                MainWindow mainWindow = new MainWindow
+                {
+                    DataContext = new MainWindowViewModel(userInterface, statusInfo, projectContext)
+                };
+
+                mainWindow.Show();
 
                 ConfigurationEnumProvider enumProvider = new ConfigurationEnumProvider();
                 projectContext.LoadFlagCollection(enumProvider);

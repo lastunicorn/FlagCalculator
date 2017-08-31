@@ -53,7 +53,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public MainHeaderViewModel MainHeaderViewModel { get; }
 
         public OpenAssemblyCommand OpenAssemblyCommand { get; }
-        public EscapeCommand EscapeCommand { get; }
+        public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
@@ -76,7 +76,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             // Create commands
 
             OpenAssemblyCommand = new OpenAssemblyCommand(projectContext, userInterface);
-            EscapeCommand = new EscapeCommand(projectContext, userInterface);
+            SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext, userInterface);
             SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext, userInterface);
             CopyCommand = new CopyCommand(projectContext, userInterface);
             PasteCommand = new PasteCommand(projectContext, userInterface);
