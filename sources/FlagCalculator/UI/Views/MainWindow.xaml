@@ -43,9 +43,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <ResourceDictionary Source="/UI/Styles/ButtonStylesDictionary.xaml"/>
                 <ResourceDictionary Source="/UI/Styles/ToggleButtonStylesDictionary.xaml"/>
                 <ResourceDictionary Source="/UI/Styles/CheckBoxStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/UI/Styles/TabControlStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
         </ResourceDictionary>
 
     </Window.Resources>
@@ -90,31 +92,63 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     </Window.InputBindings>
 
-    <Grid>
+    <TabControl>
 
-        <DockPanel Background="{StaticResource MainBackground}">
+        <TabItem Header="HousePart (Int32)">
 
-            <views:MainHeader DockPanel.Dock="Top" DataContext="{Binding MainHeaderViewModel}"/>
-            <views:MainFooter DockPanel.Dock="Bottom" DataContext="{Binding MainFooterViewModel}"/>
+            <DockPanel Background="{StaticResource MainBackground}" Margin="0">
 
-            <Grid>
-                <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
+                <views:MainHeader DockPanel.Dock="Top" DataContext="{Binding MainHeaderViewModel}"/>
+                <views:MainFooter DockPanel.Dock="Bottom" DataContext="{Binding MainFooterViewModel}"/>
 
-                <Grid
-                    Background="{StaticResource MainBackground}"
-                    Visibility="{Binding IsOpenPanelVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid>
+                    <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
 
-                    <Button
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Command="{Binding OpenAssemblyCommand}"
-                        Content="Open Assembly..."/>
+                    <Grid
+                        Background="{StaticResource MainBackground}"
+                        Visibility="{Binding IsOpenPanelVisible, Converter={StaticResource BoolToVisibilityConverter}}">
 
+                        <Button
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding OpenAssemblyCommand}"
+                            Content="Open Assembly..."/>
+
+                    </Grid>
                 </Grid>
-            </Grid>
 
-        </DockPanel>
+            </DockPanel>
+        </TabItem>
 
-    </Grid>
+        <TabItem Header="LongEnum (Int64)">
+            <DockPanel Background="{StaticResource MainBackground}" Margin="0">
+
+                <views:MainHeader DockPanel.Dock="Top" DataContext="{Binding MainHeaderViewModel}"/>
+                <views:MainFooter DockPanel.Dock="Bottom" DataContext="{Binding MainFooterViewModel}"/>
+
+                <Grid>
+                    <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
+
+                    <Grid
+                        Background="{StaticResource MainBackground}"
+                        Visibility="{Binding IsOpenPanelVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                        <Button
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding OpenAssemblyCommand}"
+                            Content="Open Assembly..."/>
+
+                    </Grid>
+                </Grid>
+
+            </DockPanel>
+        </TabItem>
+
+        <TabItem Header="ShortEnum (Int16)">
+            <TextBlock Text="zxcasdqwesdf sdfsdf"></TextBlock>
+        </TabItem>
+
+    </TabControl>
 
 </Window>
