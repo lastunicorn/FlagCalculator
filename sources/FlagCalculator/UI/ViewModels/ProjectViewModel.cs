@@ -37,7 +37,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         public OpenAssemblyCommand OpenAssemblyCommand { get; }
 
-        public FlagsViewModel FlagsViewModel { get; }
+        public FlagListViewModel FlagListViewModel { get; }
         public MainFooterViewModel MainFooterViewModel { get; }
         public MainHeaderViewModel MainHeaderViewModel { get; }
 
@@ -51,7 +51,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Create view models.
 
-            FlagsViewModel = new FlagsViewModel(projectContext, statusInfo, userInterface);
+            FlagListViewModel = new FlagListViewModel(projectContext, statusInfo, userInterface);
             MainFooterViewModel = new MainFooterViewModel(projectContext, statusInfo, userInterface);
             MainHeaderViewModel = new MainHeaderViewModel(projectContext, statusInfo, userInterface);
 

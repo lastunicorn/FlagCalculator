@@ -107,7 +107,7 @@
     <Compile Include="UI\Views\FlagListView.xaml.cs">
       <DependentUpon>FlagListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ViewModels\FlagsViewModel.cs" />
+    <Compile Include="UI\ViewModels\FlagListViewModel.cs" />
     <Compile Include="UI\Views\MainFooter.xaml.cs">
       <DependentUpon>MainFooter.xaml</DependentUpon>
     </Compile>

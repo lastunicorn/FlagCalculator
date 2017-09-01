@@ -25,7 +25,7 @@ using DustInTheWind.FlagCalculator.UI.Commands;
 
 namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
-    internal class FlagsViewModel : ViewModelBase
+    internal class FlagListViewModel : ViewModelBase
     {
         private readonly ProjectContext projectContext;
         private readonly StatusInfo statusInfo;
@@ -35,7 +35,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         public ICollectionView ItemsView { get; }
 
-        public FlagsViewModel(ProjectContext projectContext, StatusInfo statusInfo, UserInterface userInterface)
+        public FlagListViewModel(ProjectContext projectContext, StatusInfo statusInfo, UserInterface userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));

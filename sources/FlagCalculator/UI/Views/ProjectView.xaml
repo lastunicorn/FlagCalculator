@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <local:MainFooter DockPanel.Dock="Bottom" DataContext="{Binding MainFooterViewModel}"/>
 
         <Grid>
-            <local:FlagListView DataContext="{Binding FlagsViewModel}"/>
+            <local:FlagListView DataContext="{Binding FlagListViewModel}"/>
 
             <Grid
                 Background="{StaticResource MainBackground}"
