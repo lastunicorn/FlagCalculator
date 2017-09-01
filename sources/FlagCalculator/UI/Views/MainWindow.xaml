@@ -58,6 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <KeyBinding Command="{Binding CopyCommand}" Key="C" Modifiers="Control"/>
         <KeyBinding Command="{Binding PasteCommand}" Key="V" Modifiers="Control"/>
         <KeyBinding Command="{Binding SelectAllFlagsCommand}" Key="A" Modifiers="Control"/>
+        <KeyBinding Command="{Binding CloseCommand}" Key="W" Modifiers="Control"/>
 
         <MouseBinding Command="{Binding CopyCommand}" MouseAction="LeftDoubleClick"/>
 

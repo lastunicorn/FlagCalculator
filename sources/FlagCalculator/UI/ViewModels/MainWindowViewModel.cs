@@ -57,6 +57,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
+        public CloseCommand CloseCommand { get; }
         public DigitCommand DigitCommand { get; }
 
         public MainWindowViewModel(UserInterface userInterface, StatusInfo statusInfo, ProjectContext projectContext)
@@ -80,6 +81,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext, userInterface);
             CopyCommand = new CopyCommand(projectContext, userInterface);
             PasteCommand = new PasteCommand(projectContext, userInterface);
+            CloseCommand = new CloseCommand(projectContext, userInterface);
             DigitCommand = new DigitCommand(projectContext, userInterface);
 
             // Initialize everything
@@ -88,6 +90,19 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             isOpenPanelVisible = !projectContext.IsLoaded;
 
             this.projectContext.Loaded += HandleProjectLoaded;
+            this.projectContext.Unloaded += HandleProjectUnloaded;
+        }
+
+        private void HandleProjectLoaded(object sender, EventArgs e)
+        {
+            UpdateTitle();
+            IsOpenPanelVisible = !projectContext.IsLoaded;
+        }
+
+        private void HandleProjectUnloaded(object sender, EventArgs eventArgs)
+        {
+            UpdateTitle();
+            IsOpenPanelVisible = !projectContext.IsLoaded;
         }
 
         private static string BuildTitleBase()
@@ -95,12 +110,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             Assembly assembly = Assembly.GetEntryAssembly();
             string version = assembly.GetName().Version.ToString(3);
             return string.Format("Flag Calculator {0}", version);
-        }
-
-        private void HandleProjectLoaded(object sender, EventArgs e)
-        {
-            UpdateTitle();
-            IsOpenPanelVisible = !projectContext.IsLoaded;
         }
 
         private void UpdateTitle()

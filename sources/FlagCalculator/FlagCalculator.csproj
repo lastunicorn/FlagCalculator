@@ -78,6 +78,7 @@
     <Compile Include="Business\SmartNumber.cs" />
     <Compile Include="Business\StatusInfo.cs" />
     <Compile Include="UI\Bootstrapper.cs" />
+    <Compile Include="UI\Commands\CloseCommand.cs" />
     <Compile Include="UI\Commands\CommandBase.cs" />
     <Compile Include="UI\GuiEnumProvider.cs" />
     <Compile Include="UI\Commands\OpenAssemblyCommand.cs" />

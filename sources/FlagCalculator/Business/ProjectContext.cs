@@ -72,6 +72,7 @@ namespace DustInTheWind.FlagCalculator.Business
         }
 
         public event EventHandler Loaded;
+        public event EventHandler Unloaded;
         public event EventHandler<FlagsNumberChangedEventArgs> FlagsNumberChanged;
         public event EventHandler DisplaySelectedChanged;
 
@@ -83,12 +84,12 @@ namespace DustInTheWind.FlagCalculator.Business
             NumericalBaseService = new NumericalBaseService();
             FlagsNumber = new FlagsNumber();
         }
-        
+
         public void LoadFlagCollection(IEnumProvider enumProvider)
         {
             Type enumType = enumProvider.LoadEnum();
 
-            if(enumType == null)
+            if (enumType == null)
                 return;
 
             FlagsNumber = new FlagsNumber(enumType);
@@ -97,9 +98,22 @@ namespace DustInTheWind.FlagCalculator.Business
             OnLoaded();
         }
 
+        public void Unload()
+        {
+            FlagsNumber = new FlagsNumber();
+            IsLoaded = false;
+
+            OnUnloaded();
+        }
+
         protected virtual void OnLoaded()
         {
             Loaded?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnUnloaded()
+        {
+            Unloaded?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnFlagsNumberChanged(FlagsNumberChangedEventArgs e)

@@ -67,7 +67,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Template="{StaticResource CheckBoxCheckedIconTemplate}"
                         Width="16"
                         Height="16"
-                        Foreground="{StaticResource IconNormalForeground}"/>
+                        Foreground="{StaticResource IconNormalForeground}"
+                        KeyboardNavigation.IsTabStop="False"/>
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
@@ -86,7 +87,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Template="{StaticResource CheckBoxUncheckedIconTemplate}"
                         Width="16"
                         Height="16"
-                        Foreground="{StaticResource IconNormalForeground}"/>
+                        Foreground="{StaticResource IconNormalForeground}"
+                        KeyboardNavigation.IsTabStop="False"/>
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
@@ -119,7 +121,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Template="{StaticResource CheckBoxCheckedIconTemplate}"
                         Width="16"
                         Height="16"
-                        Foreground="{StaticResource IconNormalForeground}"/>
+                        Foreground="{StaticResource IconNormalForeground}"
+                        KeyboardNavigation.IsTabStop="False"/>
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
@@ -141,7 +144,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Template="{StaticResource CheckBoxUncheckedIconTemplate}"
                         Width="16"
                         Height="16"
-                        Foreground="{StaticResource IconNormalForeground}"/>
+                        Foreground="{StaticResource IconNormalForeground}"
+                        KeyboardNavigation.IsTabStop="False"/>
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">

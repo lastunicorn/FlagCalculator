@@ -1,4 +1,4 @@
-// FlagCalculator
+﻿// FlagCalculator
 // Copyright (C) 2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -19,15 +19,15 @@ using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class OpenAssemblyCommand : CommandBase
+    internal class CloseCommand : CommandBase
     {
         private readonly ProjectContext projectContext;
 
-        public OpenAssemblyCommand(ProjectContext projectContext, UserInterface userInterface)
+        public CloseCommand(ProjectContext projectContext, UserInterface userInterface)
             : base(userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-            
+
             this.projectContext = projectContext;
             this.projectContext.Loaded += HandleProjectContextLoaded;
             this.projectContext.Unloaded += HandleProjectContextUnloaded;
@@ -45,13 +45,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public override bool CanExecute(object parameter)
         {
-            return !projectContext.IsLoaded;
+            return projectContext.IsLoaded;
         }
-        
+
         protected override void DoExecute(object parameter)
         {
-            GuiEnumProvider enumProvider = new GuiEnumProvider();
-            projectContext.LoadFlagCollection(enumProvider);
+            projectContext.Unload();
         }
     }
 }
