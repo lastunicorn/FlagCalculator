@@ -27,15 +27,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300"
-    d:DataContext="{d:DesignInstance viewModels:MainHeaderViewModel}">
+    d:DataContext="{d:DesignInstance viewModels:MainHeaderViewModel}"
+    IsEnabled="{Binding IsEnabled}">
 
     <UserControl.Resources>
+        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/UI/Resources/CopyPasteIconTemplates.xaml"/>
                 <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        
     </UserControl.Resources>
 
     <Grid Background="{StaticResource StatusBarBackground}">

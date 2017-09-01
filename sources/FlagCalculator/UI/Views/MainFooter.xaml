@@ -27,7 +27,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300"
-    d:DataContext="{d:DesignInstance viewModels:MainFooterViewModel}">
+    d:DataContext="{d:DesignInstance viewModels:MainFooterViewModel}"
+    IsEnabled="{Binding IsEnabled}">
 
     <UserControl.Resources>
 
@@ -37,7 +38,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <ResourceDictionary Source="/UI/Resources/CopyPasteIconTemplates.xaml"/>
                 <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
 
     </UserControl.Resources>

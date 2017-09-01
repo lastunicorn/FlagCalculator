@@ -27,6 +27,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private SmartNumber mainValue;
         private string numericalBase;
+        private bool isEnabled;
 
         public SmartNumber MainValue
         {
@@ -48,6 +49,16 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+            set
+            {
+                isEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public NumericalBaseRollCommand NumericalBaseRollCommand { get; }
@@ -65,12 +76,24 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             NumericalBaseRollCommand = new NumericalBaseRollCommand(projectContext.NumericalBaseService, userInterface);
             StatusInfoCommand = new StatusInfoCommand(statusInfo, userInterface);
 
+            projectContext.Loaded += HandleProjectContextLoaded;
+            projectContext.Unloaded += HandleProjectContextUnloaded;
             projectContext.FlagsNumberChanged += HandleFlagsNumberChanged;
             projectContext.FlagsNumber.ValueChanged += HandleMainValueChanged;
             projectContext.NumericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
 
             UpdateMainValue();
             UpdateNumericalBaseText();
+        }
+
+        private void HandleProjectContextLoaded(object sender, EventArgs eventArgs)
+        {
+            IsEnabled = projectContext.IsLoaded;
+        }
+
+        private void HandleProjectContextUnloaded(object sender, EventArgs eventArgs)
+        {
+            IsEnabled = projectContext.IsLoaded;
         }
 
         private void HandleFlagsNumberChanged(object sender, FlagsNumberChangedEventArgs e)

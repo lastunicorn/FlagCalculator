@@ -27,6 +27,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private bool displaySelected;
         private bool displayUnselected;
         private string statusText;
+        private bool isEnabled;
 
         public bool DisplaySelected
         {
@@ -58,6 +59,16 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+            private set
+            {
+                isEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
         public StatusInfoCommand StatusInfoCommand { get; }
@@ -83,6 +94,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             statusInfo.StatusTextChanged += HandleStatusTextChanged;
             projectContext.DisplaySelectedChanged += HandleFlagsDisplaySelectedChanged;
+            projectContext.Loaded += HandleProjectContextLoaded;
+            projectContext.Unloaded += HandleProjectContextUnloaded;
         }
 
         private void HandleStatusTextChanged(object sender, EventArgs eventArgs)
@@ -94,6 +107,16 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         {
             DisplaySelected = projectContext.DisplaySelected;
             DisplayUnselected = projectContext.DisplayUnselected;
+        }
+
+        private void HandleProjectContextLoaded(object sender, EventArgs eventArgs)
+        {
+            IsEnabled = projectContext.IsLoaded;
+        }
+
+        private void HandleProjectContextUnloaded(object sender, EventArgs eventArgs)
+        {
+            IsEnabled = projectContext.IsLoaded;
         }
     }
 }

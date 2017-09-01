@@ -101,8 +101,11 @@ namespace DustInTheWind.FlagCalculator.Business
         public void Unload()
         {
             FlagsNumber = new FlagsNumber();
-            IsLoaded = false;
+            NumericalBaseService.NumericalBase = NumericalBase.Decimal;
+            DisplaySelected = false;
+            DisplayUnselected = false;
 
+            IsLoaded = false;
             OnUnloaded();
         }
 
