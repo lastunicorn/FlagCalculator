@@ -103,7 +103,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     HorizontalAlignment="Stretch"/>-->
 
                                 <ContentControl
-                                    Content="{Binding FlagValue, Converter={StaticResource SmartNumberToStringConverter}, Mode=OneWay}"/>
+                                    Content="{Binding FlagValue, Converter={StaticResource SmartNumberToStringConverter}, Mode=OneWay}"
+                                    VerticalAlignment="Center"/>
 
                             </StackPanel>
 

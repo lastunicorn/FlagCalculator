@@ -85,7 +85,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             DigitCommand = new DigitCommand(projectContext, userInterface);
 
             // Initialize everything
-
+            
             UpdateTitle();
             isOpenPanelVisible = !projectContext.IsLoaded;
 

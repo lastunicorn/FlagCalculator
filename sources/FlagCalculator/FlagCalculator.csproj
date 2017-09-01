@@ -117,6 +117,9 @@
     <Compile Include="UI\UserInterface.cs" />
     <Compile Include="UI\Converters\SmartNumberToStringConverter.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
+    <Compile Include="UI\Views\ProjectView.xaml.cs">
+      <DependentUpon>ProjectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Views\SmartValueView.xaml.cs">
       <DependentUpon>SmartValueView.xaml</DependentUpon>
     </Compile>
@@ -177,6 +180,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\Styles\ToggleButtonStylesDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Views\ProjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

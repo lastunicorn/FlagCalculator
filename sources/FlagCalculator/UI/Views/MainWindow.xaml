@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:converters="clr-namespace:DustInTheWind.FlagCalculator.UI.Converters"
     xmlns:views="clr-namespace:DustInTheWind.FlagCalculator.UI.Views"
     xmlns:viewModels="clr-namespace:DustInTheWind.FlagCalculator.UI.ViewModels"
     mc:Ignorable="d"
@@ -39,15 +38,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
                 <ResourceDictionary Source="/UI/Styles/ScrollBarStylesDictionary.xaml"/>
                 <ResourceDictionary Source="/UI/Styles/ButtonStylesDictionary.xaml"/>
                 <ResourceDictionary Source="/UI/Styles/ToggleButtonStylesDictionary.xaml"/>
                 <ResourceDictionary Source="/UI/Styles/CheckBoxStylesDictionary.xaml"/>
                 <ResourceDictionary Source="/UI/Styles/TabControlStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-
         </ResourceDictionary>
 
     </Window.Resources>
@@ -96,58 +93,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <TabControl>
 
         <TabItem Header="HousePart (Int32)">
-
-            <DockPanel Background="{StaticResource MainBackground}" Margin="0">
-
-                <views:MainHeader DockPanel.Dock="Top" DataContext="{Binding MainHeaderViewModel}"/>
-                <views:MainFooter DockPanel.Dock="Bottom" DataContext="{Binding MainFooterViewModel}"/>
-
-                <Grid>
-                    <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
-
-                    <Grid
-                        Background="{StaticResource MainBackground}"
-                        Visibility="{Binding IsOpenPanelVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-
-                        <Button
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Command="{Binding OpenAssemblyCommand}"
-                            Content="Open Assembly..."/>
-
-                    </Grid>
-                </Grid>
-
-            </DockPanel>
+            <views:ProjectView/>
         </TabItem>
 
         <TabItem Header="LongEnum (Int64)">
-            <DockPanel Background="{StaticResource MainBackground}" Margin="0">
-
-                <views:MainHeader DockPanel.Dock="Top" DataContext="{Binding MainHeaderViewModel}"/>
-                <views:MainFooter DockPanel.Dock="Bottom" DataContext="{Binding MainFooterViewModel}"/>
-
-                <Grid>
-                    <views:FlagListView DataContext="{Binding FlagsViewModel}"/>
-
-                    <Grid
-                        Background="{StaticResource MainBackground}"
-                        Visibility="{Binding IsOpenPanelVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-
-                        <Button
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Command="{Binding OpenAssemblyCommand}"
-                            Content="Open Assembly..."/>
-
-                    </Grid>
-                </Grid>
-
-            </DockPanel>
+            <views:ProjectView/>
         </TabItem>
 
         <TabItem Header="ShortEnum (Int16)">
-            <TextBlock Text="zxcasdqwesdf sdfsdf"></TextBlock>
+            <TextBlock
+                Text="zxcasdqwesdf sdfsdf"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
         </TabItem>
 
     </TabControl>
