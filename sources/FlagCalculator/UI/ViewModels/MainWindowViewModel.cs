@@ -26,7 +26,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private string title;
 
         private readonly ProjectContext projectContext;
-        private bool isOpenPanelVisible;
 
         public string Title
         {
@@ -38,27 +37,14 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public bool IsOpenPanelVisible
-        {
-            get { return isOpenPanelVisible; }
-            set
-            {
-                isOpenPanelVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public FlagsViewModel FlagsViewModel { get; }
-        public MainFooterViewModel MainFooterViewModel { get; }
-        public MainHeaderViewModel MainHeaderViewModel { get; }
-
-        public OpenAssemblyCommand OpenAssemblyCommand { get; }
         public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public CloseCommand CloseCommand { get; }
         public DigitCommand DigitCommand { get; }
+
+        public ProjectViewModel ProjectViewModel { get; set; }
 
         public MainWindowViewModel(UserInterface userInterface, StatusInfo statusInfo, ProjectContext projectContext)
         {
@@ -70,13 +56,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Create view models.
 
-            FlagsViewModel = new FlagsViewModel(projectContext, statusInfo, userInterface);
-            MainFooterViewModel = new MainFooterViewModel(projectContext, statusInfo, userInterface);
-            MainHeaderViewModel = new MainHeaderViewModel(projectContext, statusInfo, userInterface);
+            ProjectViewModel = new ProjectViewModel(userInterface, statusInfo, projectContext);
 
             // Create commands
-
-            OpenAssemblyCommand = new OpenAssemblyCommand(projectContext, userInterface);
+            
             SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext, userInterface);
             SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext, userInterface);
             CopyCommand = new CopyCommand(projectContext, userInterface);
@@ -87,7 +70,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             // Initialize everything
             
             UpdateTitle();
-            isOpenPanelVisible = !projectContext.IsLoaded;
 
             this.projectContext.Loaded += HandleProjectLoaded;
             this.projectContext.Unloaded += HandleProjectUnloaded;
@@ -96,13 +78,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private void HandleProjectLoaded(object sender, EventArgs e)
         {
             UpdateTitle();
-            IsOpenPanelVisible = !projectContext.IsLoaded;
         }
 
         private void HandleProjectUnloaded(object sender, EventArgs eventArgs)
         {
             UpdateTitle();
-            IsOpenPanelVisible = !projectContext.IsLoaded;
         }
 
         private static string BuildTitleBase()

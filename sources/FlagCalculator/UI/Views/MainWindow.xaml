@@ -93,7 +93,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <TabControl>
 
         <TabItem Header="HousePart (Int32)">
-            <views:ProjectView/>
+            <views:ProjectView DataContext="{Binding ProjectViewModel}"/>
         </TabItem>
 
         <TabItem Header="LongEnum (Int64)">

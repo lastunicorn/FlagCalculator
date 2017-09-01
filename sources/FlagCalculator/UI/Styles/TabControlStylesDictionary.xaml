@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
 
-                    <Grid>
+                    <Grid Background="#ffebd9">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -67,6 +67,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <DataTemplate>
 
                     <StackPanel Orientation="Horizontal">
+                        
                         <TextBlock Text="{TemplateBinding Content}">
 
                             <TextBlock.Style>
@@ -83,13 +84,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             </TextBlock.Style>
 
                         </TextBlock>
+                        
                         <!--<Button
-                                    Margin="5 0"
-                                    Padding="0"
-                                    VerticalAlignment="Center"
-                                    Content="X"
-                                    FontSize="12"
-                                    Background="Transparent"/>-->
+                            Margin="5 0"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            Content="X"
+                            FontSize="12"
+                            Background="Transparent"/>-->
+                        
                     </StackPanel>
 
                 </DataTemplate>
@@ -118,7 +121,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </Trigger>
 
                         <Trigger Property="IsSelected" Value="False">
-                            <!--<Setter TargetName="Panel" Property="Background" Value="#ffebd9" />-->
                             <Setter TargetName="Panel" Property="Background" Value="Transparent" />
                         </Trigger>
 
