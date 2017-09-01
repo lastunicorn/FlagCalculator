@@ -90,7 +90,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     </Window.InputBindings>
 
-    <TabControl>
+    <!--<TabControl>
 
         <TabItem Header="HousePart (Int32)">
             <views:ProjectView DataContext="{Binding ProjectViewModel}"/>
@@ -107,6 +107,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 VerticalAlignment="Center"/>
         </TabItem>
 
+    </TabControl>-->
+
+    <TabControl ItemsSource="{Binding Projects}" SelectedIndex="0">
+        
+        <TabControl.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding Header}" />
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+        
+        <TabControl.ContentTemplate>
+            <DataTemplate>
+                <views:ProjectView DataContext="{Binding Content}"/>
+            </DataTemplate>
+        </TabControl.ContentTemplate>
+        
     </TabControl>
 
 </Window>

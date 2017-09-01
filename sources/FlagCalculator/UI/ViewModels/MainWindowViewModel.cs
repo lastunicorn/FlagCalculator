@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.ObjectModel;
 using System.Reflection;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
@@ -46,6 +47,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         public ProjectViewModel ProjectViewModel { get; set; }
 
+        public ObservableCollection<TabItem> Projects { get; }
+
         public MainWindowViewModel(UserInterface userInterface, StatusInfo statusInfo, ProjectContext projectContext)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
@@ -59,7 +62,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             ProjectViewModel = new ProjectViewModel(userInterface, statusInfo, projectContext);
 
             // Create commands
-            
+
             SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext, userInterface);
             SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext, userInterface);
             CopyCommand = new CopyCommand(projectContext, userInterface);
@@ -68,7 +71,13 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             DigitCommand = new DigitCommand(projectContext, userInterface);
 
             // Initialize everything
-            
+
+            Projects = new ObservableCollection<TabItem>
+            {
+                new TabItem(userInterface, statusInfo, new ProjectContext()),
+                new TabItem(userInterface, statusInfo, new ProjectContext())
+            };
+
             UpdateTitle();
 
             this.projectContext.Loaded += HandleProjectLoaded;
