@@ -22,13 +22,34 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class PasteCommand : CommandBase
     {
-        private readonly ProjectContext projectContext;
+        private ProjectContext projectContext;
 
-        public PasteCommand(ProjectContext projectContext, UserInterface userInterface)
+        public PasteCommand(UserInterface userInterface, OpenedProjects openedProjects)
+            : base(userInterface)
+        {
+            if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));
+
+            projectContext = openedProjects.CurrentProject;
+            openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
+        }
+
+        public PasteCommand(UserInterface userInterface, ProjectContext projectContext)
             : base(userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
             this.projectContext = projectContext;
+        }
+
+        private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
+        {
+            projectContext = e.NewProject;
+
+            OnCanExecuteChanged();
+        }
+
+        public override bool CanExecute(object parameter)
+        {
+            return projectContext != null;
         }
 
         protected override void DoExecute(object parameter)

@@ -21,33 +21,67 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class OpenAssemblyCommand : CommandBase
     {
-        private readonly ProjectContext projectContext;
+        private ProjectContext projectContext;
 
-        public OpenAssemblyCommand(ProjectContext projectContext, UserInterface userInterface)
+        public OpenAssemblyCommand(UserInterface userInterface, OpenedProjects openedProjects)
+            : base(userInterface)
+        {
+            if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));
+
+            projectContext = openedProjects.CurrentProject;
+            openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
+
+            if (projectContext != null)
+            {
+                projectContext.Loaded += HandleProjectLoaded;
+                projectContext.Unloaded += HandleProjectUnloaded;
+            }
+        }
+
+        public OpenAssemblyCommand(UserInterface userInterface, ProjectContext projectContext)
             : base(userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-            
+
             this.projectContext = projectContext;
-            this.projectContext.Loaded += HandleProjectContextLoaded;
-            this.projectContext.Unloaded += HandleProjectContextUnloaded;
+            this.projectContext.Loaded += HandleProjectLoaded;
+            this.projectContext.Unloaded += HandleProjectUnloaded;
         }
 
-        private void HandleProjectContextLoaded(object sender, EventArgs eventArgs)
+        private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
+        {
+            if (projectContext != null)
+            {
+                projectContext.Loaded -= HandleProjectLoaded;
+                projectContext.Unloaded -= HandleProjectUnloaded;
+            }
+
+            projectContext = e.NewProject;
+
+            if (e.NewProject != null)
+            {
+                projectContext.Loaded += HandleProjectLoaded;
+                projectContext.Unloaded += HandleProjectUnloaded;
+            }
+
+            OnCanExecuteChanged();
+        }
+
+        private void HandleProjectLoaded(object sender, EventArgs e)
         {
             OnCanExecuteChanged();
         }
 
-        private void HandleProjectContextUnloaded(object sender, EventArgs eventArgs)
+        private void HandleProjectUnloaded(object sender, EventArgs e)
         {
             OnCanExecuteChanged();
         }
 
         public override bool CanExecute(object parameter)
         {
-            return !projectContext.IsLoaded;
+            return projectContext != null && !projectContext.IsLoaded;
         }
-        
+
         protected override void DoExecute(object parameter)
         {
             GuiEnumProvider enumProvider = new GuiEnumProvider();

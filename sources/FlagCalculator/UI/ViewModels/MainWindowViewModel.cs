@@ -15,7 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
@@ -26,7 +28,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
     {
         private string title;
 
-        private readonly ProjectContext projectContext;
+        private readonly OpenedProjects openedProjects;
+        private TabItem selectedProject;
 
         public string Title
         {
@@ -38,6 +41,23 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
+        public ObservableCollection<TabItem> Projects { get; }
+
+        public TabItem SelectedProject
+        {
+            get { return selectedProject; }
+            set
+            {
+                if (selectedProject == value)
+                    return;
+
+                selectedProject = value;
+                OnPropertyChanged();
+
+                openedProjects.CurrentProject = value?.ProjectContext;
+            }
+        }
+
         public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
         public CopyCommand CopyCommand { get; }
@@ -45,43 +65,62 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public CloseCommand CloseCommand { get; }
         public DigitCommand DigitCommand { get; }
 
-        public ProjectViewModel ProjectViewModel { get; set; }
-
-        public ObservableCollection<TabItem> Projects { get; }
-
-        public MainWindowViewModel(UserInterface userInterface, StatusInfo statusInfo, ProjectContext projectContext)
+        public MainWindowViewModel(UserInterface userInterface, StatusInfo statusInfo, OpenedProjects openedProjects)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
-            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
+            if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));
 
-            this.projectContext = projectContext;
-
-            // Create view models.
-
-            ProjectViewModel = new ProjectViewModel(userInterface, statusInfo, projectContext);
+            this.openedProjects = openedProjects;
 
             // Create commands
 
-            SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext, userInterface);
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext, userInterface);
-            CopyCommand = new CopyCommand(projectContext, userInterface);
-            PasteCommand = new PasteCommand(projectContext, userInterface);
-            CloseCommand = new CloseCommand(projectContext, userInterface);
-            DigitCommand = new DigitCommand(projectContext, userInterface);
+            SelectNoFlagsCommand = new SelectNoFlagsCommand(userInterface, openedProjects);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(userInterface, openedProjects);
+            CopyCommand = new CopyCommand(userInterface, openedProjects);
+            PasteCommand = new PasteCommand(userInterface, openedProjects);
+            CloseCommand = new CloseCommand(userInterface, openedProjects);
+            DigitCommand = new DigitCommand(userInterface, openedProjects);
 
             // Initialize everything
 
-            Projects = new ObservableCollection<TabItem>
-            {
-                new TabItem(userInterface, statusInfo, new ProjectContext()),
-                new TabItem(userInterface, statusInfo, new ProjectContext())
-            };
+            openedProjects.CreateNew();
+            openedProjects.CreateNew();
+
+            IEnumerable<TabItem> projects = openedProjects
+                .Select(x => new TabItem(userInterface, statusInfo, x));
+
+            Projects = new ObservableCollection<TabItem>(projects);
+            SelectedProject = Projects.Skip(1).FirstOrDefault();
 
             UpdateTitle();
 
-            this.projectContext.Loaded += HandleProjectLoaded;
-            this.projectContext.Unloaded += HandleProjectUnloaded;
+            if (openedProjects.CurrentProject != null)
+            {
+                openedProjects.CurrentProject.Loaded += HandleProjectLoaded;
+                openedProjects.CurrentProject.Unloaded += HandleProjectUnloaded;
+            }
+
+            this.openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
+        }
+
+        private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
+        {
+            SelectedProject = Projects.FirstOrDefault(x => x.ProjectContext == e.NewProject);
+
+            if (e.OldProject != null)
+            {
+                e.OldProject.Loaded -= HandleProjectLoaded;
+                e.OldProject.Unloaded -= HandleProjectUnloaded;
+            }
+
+            if (e.NewProject != null)
+            {
+                e.NewProject.Loaded += HandleProjectLoaded;
+                e.NewProject.Unloaded += HandleProjectUnloaded;
+            }
+
+            UpdateTitle();
         }
 
         private void HandleProjectLoaded(object sender, EventArgs e)
@@ -103,9 +142,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void UpdateTitle()
         {
-            if (projectContext.IsLoaded)
+            ProjectContext currentProject = openedProjects.CurrentProject;
+
+            if (currentProject?.IsLoaded == true)
             {
-                FlagsNumber flagNumber = projectContext.FlagsNumber;
+                FlagsNumber flagNumber = currentProject.FlagsNumber;
 
                 string titleBase = BuildTitleBase();
                 string flagsName = flagNumber.Name;

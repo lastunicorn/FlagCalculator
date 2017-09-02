@@ -21,24 +21,36 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class DigitCommand : CommandBase
     {
-        private readonly ProjectContext projectContext;
+        private readonly OpenedProjects openedProjects;
 
-        public DigitCommand(ProjectContext projectContext, UserInterface userInterface)
+        public DigitCommand(UserInterface userInterface, OpenedProjects openedProjects)
             : base(userInterface)
         {
-            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-            this.projectContext = projectContext;
+            if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));
+
+            this.openedProjects = openedProjects;
+            this.openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
+        }
+
+        private void HandleCurrentProjectChanged(object sender, EventArgs e)
+        {
+            OnCanExecuteChanged();
+        }
+
+        public override bool CanExecute(object parameter)
+        {
+            return openedProjects.CurrentProject != null;
         }
 
         protected override void DoExecute(object parameter)
         {
             uint digit = uint.Parse((string)parameter);
-            uint numericalBase = projectContext.NumericalBaseService;
+            uint numericalBase = openedProjects.CurrentProject.NumericalBaseService;
 
             if (digit >= numericalBase)
                 return;
 
-            projectContext.FlagsNumber.Value = projectContext.FlagsNumber.Value * numericalBase + digit;
+            openedProjects.CurrentProject.FlagsNumber.Value = openedProjects.CurrentProject.FlagsNumber.Value * numericalBase + digit;
         }
     }
 }

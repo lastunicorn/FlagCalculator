@@ -1,4 +1,4 @@
-// FlagCalculator
+﻿// FlagCalculator
 // Copyright (C) 2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,24 +15,18 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.FlagCalculator.Business;
 
-namespace DustInTheWind.FlagCalculator.UI.Commands
+namespace DustInTheWind.FlagCalculator.Business
 {
-    internal class NumericalBaseRollCommand : CommandBase
+    internal class CurrentProjectChangedEventArgs : EventArgs
     {
-        private readonly ProjectContext projectContext;
+        public ProjectContext OldProject { get; }
+        public ProjectContext NewProject { get; }
 
-        public NumericalBaseRollCommand(ProjectContext projectContext, UserInterface userInterface)
-            : base(userInterface)
+        public CurrentProjectChangedEventArgs(ProjectContext oldProject, ProjectContext newProject)
         {
-            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-            this.projectContext = projectContext;
-        }
-
-        protected override void DoExecute(object parameter)
-        {
-            projectContext.NumericalBaseService.Roll();
+            OldProject = oldProject;
+            NewProject = newProject;
         }
     }
 }

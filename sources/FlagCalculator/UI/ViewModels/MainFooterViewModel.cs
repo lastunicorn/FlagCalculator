@@ -83,38 +83,39 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             this.projectContext = projectContext;
             this.statusInfo = statusInfo;
 
-            SelectAllFlagsCommand = new SelectAllFlagsCommand(projectContext, userInterface);
-            SelectNoFlagsCommand = new SelectNoFlagsCommand(projectContext, userInterface);
+            SelectAllFlagsCommand = new SelectAllFlagsCommand(userInterface, projectContext);
+            SelectNoFlagsCommand = new SelectNoFlagsCommand(userInterface, projectContext);
             StatusInfoCommand = new StatusInfoCommand(statusInfo, userInterface);
-            ToggleDisplaySelectedCommand = new ToggleDisplaySelectedCommand(projectContext, userInterface);
-            ToggleDisplayUnselectedCommand = new ToggleDisplayUnselectedCommand(projectContext, userInterface);
+            ToggleDisplaySelectedCommand = new ToggleDisplaySelectedCommand(userInterface, projectContext);
+            ToggleDisplayUnselectedCommand = new ToggleDisplayUnselectedCommand(userInterface, projectContext);
 
             DisplaySelected = projectContext.DisplaySelected;
             DisplayUnselected = projectContext.DisplayUnselected;
 
             statusInfo.StatusTextChanged += HandleStatusTextChanged;
-            projectContext.DisplaySelectedChanged += HandleFlagsDisplaySelectedChanged;
-            projectContext.Loaded += HandleProjectContextLoaded;
-            projectContext.Unloaded += HandleProjectContextUnloaded;
+
+            this.projectContext.Loaded += HandleProjectLoaded;
+            this.projectContext.Unloaded += HandleProjectUnloaded;
+            this.projectContext.DisplaySelectedChanged += HandleFlagsDisplaySelectedChanged;
         }
 
-        private void HandleStatusTextChanged(object sender, EventArgs eventArgs)
+        private void HandleStatusTextChanged(object sender, EventArgs e)
         {
             StatusText = statusInfo.StatusText;
         }
 
-        private void HandleFlagsDisplaySelectedChanged(object sender, EventArgs eventArgs)
+        private void HandleFlagsDisplaySelectedChanged(object sender, EventArgs e)
         {
             DisplaySelected = projectContext.DisplaySelected;
             DisplayUnselected = projectContext.DisplayUnselected;
         }
 
-        private void HandleProjectContextLoaded(object sender, EventArgs eventArgs)
+        private void HandleProjectLoaded(object sender, EventArgs e)
         {
             IsEnabled = projectContext.IsLoaded;
         }
 
-        private void HandleProjectContextUnloaded(object sender, EventArgs eventArgs)
+        private void HandleProjectUnloaded(object sender, EventArgs e)
         {
             IsEnabled = projectContext.IsLoaded;
         }

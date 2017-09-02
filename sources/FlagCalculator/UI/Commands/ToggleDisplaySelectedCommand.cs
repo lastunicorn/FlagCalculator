@@ -21,18 +21,39 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class ToggleDisplaySelectedCommand : CommandBase
     {
-        private readonly ProjectContext projectContext;
+        private ProjectContext projectContext;
 
-        public ToggleDisplaySelectedCommand(ProjectContext projectContext, UserInterface userInterface)
+        public ToggleDisplaySelectedCommand(UserInterface userInterface, OpenedProjects openedProjects)
+            : base(userInterface)
+        {
+            if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));
+
+            projectContext = openedProjects.CurrentProject;
+            openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
+        }
+
+        public ToggleDisplaySelectedCommand(UserInterface userInterface, ProjectContext projectContext)
             : base(userInterface)
         {
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
             this.projectContext = projectContext;
         }
 
+        private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
+        {
+            projectContext = e.NewProject;
+
+            OnCanExecuteChanged();
+        }
+
+        public override bool CanExecute(object parameter)
+        {
+            return projectContext != null;
+        }
+
         protected override void DoExecute(object parameter)
         {
-            projectContext.DisplaySelected = !projectContext.DisplaySelected;
+            projectContext.ToggleDisplaySelected();
         }
     }
 }

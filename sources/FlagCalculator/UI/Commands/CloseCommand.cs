@@ -21,36 +21,58 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 {
     internal class CloseCommand : CommandBase
     {
-        private readonly ProjectContext projectContext;
+        private readonly OpenedProjects openedProjects;
 
-        public CloseCommand(ProjectContext projectContext, UserInterface userInterface)
+        public CloseCommand(UserInterface userInterface, OpenedProjects openedProjects)
             : base(userInterface)
         {
-            if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
+            if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));
 
-            this.projectContext = projectContext;
-            this.projectContext.Loaded += HandleProjectContextLoaded;
-            this.projectContext.Unloaded += HandleProjectContextUnloaded;
+            this.openedProjects = openedProjects;
+            this.openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
+
+            if (this.openedProjects.CurrentProject != null)
+            {
+                this.openedProjects.CurrentProject.Loaded += HandleProjectLoaded;
+                this.openedProjects.CurrentProject.Unloaded += HandleProjectUnloaded;
+            }
         }
 
-        private void HandleProjectContextLoaded(object sender, EventArgs eventArgs)
+        private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
+        {
+            if (e.OldProject != null)
+            {
+                e.OldProject.Loaded -= HandleProjectLoaded;
+                e.OldProject.Unloaded -= HandleProjectUnloaded;
+            }
+
+            if (e.NewProject != null)
+            {
+                e.NewProject.Loaded += HandleProjectLoaded;
+                e.NewProject.Unloaded += HandleProjectUnloaded;
+            }
+
+            OnCanExecuteChanged();
+        }
+
+        private void HandleProjectLoaded(object sender, EventArgs e)
         {
             OnCanExecuteChanged();
         }
 
-        private void HandleProjectContextUnloaded(object sender, EventArgs eventArgs)
+        private void HandleProjectUnloaded(object sender, EventArgs e)
         {
             OnCanExecuteChanged();
         }
 
         public override bool CanExecute(object parameter)
         {
-            return projectContext.IsLoaded;
+            return openedProjects.CurrentProject != null && openedProjects.CurrentProject.IsLoaded;
         }
 
         protected override void DoExecute(object parameter)
         {
-            projectContext.Unload();
+            openedProjects.CurrentProject?.Unload();
         }
     }
 }

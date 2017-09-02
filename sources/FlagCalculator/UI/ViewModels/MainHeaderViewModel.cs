@@ -71,27 +71,27 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             this.projectContext = projectContext;
 
-            CopyCommand = new CopyCommand(projectContext, userInterface);
-            PasteCommand = new PasteCommand(projectContext, userInterface);
-            NumericalBaseRollCommand = new NumericalBaseRollCommand(projectContext.NumericalBaseService, userInterface);
+            CopyCommand = new CopyCommand(userInterface, projectContext);
+            PasteCommand = new PasteCommand(userInterface, projectContext);
+            NumericalBaseRollCommand = new NumericalBaseRollCommand(projectContext, userInterface);
             StatusInfoCommand = new StatusInfoCommand(statusInfo, userInterface);
 
-            projectContext.Loaded += HandleProjectContextLoaded;
-            projectContext.Unloaded += HandleProjectContextUnloaded;
-            projectContext.FlagsNumberChanged += HandleFlagsNumberChanged;
-            projectContext.FlagsNumber.ValueChanged += HandleMainValueChanged;
-            projectContext.NumericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
+            this.projectContext.Loaded += HandleProjectLoaded;
+            this.projectContext.Unloaded += HandleProjectUnloaded;
+            this.projectContext.FlagsNumberChanged += HandleFlagsNumberChanged;
+            this.projectContext.FlagsNumber.ValueChanged += HandleMainValueChanged;
+            this.projectContext.NumericalBaseService.NumericalBaseChanged += HandleNumericalBaseChanged;
 
             UpdateMainValue();
             UpdateNumericalBaseText();
         }
 
-        private void HandleProjectContextLoaded(object sender, EventArgs eventArgs)
+        private void HandleProjectLoaded(object sender, EventArgs e)
         {
             IsEnabled = projectContext.IsLoaded;
         }
 
-        private void HandleProjectContextUnloaded(object sender, EventArgs eventArgs)
+        private void HandleProjectUnloaded(object sender, EventArgs e)
         {
             IsEnabled = projectContext.IsLoaded;
         }

@@ -68,13 +68,16 @@
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
     <Compile Include="Business\ConstantEnumProvider.cs" />
+    <Compile Include="Business\CurrentProjectChangedEventArgs.cs" />
     <Compile Include="Business\FlagsNumber.cs" />
     <Compile Include="Business\FlagsNumberChangedEventArgs.cs" />
     <Compile Include="Business\IEnumProvider.cs" />
     <Compile Include="Business\NumericalBase.cs" />
     <Compile Include="Business\NumericalBaseService.cs" />
     <Compile Include="Business\ObjectExtensions.cs" />
+    <Compile Include="Business\OpenedProjects.cs" />
     <Compile Include="Business\ProjectContext.cs" />
+    <Compile Include="Business\ProjectCreatedEventArgs.cs" />
     <Compile Include="Business\SmartNumber.cs" />
     <Compile Include="Business\StatusInfo.cs" />
     <Compile Include="UI\Bootstrapper.cs" />

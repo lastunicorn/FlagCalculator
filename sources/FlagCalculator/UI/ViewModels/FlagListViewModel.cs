@@ -67,7 +67,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             return allOptionsAreUnselected || checkableItem != null && ((checkableItem.IsChecked && displaySelected) || (!checkableItem.IsChecked && displayUnselected));
         }
-        
+
         private void HandleProjectContextFlagsNumberChanged(object sender, FlagsNumberChangedEventArgs e)
         {
             if (e.OldValue != null)
@@ -98,7 +98,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             ItemsView.Refresh();
         }
 
-        private void HandleProjectContextDisplaySelectedChanged(object sender, EventArgs eventArgs)
+        private void HandleProjectContextDisplaySelectedChanged(object sender, EventArgs e)
         {
             ItemsView.Refresh();
         }

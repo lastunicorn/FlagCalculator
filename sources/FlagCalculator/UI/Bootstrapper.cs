@@ -30,17 +30,17 @@ namespace DustInTheWind.FlagCalculator.UI
             try
             {
                 StatusInfo statusInfo = new StatusInfo();
-                ProjectContext projectContext = new ProjectContext();
+                OpenedProjects openedProjects = new OpenedProjects();
 
                 MainWindow mainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(userInterface, statusInfo, projectContext)
+                    DataContext = new MainWindowViewModel(userInterface, statusInfo, openedProjects)
                 };
 
                 mainWindow.Show();
 
                 ConfigurationEnumProvider enumProvider = new ConfigurationEnumProvider();
-                projectContext.LoadFlagCollection(enumProvider);
+                openedProjects.LoadFrom(enumProvider);
             }
             catch (Exception ex)
             {

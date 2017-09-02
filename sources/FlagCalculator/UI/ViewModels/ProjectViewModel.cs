@@ -57,7 +57,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Create commands
 
-            OpenAssemblyCommand = new OpenAssemblyCommand(projectContext, userInterface);
+            OpenAssemblyCommand = new OpenAssemblyCommand(userInterface, projectContext);
 
             // Initialize everything
 
@@ -72,7 +72,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             IsOpenPanelVisible = !projectContext.IsLoaded;
         }
 
-        private void HandleProjectUnloaded(object sender, EventArgs eventArgs)
+        private void HandleProjectUnloaded(object sender, EventArgs e)
         {
             IsOpenPanelVisible = !projectContext.IsLoaded;
         }

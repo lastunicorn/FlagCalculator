@@ -85,17 +85,19 @@ namespace DustInTheWind.FlagCalculator.Business
             FlagsNumber = new FlagsNumber();
         }
 
-        public void LoadFlagCollection(IEnumProvider enumProvider)
+        public bool LoadFlagCollection(IEnumProvider enumProvider)
         {
             Type enumType = enumProvider.LoadEnum();
 
             if (enumType == null)
-                return;
+                return false;
 
             FlagsNumber = new FlagsNumber(enumType);
 
             IsLoaded = true;
             OnLoaded();
+
+            return true;
         }
 
         public void Unload()
@@ -107,6 +109,16 @@ namespace DustInTheWind.FlagCalculator.Business
 
             IsLoaded = false;
             OnUnloaded();
+        }
+
+        public void ToggleDisplaySelected()
+        {
+            DisplaySelected = !DisplaySelected;
+        }
+
+        public void ToggleDisplayUnselected()
+        {
+            DisplayUnselected = !DisplayUnselected;
         }
 
         protected virtual void OnLoaded()

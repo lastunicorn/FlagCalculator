@@ -21,7 +21,6 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal sealed class TabItem : ViewModelBase
     {
-        private readonly ProjectContext projectContext;
         private string header;
 
         public string Header
@@ -34,7 +33,9 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public ProjectViewModel Content { get; set; }
+        public ProjectViewModel Content { get; }
+
+        public ProjectContext ProjectContext { get; }
 
         public TabItem(UserInterface userInterface, StatusInfo statusInfo, ProjectContext projectContext)
         {
@@ -42,10 +43,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
 
-            this.projectContext = projectContext;
+            ProjectContext = projectContext;
 
-            this.projectContext.Loaded += HandleProjectLoaded;
-            this.projectContext.Unloaded += HandleProjectUnloaded;
+            ProjectContext.Loaded += HandleProjectLoaded;
+            ProjectContext.Unloaded += HandleProjectUnloaded;
 
             UpdateHeader();
             Content = new ProjectViewModel(userInterface, statusInfo, projectContext);
@@ -63,9 +64,9 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void UpdateHeader()
         {
-            if (projectContext.IsLoaded)
+            if (ProjectContext.IsLoaded)
             {
-                FlagsNumber flagNumber = projectContext.FlagsNumber;
+                FlagsNumber flagNumber = ProjectContext.FlagsNumber;
 
                 string flagsName = flagNumber.Name;
                 string enumTypeName = flagNumber.UnderlyingType.Name;
