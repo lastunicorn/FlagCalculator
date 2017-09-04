@@ -91,7 +91,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 .Select(x => new TabItem(userInterface, statusInfo, x));
 
             Projects = new ObservableCollection<TabItem>(projects);
-            SelectedProject = Projects.Skip(1).FirstOrDefault();
+            SelectedProject = Projects.FirstOrDefault();
 
             UpdateTitle();
 
