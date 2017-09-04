@@ -28,6 +28,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
     {
         private string title;
 
+        private readonly UserInterface userInterface;
+        private readonly StatusInfo statusInfo;
         private readonly OpenedProjects openedProjects;
         private TabItem selectedProject;
 
@@ -64,6 +66,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public PasteCommand PasteCommand { get; }
         public CloseCommand CloseCommand { get; }
         public DigitCommand DigitCommand { get; }
+        public CreateProjectCommand CreateProjectCommand { get; }
 
         public MainWindowViewModel(UserInterface userInterface, StatusInfo statusInfo, OpenedProjects openedProjects)
         {
@@ -71,6 +74,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
             if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));
 
+            this.userInterface = userInterface;
+            this.statusInfo = statusInfo;
             this.openedProjects = openedProjects;
 
             // Create commands
@@ -81,6 +86,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             PasteCommand = new PasteCommand(userInterface, openedProjects);
             CloseCommand = new CloseCommand(userInterface, openedProjects);
             DigitCommand = new DigitCommand(userInterface, openedProjects);
+            CreateProjectCommand = new CreateProjectCommand(userInterface, openedProjects);
 
             // Initialize everything
 
@@ -102,6 +108,13 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
 
             this.openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
+            this.openedProjects.ProjectCreated += HandleProjectCreated;
+        }
+
+        private void HandleProjectCreated(object sender, ProjectCreatedEventArgs e)
+        {
+            TabItem tabItem = new TabItem(userInterface, statusInfo, e.NewProject);
+            Projects.Add(tabItem);
         }
 
         private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
