@@ -19,8 +19,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
