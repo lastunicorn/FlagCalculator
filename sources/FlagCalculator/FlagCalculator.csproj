@@ -83,6 +83,7 @@
     <Compile Include="UI\Bootstrapper.cs" />
     <Compile Include="UI\Commands\CloseCommand.cs" />
     <Compile Include="UI\Commands\CommandBase.cs" />
+    <Compile Include="UI\Commands\CreateProjectCommand.cs" />
     <Compile Include="UI\GuiEnumProvider.cs" />
     <Compile Include="UI\Commands\OpenAssemblyCommand.cs" />
     <Compile Include="UI\Commands\SelectAllFlagsCommand.cs" />
