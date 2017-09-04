@@ -75,7 +75,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
             else
             {
-                Header = "< New Tab >";
+                Header = "< Empty Tab >";
             }
         }
     }

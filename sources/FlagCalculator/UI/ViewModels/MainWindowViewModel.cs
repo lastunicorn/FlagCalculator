@@ -99,7 +99,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
                 .Select(x => new TabItem(userInterface, statusInfo, x));
 
             Projects = new ObservableCollection<TabItem>(projects);
-            SelectedProject = Projects.Skip(1).FirstOrDefault();
+            SelectedProject = Projects.FirstOrDefault();
 
             UpdateTitle();
 
@@ -115,11 +115,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void HandleProjectCreated(object sender, ProjectCreatedEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                TabItem tabItem = new TabItem(userInterface, statusInfo, e.NewProject);
-                Projects.Add(tabItem);
-            });
+            TabItem tabItem = new TabItem(userInterface, statusInfo, e.NewProject);
+            Projects.Add(tabItem);
         }
 
         private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
