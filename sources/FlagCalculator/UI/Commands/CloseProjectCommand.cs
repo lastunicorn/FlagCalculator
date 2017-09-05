@@ -19,11 +19,11 @@ using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class CloseCommand : CommandBase
+    internal class CloseProjectCommand : CommandBase
     {
         private readonly OpenedProjects openedProjects;
 
-        public CloseCommand(UserInterface userInterface, OpenedProjects openedProjects)
+        public CloseProjectCommand(UserInterface userInterface, OpenedProjects openedProjects)
             : base(userInterface)
         {
             if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));

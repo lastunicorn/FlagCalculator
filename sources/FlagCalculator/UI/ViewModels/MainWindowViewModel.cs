@@ -32,6 +32,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private readonly StatusInfo statusInfo;
         private readonly OpenedProjects openedProjects;
         private TabItem selectedProject;
+        private bool isNoTabInfoVisible;
 
         public string Title
         {
@@ -60,13 +61,23 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
+        public bool IsNoTabInfoVisible
+        {
+            get { return isNoTabInfoVisible; }
+            set
+            {
+                isNoTabInfoVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
         public SelectAllFlagsCommand SelectAllFlagsCommand { get; }
+        public SelectNoFlagsCommand SelectNoFlagsCommand { get; }
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
-        public CloseCommand CloseCommand { get; }
-        public DigitCommand DigitCommand { get; }
         public CreateProjectCommand CreateProjectCommand { get; }
+        public CloseProjectCommand CloseProjectCommand { get; }
+        public DigitCommand DigitCommand { get; }
 
         public MainWindowViewModel(UserInterface userInterface, StatusInfo statusInfo, OpenedProjects openedProjects)
         {
@@ -80,19 +91,16 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Create commands
 
-            SelectNoFlagsCommand = new SelectNoFlagsCommand(userInterface, openedProjects);
             SelectAllFlagsCommand = new SelectAllFlagsCommand(userInterface, openedProjects);
+            SelectNoFlagsCommand = new SelectNoFlagsCommand(userInterface, openedProjects);
             CopyCommand = new CopyCommand(userInterface, openedProjects);
             PasteCommand = new PasteCommand(userInterface, openedProjects);
-            CloseCommand = new CloseCommand(userInterface, openedProjects);
-            DigitCommand = new DigitCommand(userInterface, openedProjects);
             CreateProjectCommand = new CreateProjectCommand(userInterface, openedProjects);
+            CloseProjectCommand = new CloseProjectCommand(userInterface, openedProjects);
+            DigitCommand = new DigitCommand(userInterface, openedProjects);
 
             // Initialize everything
-
-            //openedProjects.CreateNew();
-            //openedProjects.CreateNew();
-
+            
             IEnumerable<TabItem> projects = openedProjects
                 .Select(x => new TabItem(userInterface, statusInfo, x));
 
@@ -109,12 +117,16 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             this.openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
             this.openedProjects.ProjectCreated += HandleProjectCreated;
+
+            IsNoTabInfoVisible = Projects.Count == 0;
         }
 
         private void HandleProjectCreated(object sender, ProjectCreatedEventArgs e)
         {
             TabItem tabItem = new TabItem(userInterface, statusInfo, e.NewProject);
             Projects.Add(tabItem);
+
+            IsNoTabInfoVisible = Projects.Count == 0;
         }
 
         private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)

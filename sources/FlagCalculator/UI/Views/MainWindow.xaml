@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:views="clr-namespace:DustInTheWind.FlagCalculator.UI.Views"
     xmlns:viewModels="clr-namespace:DustInTheWind.FlagCalculator.UI.ViewModels"
+    xmlns:converters="clr-namespace:DustInTheWind.FlagCalculator.UI.Converters"
     mc:Ignorable="d"
     Title="{Binding Title}"
     Height="550"
@@ -45,20 +46,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <ResourceDictionary Source="/UI/Styles/CheckBoxStylesDictionary.xaml"/>
                 <ResourceDictionary Source="/UI/Styles/TabControlStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         </ResourceDictionary>
 
     </Window.Resources>
 
     <Window.InputBindings>
 
+        <KeyBinding Command="{Binding SelectAllFlagsCommand}" Key="A" Modifiers="Control"/>
         <KeyBinding Command="{Binding SelectNoFlagsCommand}" Key="Escape"/>
+        
         <KeyBinding Command="{Binding CopyCommand}" Key="C" Modifiers="Control"/>
         <KeyBinding Command="{Binding PasteCommand}" Key="V" Modifiers="Control"/>
-        <KeyBinding Command="{Binding SelectAllFlagsCommand}" Key="A" Modifiers="Control"/>
-        <KeyBinding Command="{Binding CreateProjectCommand}" Key="N" Modifiers="Control"/>
-        <KeyBinding Command="{Binding CloseCommand}" Key="W" Modifiers="Control"/>
-
-        <MouseBinding Command="{Binding CopyCommand}" MouseAction="LeftDoubleClick"/>
+        
+        <KeyBinding Command="{Binding CreateProjectCommand}" Key="T" Modifiers="Control"/>
+        <KeyBinding Command="{Binding CloseProjectCommand}" Key="W" Modifiers="Control"/>
 
         <KeyBinding Command="{Binding DigitCommand}" Key="D0" CommandParameter="0"/>
         <KeyBinding Command="{Binding DigitCommand}" Key="D1" CommandParameter="1"/>
@@ -89,34 +91,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <KeyBinding Command="{Binding DigitCommand}" Key="NumPad8" CommandParameter="8"/>
         <KeyBinding Command="{Binding DigitCommand}" Key="NumPad9" CommandParameter="9"/>
 
+        <MouseBinding Command="{Binding CopyCommand}" MouseAction="LeftDoubleClick"/>
+
     </Window.InputBindings>
 
-    <TabControl
-        ItemsSource="{Binding Projects}"
-        SelectedItem="{Binding SelectedProject}">
+    <Grid>
 
-        <TabControl.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal">
+        <TabControl
+            ItemsSource="{Binding Projects}"
+            SelectedItem="{Binding SelectedProject}">
 
-                    <TextBlock Text="{Binding Header}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
 
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
-                                        <Setter Property="Foreground" Value="#ffffff" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="False">
-                                        <Setter Property="Foreground" Value="#4a2200" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
+                        <TextBlock Text="{Binding Header}">
 
-                    </TextBlock>
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
+                                            <Setter Property="Foreground" Value="#ffffff" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="False">
+                                            <Setter Property="Foreground" Value="#4a2200" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
 
-                    <!--<Button
+                        </TextBlock>
+
+                        <!--<Button
                             Margin="5 0"
                             Padding="0"
                             VerticalAlignment="Center"
@@ -124,16 +130,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             FontSize="12"
                             Background="Transparent"/>-->
 
-                </StackPanel>
-            </DataTemplate>
-        </TabControl.ItemTemplate>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
 
-        <TabControl.ContentTemplate>
-            <DataTemplate>
-                <views:ProjectView DataContext="{Binding Content}"/>
-            </DataTemplate>
-        </TabControl.ContentTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <views:ProjectView DataContext="{Binding Content}"/>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
 
-    </TabControl>
+        </TabControl>
+
+        <TextBlock
+            Text="Press Ctrl+T to create  new tab."
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="20"
+            Visibility="{Binding IsNoTabInfoVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+    </Grid>
 
 </Window>
