@@ -67,12 +67,12 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
 
         public override bool CanExecute(object parameter)
         {
-            return openedProjects.CurrentProject != null && openedProjects.CurrentProject.IsLoaded;
+            return openedProjects.CurrentProject != null;
         }
 
         protected override void DoExecute(object parameter)
         {
-            openedProjects.CurrentProject?.Unload();
+            openedProjects.CloseCurrentProject();
         }
     }
 }

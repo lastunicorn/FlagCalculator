@@ -100,7 +100,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             DigitCommand = new DigitCommand(userInterface, openedProjects);
 
             // Initialize everything
-            
+
             IEnumerable<TabItem> projects = openedProjects
                 .Select(x => new TabItem(userInterface, statusInfo, x));
 
@@ -117,6 +117,15 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             this.openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
             this.openedProjects.ProjectCreated += HandleProjectCreated;
+            this.openedProjects.ProjectClosed += HandleProjectClosed;
+
+            IsNoTabInfoVisible = Projects.Count == 0;
+        }
+
+        private void HandleProjectClosed(object sender, ProjectClosedEventArgs e)
+        {
+            TabItem tabItemToRemove = Projects.First(x => x.ProjectContext == e.ClosedProject);
+            Projects.Remove(tabItemToRemove);
 
             IsNoTabInfoVisible = Projects.Count == 0;
         }

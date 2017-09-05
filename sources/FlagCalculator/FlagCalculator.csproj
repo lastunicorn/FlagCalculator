@@ -81,6 +81,7 @@
     <Compile Include="Business\OpenedProjects.cs" />
     <Compile Include="Business\ProjectContext.cs" />
     <Compile Include="Business\ProjectCreatedEventArgs.cs" />
+    <Compile Include="Business\ProjectClosedEventArgs.cs" />
     <Compile Include="Business\SmartNumber.cs" />
     <Compile Include="Business\StatusInfo.cs" />
     <Compile Include="UI\Bootstrapper.cs" />

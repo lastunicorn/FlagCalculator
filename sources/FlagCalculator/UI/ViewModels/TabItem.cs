@@ -16,6 +16,7 @@
 
 using System;
 using DustInTheWind.FlagCalculator.Business;
+using DustInTheWind.FlagCalculator.UI.Commands;
 
 namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
@@ -36,7 +37,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public ProjectViewModel Content { get; }
 
         public ProjectContext ProjectContext { get; }
-
+        
         public TabItem(UserInterface userInterface, StatusInfo statusInfo, ProjectContext projectContext)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
@@ -44,7 +45,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
 
             ProjectContext = projectContext;
-
+            
             ProjectContext.Loaded += HandleProjectLoaded;
             ProjectContext.Unloaded += HandleProjectUnloaded;
 
@@ -77,6 +78,11 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             {
                 Header = "Empty Tab";
             }
+        }
+
+        public void Unload()
+        {
+            ProjectContext.Unload();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace DustInTheWind.FlagCalculator.Business
 {
     internal class OpenedProjects : IEnumerable<ProjectContext>
     {
-        private List<ProjectContext> projects = new List<ProjectContext>();
+        private readonly List<ProjectContext> projects = new List<ProjectContext>();
         private ProjectContext currentProject;
 
         public ProjectContext CurrentProject
@@ -34,7 +34,7 @@ namespace DustInTheWind.FlagCalculator.Business
                     return;
 
                 ProjectContext oldProject = currentProject;
-                
+
                 currentProject = value;
 
                 CurrentProjectChangedEventArgs args = new CurrentProjectChangedEventArgs(oldProject, currentProject);
@@ -43,8 +43,9 @@ namespace DustInTheWind.FlagCalculator.Business
         }
 
         public event EventHandler<ProjectCreatedEventArgs> ProjectCreated;
+        public event EventHandler<ProjectClosedEventArgs> ProjectClosed;
         public event EventHandler<CurrentProjectChangedEventArgs> CurrentProjectChanged;
-        
+
         public ProjectContext CreateNew()
         {
             ProjectContext newProject = new ProjectContext();
@@ -73,6 +74,23 @@ namespace DustInTheWind.FlagCalculator.Business
             OnProjectCreated(args);
         }
 
+        public void CloseCurrentProject()
+        {
+            if (currentProject != null)
+                CloseProject(currentProject);
+        }
+
+        private void CloseProject(ProjectContext projectToClose)
+        {
+            projectToClose.Unload();
+            projects.Remove(projectToClose);
+
+            CurrentProject = null;
+
+            ProjectClosedEventArgs args = new ProjectClosedEventArgs(projectToClose);
+            OnProjectClosed(args);
+        }
+
         public IEnumerator<ProjectContext> GetEnumerator()
         {
             return projects.GetEnumerator();
@@ -86,6 +104,11 @@ namespace DustInTheWind.FlagCalculator.Business
         protected virtual void OnProjectCreated(ProjectCreatedEventArgs e)
         {
             ProjectCreated?.Invoke(this, e);
+        }
+
+        protected virtual void OnProjectClosed(ProjectClosedEventArgs e)
+        {
+            ProjectClosed?.Invoke(this, e);
         }
 
         protected virtual void OnCurrentProjectChanged(CurrentProjectChangedEventArgs e)
