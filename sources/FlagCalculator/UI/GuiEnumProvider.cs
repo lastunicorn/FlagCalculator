@@ -28,7 +28,7 @@ namespace DustInTheWind.FlagCalculator.UI
 {
     internal class GuiEnumProvider : IEnumProvider
     {
-        public Type LoadEnum()
+        public IEnumerable<Type> LoadEnum()
         {
             string assemblyFileName = AskUserForAssembly();
 
@@ -43,7 +43,7 @@ namespace DustInTheWind.FlagCalculator.UI
 
             return enumTypes.Count == 0
                 ? null
-                : ChooseEnumType(enumTypes);
+                : new[] { ChooseEnumType(enumTypes) };
         }
 
         private static string AskUserForAssembly()

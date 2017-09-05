@@ -84,6 +84,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             UpdateMainValue();
             UpdateNumericalBaseText();
+            IsEnabled = projectContext.IsLoaded;
         }
 
         private void HandleProjectLoaded(object sender, EventArgs e)

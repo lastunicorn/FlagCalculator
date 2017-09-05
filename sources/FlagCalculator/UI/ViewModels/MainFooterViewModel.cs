@@ -97,6 +97,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             this.projectContext.Loaded += HandleProjectLoaded;
             this.projectContext.Unloaded += HandleProjectUnloaded;
             this.projectContext.DisplaySelectedChanged += HandleFlagsDisplaySelectedChanged;
+
+            IsEnabled = projectContext.IsLoaded;
         }
 
         private void HandleStatusTextChanged(object sender, EventArgs e)

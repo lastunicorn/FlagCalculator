@@ -15,22 +15,28 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using DustInTheWind.FlagCalculator.Business.ConfigurationModel;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
     internal class ConfigurationEnumProvider : IEnumProvider
     {
         public Func<Type, bool> OnEnumIsNotFlags { get; set; }
-        
-        public Type LoadEnum()
+
+        public IEnumerable<Type> LoadEnum()
         {
-            string enumTypeFullName = ConfigurationManager.AppSettings["enumTypeName"];
+            FlagCalculatorSection flagCalculatorSection = ConfigurationManager.GetSection("flagCalculator") as FlagCalculatorSection;
 
-            if (enumTypeFullName == null)
-                return null;
+            if (flagCalculatorSection?.EnumTypes == null || flagCalculatorSection.EnumTypes.Count == 0)
+                yield break;
 
-            return GetEnumType(enumTypeFullName);
+            foreach (EnumTypeConfigurationElement enumTypeConfigurationElement in flagCalculatorSection.EnumTypes)
+            {
+                string enumTypeFullName = enumTypeConfigurationElement.Value;
+                yield return GetEnumType(enumTypeFullName);
+            }
         }
 
         private Type GetEnumType(string enumTypeFullName)

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 
 namespace DustInTheWind.FlagCalculator.Business
 {
@@ -27,9 +28,9 @@ namespace DustInTheWind.FlagCalculator.Business
             this.enumType = enumType;
         }
 
-        public Type LoadEnum()
+        public IEnumerable<Type> LoadEnum()
         {
-            return enumType;
+            return new[] { enumType };
         }
     }
 }

@@ -26,8 +26,7 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
     public class LoadFlagCollectionTests
     {
         private ProjectContext projectContext;
-        private Mock<IEnumProvider> enumProvider;
-
+        
         [Flags]
         private enum FlagsEnum
         {
@@ -42,19 +41,6 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         public void SetUp()
         {
             projectContext = new ProjectContext();
-            enumProvider = new Mock<IEnumProvider>();
-        }
-
-        [Test]
-        public void requests_the_enum_Type_from_EnumProvider()
-        {
-            enumProvider
-                .Setup(x => x.LoadEnum())
-                .Returns(() => null);
-
-            projectContext.LoadFlagCollection(enumProvider.Object);
-
-            enumProvider.VerifyAll();
         }
 
         #region EnumProvider return null Enum Type
@@ -63,11 +49,8 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         public void EnumProvider_returns_null_enum_Type_FlagsNumber_is_not_changed()
         {
             FlagsNumber initialFlagsNumber = projectContext.FlagsNumber;
-            enumProvider
-                .Setup(x => x.LoadEnum())
-                .Returns(() => null);
 
-            projectContext.LoadFlagCollection(enumProvider.Object);
+            projectContext.LoadFlagCollection(null);
 
             Assert.That(projectContext.FlagsNumber, Is.SameAs(initialFlagsNumber));
         }
@@ -77,11 +60,8 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         {
             bool eventWasRaised = false;
             projectContext.FlagsNumberChanged += (o, e) => eventWasRaised = true;
-            enumProvider
-                .Setup(x => x.LoadEnum())
-                .Returns(() => null);
 
-            projectContext.LoadFlagCollection(enumProvider.Object);
+            projectContext.LoadFlagCollection(null);
 
             Assert.That(eventWasRaised, Is.False);
         }
@@ -91,11 +71,8 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         {
             bool eventWasRaised = false;
             projectContext.Loaded += (o, e) => eventWasRaised = true;
-            enumProvider
-                .Setup(x => x.LoadEnum())
-                .Returns(() => null);
 
-            projectContext.LoadFlagCollection(enumProvider.Object);
+            projectContext.LoadFlagCollection(null);
 
             Assert.That(eventWasRaised, Is.False);
         }
@@ -108,11 +85,8 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         public void creates_new_FlagsNumber()
         {
             FlagsNumber initialFlagsNumber = projectContext.FlagsNumber;
-            enumProvider
-                .Setup(x => x.LoadEnum())
-                .Returns(() => typeof(FlagsEnum));
 
-            projectContext.LoadFlagCollection(enumProvider.Object);
+            projectContext.LoadFlagCollection(typeof(FlagsEnum));
 
             Assert.That(projectContext.FlagsNumber, Is.Not.SameAs(initialFlagsNumber));
         }
@@ -122,11 +96,8 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         {
             bool eventWasRaised = false;
             projectContext.FlagsNumberChanged += (o, e) => eventWasRaised = true;
-            enumProvider
-                .Setup(x => x.LoadEnum())
-                .Returns(() => typeof(FlagsEnum));
 
-            projectContext.LoadFlagCollection(enumProvider.Object);
+            projectContext.LoadFlagCollection(typeof(FlagsEnum));
 
             Assert.That(eventWasRaised, Is.True);
         }
@@ -137,11 +108,8 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
             FlagsNumberChangedEventArgs args = null;
             FlagsNumber oldFlagsNumber = projectContext.FlagsNumber;
             projectContext.FlagsNumberChanged += (o, e) => args = e;
-            enumProvider
-                .Setup(x => x.LoadEnum())
-                .Returns(() => typeof(FlagsEnum));
 
-            projectContext.LoadFlagCollection(enumProvider.Object);
+            projectContext.LoadFlagCollection(typeof(FlagsEnum));
 
             Assert.That(args.OldValue, Is.SameAs(oldFlagsNumber));
         }
@@ -151,11 +119,8 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         {
             FlagsNumberChangedEventArgs args = null;
             projectContext.FlagsNumberChanged += (o, e) => args = e;
-            enumProvider
-                .Setup(x => x.LoadEnum())
-                .Returns(() => typeof(FlagsEnum));
 
-            projectContext.LoadFlagCollection(enumProvider.Object);
+            projectContext.LoadFlagCollection(typeof(FlagsEnum));
 
             Assert.That(args.NewValue, Is.SameAs(projectContext.FlagsNumber));
         }
@@ -165,11 +130,8 @@ namespace DustInTheWind.FlagCalculator.Tests.Business.ProjectContextTests
         {
             bool eventWasRaised = false;
             projectContext.Loaded += (o, e) => eventWasRaised = true;
-            enumProvider
-                .Setup(x => x.LoadEnum())
-                .Returns(() => typeof(FlagsEnum));
 
-            projectContext.LoadFlagCollection(enumProvider.Object);
+            projectContext.LoadFlagCollection(typeof(FlagsEnum));
 
             Assert.That(eventWasRaised, Is.True);
         }

@@ -90,8 +90,8 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Initialize everything
 
-            openedProjects.CreateNew();
-            openedProjects.CreateNew();
+            //openedProjects.CreateNew();
+            //openedProjects.CreateNew();
 
             IEnumerable<TabItem> projects = openedProjects
                 .Select(x => new TabItem(userInterface, statusInfo, x));

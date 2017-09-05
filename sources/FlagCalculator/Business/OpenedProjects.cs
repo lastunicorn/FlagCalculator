@@ -34,41 +34,17 @@ namespace DustInTheWind.FlagCalculator.Business
                     return;
 
                 ProjectContext oldProject = currentProject;
-
-                if (oldProject != null)
-                {
-                    oldProject.Loaded -= HandleProjectLoaded;
-                    oldProject.Unloaded -= HandleProjectUnloaded;
-                }
-
+                
                 currentProject = value;
 
                 CurrentProjectChangedEventArgs args = new CurrentProjectChangedEventArgs(oldProject, currentProject);
                 OnCurrentProjectChanged(args);
-
-                if (currentProject != null)
-                {
-                    currentProject.Loaded += HandleProjectLoaded;
-                    currentProject.Unloaded += HandleProjectUnloaded;
-                }
             }
         }
 
         public event EventHandler<ProjectCreatedEventArgs> ProjectCreated;
         public event EventHandler<CurrentProjectChangedEventArgs> CurrentProjectChanged;
-        public event EventHandler CurrentProjectLoaded;
-        public event EventHandler CurrentProjectUnloaded;
-
-        private void HandleProjectLoaded(object sender, EventArgs e)
-        {
-            OnCurrentProjectLoaded();
-        }
-
-        private void HandleProjectUnloaded(object sender, EventArgs e)
-        {
-            OnCurrentProjectUnloaded();
-        }
-
+        
         public ProjectContext CreateNew()
         {
             ProjectContext newProject = new ProjectContext();
@@ -79,11 +55,14 @@ namespace DustInTheWind.FlagCalculator.Business
 
         public void LoadFrom(IEnumProvider enumProvider)
         {
-            ProjectContext newProject = new ProjectContext();
-            bool success = newProject.LoadFlagCollection(enumProvider);
+            foreach (Type enumType in enumProvider.LoadEnum())
+            {
+                ProjectContext newProject = new ProjectContext();
+                bool success = newProject.LoadFlagCollection(enumType);
 
-            if (success)
-                AddProject(newProject);
+                if (success)
+                    AddProject(newProject);
+            }
         }
 
         private void AddProject(ProjectContext newProject)
@@ -112,16 +91,6 @@ namespace DustInTheWind.FlagCalculator.Business
         protected virtual void OnCurrentProjectChanged(CurrentProjectChangedEventArgs e)
         {
             CurrentProjectChanged?.Invoke(this, e);
-        }
-
-        protected virtual void OnCurrentProjectLoaded()
-        {
-            CurrentProjectLoaded?.Invoke(this, EventArgs.Empty);
-        }
-
-        protected virtual void OnCurrentProjectUnloaded()
-        {
-            CurrentProjectUnloaded?.Invoke(this, EventArgs.Empty);
         }
     }
 }

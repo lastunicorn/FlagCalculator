@@ -1,4 +1,4 @@
-// FlagCalculator
+﻿// FlagCalculator
 // Copyright (C) 2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,13 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
+using System.Configuration;
 
-namespace DustInTheWind.FlagCalculator.Business
+namespace DustInTheWind.FlagCalculator.Business.ConfigurationModel
 {
-    public interface IEnumProvider
+    public class EnumTypeConfigurationElement : ConfigurationElement
     {
-        IEnumerable<Type> LoadEnum();
+        [ConfigurationProperty("value", IsRequired = true, IsKey = true)]
+        public string Value
+        {
+            get { return (string)this["value"]; }
+            set { this["value"] = value; }
+        }
     }
 }

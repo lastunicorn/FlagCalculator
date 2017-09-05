@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
@@ -85,7 +86,14 @@ namespace DustInTheWind.FlagCalculator.UI.Commands
         protected override void DoExecute(object parameter)
         {
             GuiEnumProvider enumProvider = new GuiEnumProvider();
-            projectContext.LoadFlagCollection(enumProvider);
+
+            IEnumerable<Type> enumTypes = enumProvider.LoadEnum();
+
+            if (enumTypes == null)
+                return;
+
+            foreach (Type enumType in enumTypes)
+                projectContext.LoadFlagCollection(enumType);
         }
     }
 }

@@ -54,6 +54,9 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             projectContext.FlagsNumberChanged += HandleProjectContextFlagsNumberChanged;
             projectContext.DisplaySelectedChanged += HandleProjectContextDisplaySelectedChanged;
+
+            if (projectContext.FlagsNumber != null)
+                UpdateFlagsList(projectContext.FlagsNumber);
         }
 
         private bool Filter(object o)
