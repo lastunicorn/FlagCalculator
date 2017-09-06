@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.FlagCalculator.Business;
-using DustInTheWind.FlagCalculator.UI.Commands;
 
 namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {

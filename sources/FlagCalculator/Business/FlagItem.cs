@@ -49,18 +49,36 @@ namespace DustInTheWind.FlagCalculator.Business
         {
             Parent.Value = Parent.Value & ~Value;
         }
-
+        
         public bool Equals(FlagItem flagItem)
         {
-            return flagItem != null &&
-                Parent == flagItem.Parent &&
+            if (ReferenceEquals(null, flagItem)) return false;
+            if (ReferenceEquals(this, flagItem)) return true;
+
+            return Equals(Parent, flagItem.Parent) &&
                 Value == flagItem.Value &&
-                Name == flagItem.Name;
+                string.Equals(Name, flagItem.Name);
         }
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as FlagItem);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+
+            if (obj.GetType() != GetType()) return false;
+
+            return Equals((FlagItem)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = (Parent != null ? Parent.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Value.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                return hashCode;
+            }
         }
 
         public override string ToString()

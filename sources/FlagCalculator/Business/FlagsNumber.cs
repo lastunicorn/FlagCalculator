@@ -68,10 +68,10 @@ namespace DustInTheWind.FlagCalculator.Business
             return fieldInfos
                 .Select(x =>
                 {
-                    string name = x.Name;
-                    ulong value = x.GetRawConstantValue().ToUInt64Value();
+                    string flagName = x.Name;
+                    ulong flagValue = x.GetRawConstantValue().ToUInt64Value();
 
-                    return new FlagItem(this, name, value);
+                    return new FlagItem(this, flagName, flagValue);
                 })
                 .ToList();
         }

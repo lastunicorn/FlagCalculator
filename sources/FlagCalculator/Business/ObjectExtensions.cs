@@ -29,19 +29,19 @@ namespace DustInTheWind.FlagCalculator.Business
                 return (ulong)(long)rawValue;
 
             if (rawValue is uint)
-                return (ulong)(uint)rawValue;
+                return (uint)rawValue;
 
             if (rawValue is int)
                 return (ulong)(int)rawValue;
 
             if (rawValue is ushort)
-                return (ulong)(ushort)rawValue;
+                return (ushort)rawValue;
 
             if (rawValue is short)
                 return (ulong)(short)rawValue;
 
             if (rawValue is byte)
-                return (ulong)(byte)rawValue;
+                return (byte)rawValue;
 
             if (rawValue is sbyte)
                 return (ulong)(sbyte)rawValue;
