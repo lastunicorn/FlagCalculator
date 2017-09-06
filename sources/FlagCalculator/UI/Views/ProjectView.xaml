@@ -34,7 +34,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/UI/Colors/Colors.xaml"/>
+                <ResourceDictionary Source="/UI/Styles/ScrollBarStylesDictionary.xaml"/>
                 <ResourceDictionary Source="/UI/Resources/CopyPasteIconTemplates.xaml"/>
+                <ResourceDictionary Source="/UI/Resources/CheckBoxIconTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         </ResourceDictionary>
