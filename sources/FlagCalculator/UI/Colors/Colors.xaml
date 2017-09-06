@@ -73,4 +73,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <Color x:Key="ListBoxSelectedBackgroundColor">#ffbc83</Color>
     <SolidColorBrush x:Key="ListBoxSelectedBackground" Color="{StaticResource ListBoxSelectedBackgroundColor}"/>
 
+    <!-- TabControl -->
+
+    <SolidColorBrush x:Key="TabsSelectedBackground" Color="#f97300"/>
+    <SolidColorBrush x:Key="TabsSelectedForeground" Color="#ffffff"/>
+
+    <!--<SolidColorBrush x:Key="TabsNormalBackground" Color="#ffebd9"/>-->
+    <SolidColorBrush x:Key="TabsNormalBackground" Color="#ffcb9e"/>
+    <SolidColorBrush x:Key="TabsNormalForeground" Color="#4a2200"/>
+
 </ResourceDictionary>
