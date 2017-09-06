@@ -1,6 +1,6 @@
 # FlagCalculator v 1.3.0
 
-This tool helps you build an integer by selecting the discrete values of a c# enum type.
+This tool helps you build an integer by selecting the discrete flag values of a c# enum type.
 The application opens an enum from a .NET assembly and displays all its members. The user can select/unselect them. The resulted value is displayed and can be copyed to be used where is needed.
 
 
