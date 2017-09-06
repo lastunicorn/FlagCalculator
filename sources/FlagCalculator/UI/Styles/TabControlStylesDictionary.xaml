@@ -129,6 +129,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <Setter TargetName="Panel" Property="Background" Value="Transparent" />
                         </Trigger>
 
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Panel" Property="Background" Value="{StaticResource TabsOverBackground}" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>
