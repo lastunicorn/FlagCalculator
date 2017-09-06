@@ -55,10 +55,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <KeyBinding Command="{Binding SelectAllFlagsCommand}" Key="A" Modifiers="Control"/>
         <KeyBinding Command="{Binding SelectNoFlagsCommand}" Key="Escape"/>
-        
+
         <KeyBinding Command="{Binding CopyCommand}" Key="C" Modifiers="Control"/>
         <KeyBinding Command="{Binding PasteCommand}" Key="V" Modifiers="Control"/>
-        
+
         <KeyBinding Command="{Binding CreateProjectCommand}" Key="T" Modifiers="Control"/>
         <KeyBinding Command="{Binding CloseProjectCommand}" Key="W" Modifiers="Control"/>
 
@@ -104,7 +104,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        
+
                         <TextBlock Text="{Binding Header}">
 
                             <TextBlock.Style>
@@ -142,12 +142,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </TabControl>
 
-        <TextBlock
-            Text="Press Ctrl+T to create  new tab."
+        <StackPanel
+            Orientation="Vertical"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            FontSize="20"
-            Visibility="{Binding IsNoTabInfoVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            Visibility="{Binding IsNoTabInfoVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+
+            <TextBlock
+                Text="Press Ctrl+T to create new tab."
+                HorizontalAlignment="Center"
+                FontSize="20"/>
+
+            <TextBlock
+                Text="(Ctrl+W to close a tab)"
+                HorizontalAlignment="Center"
+                Margin="0 20 0 0"
+                FontSize="14"
+                Foreground="#606060"/>
+
+        </StackPanel>
 
     </Grid>
 

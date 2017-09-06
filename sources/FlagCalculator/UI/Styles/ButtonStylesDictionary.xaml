@@ -63,7 +63,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="{StaticResource ButtonDisabledBackgroundColor}"/>
+                            <!--<Setter Property="Background" Value="{StaticResource ButtonDisabledBackgroundColor}"/>-->
                             <Setter Property="Foreground" Value="{StaticResource ButtonDisabledForegroundColor}"/>
                         </Trigger>
 

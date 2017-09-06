@@ -44,7 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <SolidColorBrush x:Key="ButtonCheckedOverForegroundColor" Color="#ffffff"/>
 
     <SolidColorBrush x:Key="ButtonDisabledBackgroundColor" Color="#bc5700"/>
-    <SolidColorBrush x:Key="ButtonDisabledForegroundColor" Color="#6d6d6d"/>
+    <SolidColorBrush x:Key="ButtonDisabledForegroundColor" Color="#8d8d8d"/>
 
     <!-- CheckBox -->
 
