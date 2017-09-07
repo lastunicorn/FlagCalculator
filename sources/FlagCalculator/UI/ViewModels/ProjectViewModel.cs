@@ -22,15 +22,27 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 {
     internal class ProjectViewModel : ViewModelBase
     {
-        private readonly ProjectContext projectContext;
         private bool isOpenPanelVisible;
+        private string header;
+
+        public ProjectContext ProjectContext { get; }
 
         public bool IsOpenPanelVisible
         {
             get { return isOpenPanelVisible; }
-            set
+            private set
             {
                 isOpenPanelVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Header
+        {
+            get { return header; }
+            private set
+            {
+                header = value;
                 OnPropertyChanged();
             }
         }
@@ -47,7 +59,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
 
-            this.projectContext = projectContext;
+            ProjectContext = projectContext;
 
             // Create view models.
 
@@ -61,20 +73,45 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Initialize everything
 
-            isOpenPanelVisible = !projectContext.IsLoaded;
+            ProjectContext.Loaded += HandleProjectLoaded;
+            ProjectContext.Unloaded += HandleProjectUnloaded;
 
-            this.projectContext.Loaded += HandleProjectLoaded;
-            this.projectContext.Unloaded += HandleProjectUnloaded;
+            UpdateOpenPanelVisibility();
+            UpdateHeader();
         }
 
         private void HandleProjectLoaded(object sender, EventArgs e)
         {
-            IsOpenPanelVisible = !projectContext.IsLoaded;
+            UpdateOpenPanelVisibility();
+            UpdateHeader();
         }
 
         private void HandleProjectUnloaded(object sender, EventArgs e)
         {
-            IsOpenPanelVisible = !projectContext.IsLoaded;
+            UpdateOpenPanelVisibility();
+            UpdateHeader();
+        }
+
+        private void UpdateOpenPanelVisibility()
+        {
+            IsOpenPanelVisible = !ProjectContext.IsLoaded;
+        }
+
+        private void UpdateHeader()
+        {
+            if (ProjectContext.IsLoaded)
+            {
+                FlagsNumber flagNumber = ProjectContext.FlagsNumber;
+
+                string flagsName = flagNumber.Name;
+                string enumTypeName = flagNumber.UnderlyingType.Name;
+
+                Header = $"{flagsName} ({enumTypeName})";
+            }
+            else
+            {
+                Header = "Empty Tab";
+            }
         }
     }
 }

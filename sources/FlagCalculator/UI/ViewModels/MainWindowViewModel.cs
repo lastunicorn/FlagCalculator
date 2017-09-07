@@ -31,7 +31,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private readonly UserInterface userInterface;
         private readonly StatusInfo statusInfo;
         private readonly OpenedProjects openedProjects;
-        private TabItem selectedProject;
+        private ProjectViewModel selectedProject;
         private bool isNoTabInfoVisible;
 
         public string Title
@@ -44,9 +44,9 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             }
         }
 
-        public ObservableCollection<TabItem> Projects { get; }
+        public ObservableCollection<ProjectViewModel> Projects { get; }
 
-        public TabItem SelectedProject
+        public ProjectViewModel SelectedProject
         {
             get { return selectedProject; }
             set
@@ -101,10 +101,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
             // Initialize everything
 
-            IEnumerable<TabItem> projects = openedProjects
-                .Select(x => new TabItem(userInterface, statusInfo, x));
+            IEnumerable<ProjectViewModel> projects = openedProjects
+                .Select(x => new ProjectViewModel(userInterface, statusInfo, x));
 
-            Projects = new ObservableCollection<TabItem>(projects);
+            Projects = new ObservableCollection<ProjectViewModel>(projects);
             SelectedProject = Projects.FirstOrDefault();
 
             UpdateTitle();
@@ -124,16 +124,16 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void HandleProjectClosed(object sender, ProjectClosedEventArgs e)
         {
-            TabItem tabItemToRemove = Projects.First(x => x.ProjectContext == e.ClosedProject);
-            Projects.Remove(tabItemToRemove);
+            ProjectViewModel projectToRemove = Projects.First(x => x.ProjectContext == e.ClosedProject);
+            Projects.Remove(projectToRemove);
 
             IsNoTabInfoVisible = Projects.Count == 0;
         }
 
         private void HandleProjectCreated(object sender, ProjectCreatedEventArgs e)
         {
-            TabItem tabItem = new TabItem(userInterface, statusInfo, e.NewProject);
-            Projects.Add(tabItem);
+            ProjectViewModel projectViewModel = new ProjectViewModel(userInterface, statusInfo, e.NewProject);
+            Projects.Add(projectViewModel);
 
             IsNoTabInfoVisible = Projects.Count == 0;
         }
@@ -171,7 +171,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         {
             Assembly assembly = Assembly.GetEntryAssembly();
             string version = assembly.GetName().Version.ToString(3);
-            return string.Format("Flag Calculator {0}", version);
+            return $"Flag Calculator {version}";
         }
 
         private void UpdateTitle()

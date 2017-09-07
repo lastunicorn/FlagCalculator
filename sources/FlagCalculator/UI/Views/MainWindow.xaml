@@ -136,7 +136,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <views:ProjectView DataContext="{Binding Content}"/>
+                    <views:ProjectView/>
                 </DataTemplate>
             </TabControl.ContentTemplate>
 
