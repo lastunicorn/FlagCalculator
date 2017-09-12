@@ -48,17 +48,19 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         }
 
         public OpenAssemblyCommand OpenAssemblyCommand { get; }
+        public CloseProjectCommand CloseProjectCommand { get; }
 
         public FlagListViewModel FlagListViewModel { get; }
         public MainFooterViewModel MainFooterViewModel { get; }
         public MainHeaderViewModel MainHeaderViewModel { get; }
 
-        public ProjectViewModel(UserInterface userInterface, StatusInfo statusInfo, ProjectContext projectContext)
+        public ProjectViewModel(UserInterface userInterface, StatusInfo statusInfo, OpenedProjects openedProjects, ProjectContext projectContext)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
             if (statusInfo == null) throw new ArgumentNullException(nameof(statusInfo));
+            if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));
             if (projectContext == null) throw new ArgumentNullException(nameof(projectContext));
-
+            
             ProjectContext = projectContext;
 
             // Create view models.
@@ -70,6 +72,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             // Create commands
 
             OpenAssemblyCommand = new OpenAssemblyCommand(userInterface, projectContext);
+            CloseProjectCommand = new CloseProjectCommand(userInterface, openedProjects);
 
             // Initialize everything
 

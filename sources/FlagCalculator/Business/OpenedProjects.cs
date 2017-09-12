@@ -74,18 +74,16 @@ namespace DustInTheWind.FlagCalculator.Business
             OnProjectCreated(args);
         }
 
-        public void CloseCurrentProject()
+        public void CloseProject(ProjectContext projectToClose)
         {
-            if (currentProject != null)
-                CloseProject(currentProject);
-        }
+            if (projectToClose == null)
+                return;
 
-        private void CloseProject(ProjectContext projectToClose)
-        {
             projectToClose.Unload();
             projects.Remove(projectToClose);
 
-            CurrentProject = null;
+            if (projectToClose == CurrentProject)
+                CurrentProject = null;
 
             ProjectClosedEventArgs args = new ProjectClosedEventArgs(projectToClose);
             OnProjectClosed(args);

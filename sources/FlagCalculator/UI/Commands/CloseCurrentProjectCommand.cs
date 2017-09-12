@@ -19,31 +19,33 @@ using DustInTheWind.FlagCalculator.Business;
 
 namespace DustInTheWind.FlagCalculator.UI.Commands
 {
-    internal class CloseProjectCommand : CommandBase
+    internal class CloseCurrentProjectCommand : CommandBase
     {
         private readonly OpenedProjects openedProjects;
 
-        public CloseProjectCommand(UserInterface userInterface, OpenedProjects openedProjects)
+        public CloseCurrentProjectCommand(UserInterface userInterface, OpenedProjects openedProjects)
             : base(userInterface)
         {
             if (openedProjects == null) throw new ArgumentNullException(nameof(openedProjects));
 
             this.openedProjects = openedProjects;
+            this.openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
+        }
+
+        private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
+        {
+            OnCanExecuteChanged();
         }
 
         public override bool CanExecute(object parameter)
         {
-            return parameter is ProjectContext;
+            return openedProjects.CurrentProject != null;
         }
 
         protected override void DoExecute(object parameter)
         {
-            ProjectContext projectContext = parameter as ProjectContext;
-
-            if (projectContext == null)
-                return;
-
-            openedProjects.CloseProject(projectContext);
+            ProjectContext currentProject = openedProjects.CurrentProject;
+            openedProjects.CloseProject(currentProject);
         }
     }
 }

@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <KeyBinding Command="{Binding PasteCommand}" Key="V" Modifiers="Control"/>
 
         <KeyBinding Command="{Binding CreateProjectCommand}" Key="T" Modifiers="Control"/>
-        <KeyBinding Command="{Binding CloseProjectCommand}" Key="W" Modifiers="Control"/>
+        <KeyBinding Command="{Binding CloseCurrentProjectCommand}" Key="W" Modifiers="Control"/>
 
         <KeyBinding Command="{Binding DigitCommand}" Key="D0" CommandParameter="0"/>
         <KeyBinding Command="{Binding DigitCommand}" Key="D1" CommandParameter="1"/>
@@ -105,7 +105,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
 
-                        <TextBlock Text="{Binding Header}">
+                        <StackPanel.InputBindings>
+                            <MouseBinding Command="{Binding CloseProjectCommand}" CommandParameter="{Binding ProjectContext}" MouseAction="MiddleClick"/>
+                        </StackPanel.InputBindings>
+
+                        <TextBlock Text="{Binding Header}" VerticalAlignment="Center">
 
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -124,11 +128,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                         <!--<Button
                             Margin="5 0"
-                            Padding="0"
+                            Padding="5 0"
                             VerticalAlignment="Center"
                             Content="X"
                             FontSize="12"
-                            Background="Transparent"/>-->
+                            Background="Green"/>-->
 
                     </StackPanel>
                 </DataTemplate>

@@ -86,6 +86,7 @@
     <Compile Include="Business\StatusInfo.cs" />
     <Compile Include="UI\Bootstrapper.cs" />
     <Compile Include="UI\Commands\CloseProjectCommand.cs" />
+    <Compile Include="UI\Commands\CloseCurrentProjectCommand.cs" />
     <Compile Include="UI\Commands\CommandBase.cs" />
     <Compile Include="UI\Commands\CreateProjectCommand.cs" />
     <Compile Include="UI\GuiEnumProvider.cs" />

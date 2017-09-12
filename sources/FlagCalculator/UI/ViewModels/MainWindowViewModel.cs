@@ -76,7 +76,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         public CopyCommand CopyCommand { get; }
         public PasteCommand PasteCommand { get; }
         public CreateProjectCommand CreateProjectCommand { get; }
-        public CloseProjectCommand CloseProjectCommand { get; }
+        public CloseCurrentProjectCommand CloseCurrentProjectCommand { get; }
         public DigitCommand DigitCommand { get; }
 
         public MainWindowViewModel(UserInterface userInterface, StatusInfo statusInfo, OpenedProjects openedProjects)
@@ -96,13 +96,13 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             CopyCommand = new CopyCommand(userInterface, openedProjects);
             PasteCommand = new PasteCommand(userInterface, openedProjects);
             CreateProjectCommand = new CreateProjectCommand(userInterface, openedProjects);
-            CloseProjectCommand = new CloseProjectCommand(userInterface, openedProjects);
+            CloseCurrentProjectCommand = new CloseCurrentProjectCommand(userInterface, openedProjects);
             DigitCommand = new DigitCommand(userInterface, openedProjects);
 
             // Initialize everything
 
             IEnumerable<ProjectViewModel> projects = openedProjects
-                .Select(x => new ProjectViewModel(userInterface, statusInfo, x));
+                .Select(x => new ProjectViewModel(userInterface, statusInfo, openedProjects, x));
 
             Projects = new ObservableCollection<ProjectViewModel>(projects);
             SelectedProject = Projects.FirstOrDefault();
@@ -132,7 +132,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
 
         private void HandleProjectCreated(object sender, ProjectCreatedEventArgs e)
         {
-            ProjectViewModel projectViewModel = new ProjectViewModel(userInterface, statusInfo, e.NewProject);
+            ProjectViewModel projectViewModel = new ProjectViewModel(userInterface, statusInfo, openedProjects, e.NewProject);
             Projects.Add(projectViewModel);
 
             IsNoTabInfoVisible = Projects.Count == 0;
