@@ -110,6 +110,7 @@
     <Compile Include="UI\ViewModels\MainHeaderViewModel.cs" />
     <Compile Include="UI\ViewModels\MainFooterViewModel.cs" />
     <Compile Include="UI\ViewModels\ProjectViewModel.cs" />
+    <Compile Include="UI\MainTitle.cs" />
     <Compile Include="UI\Views\EnumSelectorWindow.xaml.cs">
       <DependentUpon>EnumSelectorWindow.xaml</DependentUpon>
     </Compile>

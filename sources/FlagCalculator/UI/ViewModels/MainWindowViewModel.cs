@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
 using DustInTheWind.FlagCalculator.Business;
 using DustInTheWind.FlagCalculator.UI.Commands;
 
@@ -31,6 +30,7 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
         private readonly UserInterface userInterface;
         private readonly StatusInfo statusInfo;
         private readonly OpenedProjects openedProjects;
+        private readonly MainTitle mainTitle;
         private ProjectViewModel selectedProject;
         private bool isNoTabInfoVisible;
 
@@ -107,13 +107,10 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             Projects = new ObservableCollection<ProjectViewModel>(projects);
             SelectedProject = Projects.FirstOrDefault();
 
-            UpdateTitle();
+            mainTitle = new MainTitle(openedProjects);
+            mainTitle.Changed += HandleMainTitleChanged;
 
-            if (openedProjects.CurrentProject != null)
-            {
-                openedProjects.CurrentProject.Loaded += HandleProjectLoaded;
-                openedProjects.CurrentProject.Unloaded += HandleProjectUnloaded;
-            }
+            Title = mainTitle.ToString();
 
             this.openedProjects.CurrentProjectChanged += HandleCurrentProjectChanged;
             this.openedProjects.ProjectCreated += HandleProjectCreated;
@@ -122,12 +119,14 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             IsNoTabInfoVisible = Projects.Count == 0;
         }
 
-        private void HandleProjectClosed(object sender, ProjectClosedEventArgs e)
+        private void HandleMainTitleChanged(object sender, EventArgs eventArgs)
         {
-            ProjectViewModel projectToRemove = Projects.First(x => x.ProjectContext == e.ClosedProject);
-            Projects.Remove(projectToRemove);
+            Title = mainTitle.ToString();
+        }
 
-            IsNoTabInfoVisible = Projects.Count == 0;
+        private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
+        {
+            SelectedProject = Projects.FirstOrDefault(x => x.ProjectContext == e.NewProject);
         }
 
         private void HandleProjectCreated(object sender, ProjectCreatedEventArgs e)
@@ -138,60 +137,12 @@ namespace DustInTheWind.FlagCalculator.UI.ViewModels
             IsNoTabInfoVisible = Projects.Count == 0;
         }
 
-        private void HandleCurrentProjectChanged(object sender, CurrentProjectChangedEventArgs e)
+        private void HandleProjectClosed(object sender, ProjectClosedEventArgs e)
         {
-            SelectedProject = Projects.FirstOrDefault(x => x.ProjectContext == e.NewProject);
+            ProjectViewModel projectToRemove = Projects.First(x => x.ProjectContext == e.ClosedProject);
+            Projects.Remove(projectToRemove);
 
-            if (e.OldProject != null)
-            {
-                e.OldProject.Loaded -= HandleProjectLoaded;
-                e.OldProject.Unloaded -= HandleProjectUnloaded;
-            }
-
-            if (e.NewProject != null)
-            {
-                e.NewProject.Loaded += HandleProjectLoaded;
-                e.NewProject.Unloaded += HandleProjectUnloaded;
-            }
-
-            UpdateTitle();
-        }
-
-        private void HandleProjectLoaded(object sender, EventArgs e)
-        {
-            UpdateTitle();
-        }
-
-        private void HandleProjectUnloaded(object sender, EventArgs eventArgs)
-        {
-            UpdateTitle();
-        }
-
-        private static string BuildTitleBase()
-        {
-            Assembly assembly = Assembly.GetEntryAssembly();
-            string version = assembly.GetName().Version.ToString(3);
-            return $"Flag Calculator {version}";
-        }
-
-        private void UpdateTitle()
-        {
-            ProjectContext currentProject = openedProjects.CurrentProject;
-
-            if (currentProject?.IsLoaded == true)
-            {
-                FlagsNumber flagNumber = currentProject.FlagsNumber;
-
-                string titleBase = BuildTitleBase();
-                string flagsName = flagNumber.Name;
-                string enumTypeName = flagNumber.UnderlyingType.Name;
-
-                Title = string.Format("{1} ({2}) - {0}", titleBase, flagsName, enumTypeName);
-            }
-            else
-            {
-                Title = BuildTitleBase();
-            }
+            IsNoTabInfoVisible = Projects.Count == 0;
         }
     }
 }
