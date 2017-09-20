@@ -1,6 +1,10 @@
 Flag Calculator
 ===============
 
+ver 1.3.1
+---------
+- [UI] Hexa numbers formatting: the starting zeroes are displayed gray.
+
 ver 1.3.0
 ---------
 - [UI] possibility to edit multiple numbers (enums), each one in its own tab.

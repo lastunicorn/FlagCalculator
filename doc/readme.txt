@@ -1,4 +1,4 @@
-Flag Calculator v 1.3.0
+Flag Calculator v 1.3.1
 =======================
 
 This tool helps you build an integer by selecting the discrete values of a c# enum type.
