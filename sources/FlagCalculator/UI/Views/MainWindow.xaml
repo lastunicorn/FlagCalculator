@@ -100,7 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <TabControl
             ItemsSource="{Binding Projects}"
             SelectedItem="{Binding SelectedProject}">
-
+            
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

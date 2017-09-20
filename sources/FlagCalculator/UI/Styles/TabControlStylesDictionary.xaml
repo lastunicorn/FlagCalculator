@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
 
-                    <Grid Background="{StaticResource TabsNormalBackground}">
+                    <Grid>
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -44,7 +44,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                         <TabPanel
                             Grid.Row="0"
-                            IsItemsHost="true"/>
+                            IsItemsHost="true"
+                            Background="{StaticResource TabsNormalBackground}"/>
 
                         <Border
                             Grid.Row="1"
