@@ -98,8 +98,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <Grid>
 
         <TabControl
+            x:Name="TabControl1"
             ItemsSource="{Binding Projects}"
             SelectedItem="{Binding SelectedProject}">
+            
+            <TabControl.Resources>
+                <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                    <Setter Property="AllowDrop" Value="True"/>
+                    <EventSetter Event="PreviewMouseMove" Handler="TabItem_PreviewMouseMove"/>
+                    <EventSetter Event="Drop" Handler="TabItem_Drop"/>
+                </Style>
+            </TabControl.Resources>
 
             <TabControl.ItemTemplate>
                 <DataTemplate>
