@@ -1,0 +1,7 @@
+*.suo
+bin/
+obj/
+*.user
+/Publish/
+packages/
+*.tmp

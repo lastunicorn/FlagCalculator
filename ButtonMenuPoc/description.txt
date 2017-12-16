@@ -1,0 +1,5 @@
+ButtonMenuPoc
+-------------
+
+It is more like a PoC.
+It is my attempt to create a context menu that can be displayed clicking the right bottom button on the window.

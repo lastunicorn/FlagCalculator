@@ -1,0 +1,140 @@
+﻿<UserControl
+    x:Class="DustInTheWind.ButtonMenuPoc.Views.DropDownButtonControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:popupTutorial="clr-namespace:DustInTheWind.ButtonMenuPoc"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:buttonMenuPoc="clr-namespace:DustInTheWind.ButtonMenuPoc"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    MouseDown="UserControl1_OnMouseDown"
+    x:Name="CustomUserControl"
+    FlowDirection="LeftToRight">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/Styles/ToggleButtonStylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="MenuItemDataTemplate">
+
+                <Border Padding="10 5">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                            <i:InvokeCommandAction Command="{Binding Command}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Beige"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Image
+                            Source="{Binding IconPath, Mode=OneWay}"
+                            Width="16"
+                            Stretch="Uniform"
+                            VerticalAlignment="Center"
+                            Margin="0"/>
+
+                        <TextBlock
+                            Text="{Binding Text, Mode=OneWay}"
+                            Padding="10 0 0 0"/>
+
+                    </StackPanel>
+
+                </Border>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="StringDataTemplate">
+                <Border Padding="10 5">
+
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource MenuItemOverBackgroundColor}"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock
+                            Text="{Binding}"
+                            Margin="26 0 0 0"/>
+
+                    </StackPanel>
+
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="MenuItemSeparatorDataTemplate">
+                <Border
+                Margin="0 2"
+                Height="1"
+                Background="#805400"/>
+            </DataTemplate>
+
+            <buttonMenuPoc:MenuItemDataTemplateSelector x:Key="MenuItemDataTemplateSelector"/>
+
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <Grid>
+
+        <ToggleButton
+            x:Name="ToggleButton1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Content="{Binding ButtonContent, ElementName=CustomUserControl}"
+            IsChecked="{Binding MenuIsOpen, Mode=TwoWay}"/>
+
+        <Popup
+            Name="Popup1"
+            IsOpen="{Binding MenuIsOpen, Mode=TwoWay}"
+            PlacementTarget="{Binding ElementName=ToggleButton1, Mode=OneWay}"
+            Placement="Custom"
+            AllowsTransparency="True">
+
+            <Border
+                CornerRadius="2"
+                Padding="5"
+                Background="{StaticResource MenuNormalBackgroundColor}">
+
+                <ItemsControl
+                    ItemsSource="{Binding MenuItems, Mode=OneWay}"
+                    ItemTemplateSelector="{StaticResource MenuItemDataTemplateSelector}"
+                    Foreground="{StaticResource MenuNormalForegroundColor}"/>
+
+            </Border>
+
+        </Popup>
+
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,75 @@
+﻿<Window
+    x:Class="DustInTheWind.ButtonMenuPoc.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:DustInTheWind.ButtonMenuPoc"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:views="clr-namespace:DustInTheWind.ButtonMenuPoc.Views"
+    xmlns:views1="clr-namespace:DustInTheWind.ButtonMenuPoc.Views"
+    mc:Ignorable="d"
+    Title="MainWindow"
+    Height="350"
+    Width="525">
+
+    <Window.Resources>
+
+        <!-- orange: f97300 - ffcb9e, ff9a4e, aa4f00, 4a2200 -->
+        <!-- blue: 113f47 - 5575bf, 3459af, 0d3083, 082466 -->
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/Styles/ToggleButtonStylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDown">
+            <i:InvokeCommandAction Command="{Binding WindowMouseDownCommand, Mode=OneWay}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="LostKeyboardFocus">
+            <i:InvokeCommandAction Command="{Binding WindowLostKeyboardFocusCommand, Mode=OneWay}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="LocationChanged">
+            <i:InvokeCommandAction Command="{Binding WindowLocationChangedCommand, Mode=OneWay}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="SizeChanged">
+            <i:InvokeCommandAction Command="{Binding WindowSizeChangedCommand, Mode=OneWay}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <DockPanel Background="#eaeaea">
+
+        <StackPanel
+            DockPanel.Dock="Bottom"
+            Orientation="Horizontal"
+            FlowDirection="RightToLeft"
+            Background="#d0d0d0">
+
+            <views1:DropDownButtonControl
+                x:Name="ToggleButton1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                DataContext="{Binding MenuViewModel, Mode=OneWay}"
+                ButtonContent="qwe"
+                Margin="10"/>
+
+        </StackPanel>
+        
+        <TextBlock
+            Name="TextBlock1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="Some conetent here"
+            Background="BlueViolet"
+            Foreground="WhiteSmoke"
+            Padding="10"/>
+        
+    </DockPanel>
+
+</Window>
+
